@@ -771,11 +771,11 @@ h3 {
 .img-joki a{
     text-decoration: none;
     font-size: 20px;
-    color: #888;
+    color: #fff;
 }
 
 .img-joki a:hover {
-    color: #00530c;
+    color: #06D85F;
 
 }
 
@@ -944,7 +944,7 @@ h3 {
     background-color: #0C356A;
     margin-left: 570px;
     border-radius: 15px;
-    margin-bottom: 100px;
+    margin-bottom: 10px;
     margin-top: -1790px;
     margin-right: 20px;
     height: 350px;
@@ -993,4 +993,15 @@ input {
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+
+.box-harga1{
+   
+    background-color: #0C356A;
+    margin-left: 570px;
+    border-radius: 15px;
+    margin-right: 20px;
+    height: 350px;
+    margin-top: 20px;
 }
