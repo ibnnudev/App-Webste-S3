@@ -28,9 +28,7 @@
                     <span class="link-text">Beranda</span>
                 </a>
 
-                <a href="listjoki.php">
-                     <span class="link-text">Order Jasa Joki</span>
-                </a>
+            
                 <a href="lacakorderan.php">
                     <span class="link-text">Lacak Orderan</span>
                 </a>

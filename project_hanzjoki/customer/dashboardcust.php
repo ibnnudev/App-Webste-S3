@@ -23,10 +23,6 @@
                 <span class="link-text">Beranda</span>
                         </a>
 
-
-            <a href="listjoki.php" >
-                <span class="link-text">Order Jasa Joki</span>
-            </a>
             <a href="lacakorderan.php">
                 <span class="link-text">Lacak Orderan</span>
             </a>
@@ -56,69 +52,118 @@
         </div>
     </div>
 
+    <div class="search-box">
+                 <div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <div class="search-input">
+                    <input type="text" class="input" placeholder="search...">
+                    </div>
+             </div>
 
-    <h1 class="title-p">PROMO BULANAN</h1>
+
+
+
+    <h1 class="title-p">JASA</h1>
     <section id="joki" class="joki">
         
-<div class="mlbb">
+<div class="Jasa-rank">
     <div class="link">
         <a href="listjoki.html">
-                <img src="../image/mlbb.jpg" alt="">
-                <div class="judul-produk">Mobile Legend</div>
+                <img src="../image/JASA RANK.png" alt="">
+               
         </a>
     </div>
 </div>
-
-
-<div class="genshin">
+<div class="Jasa-mcl">
     <div class="link">
         <a href="#harga-genshin">
-                <img src="../image/GenshinImpact.jpg" alt="">
-                <div class="judul-produk">GenshinImpact</div>
+                <img src="../image/JASA MCL.png" alt="">
+            
         </a>
     </div>
 </div>
 
 
-<div class="valorant">
+<div class="jasa-mabar">
     <div class="link">
         <a href="#harga-genshin">
-                <img src="../image/valorant.jpg" alt="">
-                <div class="judul-produk">Valorant</div>
+                <img src="../image/JASA MAin.png" alt="">
+                
         </a>
     </div>
 </div>
 
 
-<div class="domino">
+<div class="jasa-montage">
     <div class="link">
         <a href="#harga-domino">
-                <img src="../image/higgs_domino.jpg" alt="">
-                <div class="judul-produk">Domino Higgh</div>
+                <img src="../image/JASA MONTAGE.png" alt="">
+                
         </a>
     </div>
 </div>
 
 
-<div class="pubg">
+<div class="jasa-clasic">
     <div class="link">
         <a href="#harga-pubg">
-                <img src="../image/pubgm.jpg" alt="">
-                <div class="judul-produk">pubg Mobile</div>
+                <img src="../image/JASA CLASIK.png" alt="">
         </a>
     </div>
 </div>
-
-<div class="ff">
-    <div class="link">
-        <a href="#harga-ff">
-                <img src="../image/ff.png" alt="">
-                <div class="judul-produk">Free Fire</div>
-        </a>
-    </div>
-</div>
-
 </section>
+
+
+
+<h1 class="title-p2">PROMO</h1>
+    <div class="box-promo">
+        <section id="promo" class="promo">
+        
+            <div class="promo1">
+                <div class="pomo1">
+                    <a href="listjoki.html">
+                            <img src="../image/RPOMO EPIC.png" alt="">
+                           
+                    </a>
+                </div>
+            </div>
+            <div class="promo2">
+                <div class="pomo2">
+                    <a href="#harga-genshin">
+                            <img src="../image/RPOMO LEGENDS.png" alt="">
+                        
+                    </a>
+                </div>
+            </div>
+            
+            
+            <div class="promo3">
+                <div class="pomo3">
+                    <a href="#harga-genshin">
+                            <img src="../image/RPOMO HONOR.png" alt="">
+                            
+                    </a>
+                </div>
+            </div>
+            
+            
+            <div class="promo4">
+                <div class="pomo4">
+                    <a href="#harga-domino">
+                            <img src="../image/RPOMO MYTHIC.png" alt="">
+                            
+                    </a>
+                </div>
+            </div>
+
+
+
+        </section>
+
+    </div>
+
+
+
+
 
 
  

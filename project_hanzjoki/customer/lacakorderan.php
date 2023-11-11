@@ -23,9 +23,6 @@
                     <a href="dashboardcust.php">
                         <span class="link-text">Beranda</span>
                     </a>
-                    <a href="listjoki.php">
-                        <span class="link-text">Order Jasa Joki</span>
-                    </a>
                     <a href="lacakorderan.html" style="text-decoration: none; color: #06D85F;">
                         <span class="link-text">Lacak Orderan</span>
                     </a>

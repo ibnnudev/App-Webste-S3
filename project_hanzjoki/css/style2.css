@@ -69,8 +69,9 @@ header {
     background-color: #D9D9D9;
     padding: 8px 14px;
     border-radius: 30px;
-    max-width: 600px; 
-    margin-left: 5px;
+    max-width: 400px; 
+    margin-left: 250px;
+    margin-top: 790px;
 
 }
 
@@ -142,12 +143,11 @@ header {
     padding: 10px 0; /* Atur padding sesuai kebutuhan */
     position: fixed;
     top: 3.5%; /* Memposisikan navigasi di tengah vertikal dari bawah */
-    left: 50%; /* Memposisikan navigasi di tengah horizontal dari kiri */
+    left: 55%; /* Memposisikan navigasi di tengah horizontal dari kiri */
     transform: translate(-50%, -50%); /* Memusatkan elemen dengan memindahkannya ke tengah */
     z-index: 999; /* Menentukan urutan tumpukan elemen */
     width: 100%; /* Memastikan navigasi mengisi seluruh lebar layar */
     max-width: 1300px; /* Atur lebar maksimum navigasi jika diperlukan */
-    
     line-height: normal;
    
 }
@@ -161,7 +161,7 @@ header {
     text-align: center;
     color: #333; /* Atur warna teks */
     margin-right: 50px; /* Atur jarak antara link */
-    margin-left: 60px;
+    margin-left: 80px;
     text-decoration: none; /* Hilangkan dekorasi tautan */
     position: relative;
     
@@ -270,20 +270,81 @@ header {
 
 /* styles.css */
 .title-p {
-    margin-top: 55%;
-    margin-left: 3%;
+    margin-top: 50px;
+    margin-left: 250px;
+    background-color: #014684;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    max-width: 200px;
+    width: 100%; 
+    text-align: center;
+    font-size: 25px;
+}
+
+.title-p2 {
+    margin-top: 60px;
+    margin-left: 250px;
+    background-color: #014684;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    max-width: 200px;
+    width: 100%; 
+    text-align: center;
+    font-size: 25px;
 }
 .joki {
     display: flex;
     /* grid-template-columns: repeat(3,1fr); */
     justify-content: space-between;
     margin-top: 2%;
-    margin-left: 5%;
-    width: 90%;
+    margin-left: 270px;
+    width: 70%;
     margin-right: 5%;
 
     
 }
+
+.Jasa-rank img {
+    max-width: 250px; /* Membuat gambar tidak melebihi lebar container */
+    height: auto; /* Menjaga aspek rasio gambar */
+    display: block; /* Menghilangkan spasi ekstra di sekitar gambar */
+    margin: 0 auto; /* Menengahkan gambar di dalam container jika ada ruang tambahan */
+}
+
+.Jasa-mcl img {
+    max-width: 250px; /* Membuat gambar tidak melebihi lebar container */
+    height: auto; /* Menjaga aspek rasio gambar */
+    display: block; /* Menghilangkan spasi ekstra di sekitar gambar */
+    margin: 0 auto;
+}
+
+.jasa-mabar img{
+    max-width: 250px; /* Membuat gambar tidak melebihi lebar container */
+    height: auto; /* Menjaga aspek rasio gambar */
+    display: block; /* Menghilangkan spasi ekstra di sekitar gambar */
+    margin: 0 auto;
+}
+
+.jasa-montage img {
+    max-width: 250px; /* Membuat gambar tidak melebihi lebar container */
+    height: auto; /* Menjaga aspek rasio gambar */
+    display: block; /* Menghilangkan spasi ekstra di sekitar gambar */
+    margin: 0 auto;
+}
+
+
+.jasa-clasic img {
+    max-width: 250px; /* Membuat gambar tidak melebihi lebar container */
+    height: auto; /* Menjaga aspek rasio gambar */
+    display: block; /* Menghilangkan spasi ekstra di sekitar gambar */
+    margin: 0 auto;
+}
+
+
 
 .joki img {
     border-radius: 10px;
@@ -688,14 +749,14 @@ h3 {
     font-size: 30px;
     color: #FFD050;
     margin-top: 50px;
-    margin-left: -1100px;
+    margin-left: -1175px;
 }   
 
 .label-order1 {
     position: relative; /* Mengatur elemen dalam posisi relatif */
-    top: -80px; 
+    top: -100px; 
     font-size: 20px;
-    margin-left: -550px ;
+    margin-left: -750px ;
 }
 
 .input-orderan{
@@ -704,7 +765,7 @@ h3 {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     margin-left: -635px;
-    margin-top: -100px;
+    margin-top: -120px;
     
 }
 .button-orderan{
@@ -718,13 +779,13 @@ h3 {
     position: relative; /* Mengatur elemen dalam posisi relatif */
     top: 30px; 
     font-size: 15px;
-    margin-left: -610px ;
+    margin-left: -690px ;
 }
 .textbg-5{
     position: relative;
     top: 40px;
     font-size: 15px;
-    margin-left: -650px ;
+    margin-left: -730px ;
 }
 .textbg-5 a {
     color: #007BFF; /* Warna tautan/link */
@@ -786,8 +847,9 @@ h3 {
 }
 
 .slide-img2 {
-    width: 1300px;
-    top: 50%;
+    width: 1400px;
+    height: 600px;
+    top: 45%;
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
@@ -999,9 +1061,37 @@ input {
 .box-harga1{
    
     background-color: #0C356A;
-    margin-left: 570px;
+    margin-left: 590px;
     border-radius: 15px;
     margin-right: 20px;
     height: 350px;
     margin-top: 20px;
+}
+
+.box-promo {
+    background-color: #007BFF;
+    margin-top: 50px;
+    padding: 20px;
+    margin-left: 250px;
+    border-radius: 10px;
+    height: 290px;
+    margin-right: 280px;
+    overflow-x: auto; /* Membuat box memiliki overflow-x sehingga dapat di-scroll */
+    white-space: nowrap;
+}
+.promo{
+    display: flex;
+    /* grid-template-columns: repeat(3,1fr); */
+    justify-content: space-between;
+    margin-top: 2%;
+    margin-right: 20px;
+    width: 70%;
+}
+
+.promo img {
+    margin-right: 20px;
+}
+
+.box-promo::-webkit-scrollbar {
+    display: none;
 }
