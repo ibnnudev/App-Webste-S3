@@ -57,7 +57,7 @@
     </div>
 
 
-    <h1 class="title-p">JOKI</h1>
+    <h1 class="title-p">PROMO BULANAN</h1>
     <section id="joki" class="joki">
         
 <div class="mlbb">

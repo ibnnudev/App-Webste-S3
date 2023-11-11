@@ -270,14 +270,14 @@ header {
 
 /* styles.css */
 .title-p {
-    margin-top: 45%;
+    margin-top: 55%;
     margin-left: 3%;
 }
 .joki {
     display: flex;
     /* grid-template-columns: repeat(3,1fr); */
     justify-content: space-between;
-    margin-top: 1%;
+    margin-top: 2%;
     margin-left: 5%;
     width: 90%;
     margin-right: 5%;
@@ -740,17 +740,23 @@ h3 {
     font-weight: bold;
 }
 .bg-joki {
-    background-color: #FFD050; /* Warna latar belakang */
+    background-color: #007BFF; /* Warna latar belakang */
     padding: 20px; /* Padding untuk memberikan ruang di sekitar elemen */
-    margin-top: 1000px;
-    width: 1520px;
-    height: 400px;
+    margin-top: 200px;
+    width: 1830px;
+    height: 450px;
+    margin-left: 35px;
+    border-radius: 15px;
+}
+
+.title-JOKI{
+    margin-left: 20px;
 }
 
 .list-joki{
     display: flex;
     justify-content: space-between;
-    margin-top: 1%;
+    margin-top: 2%;
     margin-left: 5%;
     width: 90%;
     margin-right: 5%;
@@ -786,7 +792,7 @@ h3 {
     position: absolute;
     transform: translate(-50%, -50%);
     overflow: hidden;
-    border: 5px solid red;
+    border: 5px solid #D9D9D9;
     border-radius: 10px;
     box-shadow: 10px 25px 30px rgba(0, 0, 0, 1, 0);
 }
@@ -794,7 +800,7 @@ h3 {
 .op {
     display: flex;
     width: 300%;
-    animation: slide 10s infinite;
+    animation: slide 15s infinite;
 }
 
 @keyframes slide {
@@ -807,4 +813,184 @@ h3 {
     66.66% {
         transform: translate(-66.5%);
     }
+}
+
+.content-jokirank{
+    background-color: #0C356A; /* Warna latar belakang */
+    padding: 20px;  
+    margin-top: 100px;
+    width: 500px;
+    height: 700px;
+    margin-left: 35px;
+    border-radius: 15px;
+    
+}
+
+
+.content-jokirank img {
+    height: 220px;
+    margin-top: -40px;
+    margin-left: 15px;
+    
+
+    
+}
+.nama-joki {
+    margin-left: 210px;
+    margin-top: 10px;
+    color:#fff;
+    font-size: 30px;
+}
+
+.time{
+    font-size: 17px;
+    margin-left: 210px;
+    margin-top: -175px ;
+    color:#fff;
+}
+
+.ket-1 {
+    color:#fff;
+    font-size: 17px;
+    margin-left: 210px;
+    margin-top: 20px ;
+    
+}
+
+.bg {
+    background-color: #06D85F;
+    height: 10000px;
+    left: 50%;
+    margin-left: 900px;
+
+}
+.caraorder{
+    color:#fff;
+    font-size: 22px;
+    margin-top: 20px;
+    margin-left: 10px;
+
+}
+
+.isi-ket-2{
+    color:#fff;
+    font-size: 15px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.ket-3{
+    color:#fff;
+    font-size: 17px;
+    margin-left: 10px;
+    margin-top: 20px ;
+}
+.ket-4 {
+    color:#fff;
+    font-size: 17px;
+    margin-left: 10px;
+    margin-top: 20px ;
+}
+
+
+.content-listjoki{
+    background-color: #0C356A; /* Warna latar belakang */
+    padding: 20px;  
+    margin-top: 20px;
+    width: 500px;
+    height: 1070px;
+    margin-left: 35px;
+    border-radius: 15px;
+}
+
+.list-jokian{
+    margin-top: 10px;
+    color:#fff;
+    font-size: 25px;
+    margin-left: 20px;
+}
+
+.list-jokian-order{
+    justify-content: space-between;
+    margin-top: 5%;
+    margin-left: -60%;
+    margin-bottom: 10px;
+}
+
+.img-jokian {
+    position: relative;
+    margin-bottom: 110px;
+}
+
+.img-jokian img {
+    margin-left: 295px;
+    height: 220px;
+}
+.pil-jokirank{
+    font-size: 17px;
+    margin-left: 455px;
+    margin-top: -150px;
+    color: #fff;
+}
+
+
+.img-jokian a:hover .pil-jokirank {
+    color: #06D85F;
+}
+
+
+
+.box-id-input {
+    position: relative;
+    background-color: #0C356A;
+    margin-left: 570px;
+    border-radius: 15px;
+    margin-bottom: 100px;
+    margin-top: -1790px;
+    margin-right: 20px;
+    height: 350px;
+}
+.id-id{
+    color: #fff;
+    margin-left: 30px;
+    margin-top: 20px;
+    position: absolute;
+}
+
+
+.left-input,
+.right-input {
+    width: 600px; /* Lebar masing-masing bagian */
+    float: left; /* Float ke kiri */
+    box-sizing: border-box; /* Mengatasi masalah dengan padding dan border */
+    margin-left: 35px;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.input-container {
+    margin-bottom: 40px; /* Jarak antara setiap input-container */
+}
+
+.input-container select {
+    width: 600px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff; /* Warna latar belakang combo box */
+    color: #333; /* Warna teks */
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px; /* Jarak antara label dan input */
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
