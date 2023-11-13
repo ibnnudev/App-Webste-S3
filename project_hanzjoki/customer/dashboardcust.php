@@ -67,7 +67,7 @@
         
 <div class="Jasa-rank">
     <div class="link">
-        <a href="listjoki.html">
+        <a href="orderJokirank.html">
                 <img src="../image/JASA RANK.png" alt="">
                
         </a>
@@ -154,7 +154,14 @@
                     </a>
                 </div>
             </div>
-
+            <div class="promo5">
+                <div class="pomo5">
+                    <a href="#harga-domino">
+                            <img src="../image/RPOMO GLORY.png" alt="">
+                            
+                    </a>
+                </div>
+            </div>
 
 
         </section>

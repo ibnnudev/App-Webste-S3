@@ -1,5 +1,9 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+
 * {
-    font-family: Nunito, sans-serif;
+    font-family: 'Ubuntu', sans-serif;
   }
   
   .text-blk {
@@ -247,3 +251,169 @@
       margin: 0 20px 0 20px;
     }
   }
+
+  .container-1 img {
+    width:400px;
+    height: auto;
+    margin-top: 35px;
+    margin-left: 80px;
+  }
+
+  .text-1 {
+    font-size: 30px;
+    margin-left: 80px;
+    
+  }
+
+  .line1 {
+    border-top: 1px solid #000;
+  }
+
+  .box-cont{
+    display: flex;
+    height: 950px;
+    
+  }
+  
+  
+.container-1 {
+  flex: 1; /* Membuat container-1 mengambil sebanyak mungkin ruang yang tersedia */
+  padding: 20px; /* Menambahkan padding untuk memberikan ruang di sekitar elemen di dalam container-1 */
+  border-right: 1px solid #000; /* Garis pemisah antara container-1 dan container-2 */
+  flex-direction: column; /* Mengatur tata letak menjadi kolom */
+  align-items: center;
+}
+
+/* CSS untuk container 2 (dibagian kanan) */
+.container-2 {
+  flex: 1; /* Membuat container-2 mengambil sebanyak mungkin ruang yang tersedia */
+  padding: 20px; /* Menambahkan padding untuk memberikan ruang di sekitar elemen di dalam container-2 */
+  width: 100%;
+  overflow: hidden;
+}
+
+.text-2 {
+  font-size: 55px;
+  margin-left: 75px;
+  margin-top: 15px;
+}
+
+.text-3 {
+  margin-left: 75px;
+  margin-top: -20px;
+  font-size: 20px;
+}
+
+
+.text-1,
+.text-3 {
+    font-family: 'Poppins', sans-serif;
+}
+.text-2 {
+  font-family: 'Mochiy Pop One', sans-serif;
+  color: #0C356A;
+}
+
+.text-1 {
+  color:#0C356A ;
+}
+
+
+/* CSS untuk container login */
+.colomn-login {
+  display: flex;
+  flex-direction: column; /* Mengatur tata letak menjadi kolom */
+  width: 810px;
+  margin-top: 20px;
+  
+}
+
+/* Gaya untuk input email */
+.email-login-admin {
+  margin-bottom: 10px; /* Menambahkan jarak di bawah input email */
+  margin-left: 75px;
+  height: 50px;
+  border-radius: 10px;
+  margin-top: 80px; 
+  
+}
+
+/* Gaya untuk input password */
+.pw-login-admin {
+  margin-top: 50px; /* Menambahkan jarak di atas input password */
+  margin-left: 75px;
+  height: 50px;
+  border-radius: 10px;
+
+}
+
+.login-button {
+  margin-left: 75px;
+  height: 60px;
+  border-radius: 10px;
+  background-color: #0C356A;
+  margin-top: 90px;
+  font-size: 22px;
+  color: #fff;
+}
+
+.container-2 {
+  background-color: #0C356A;
+}
+
+
+
+.box-kotak-slize {
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+    overflow-x: hidden; /* Menggunakan hidden agar tidak ada scrollbar horizontal */
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.box-kotak-slize img {
+    width: 1000px;
+    height: auto; /* Sesuaikan tinggi gambar sesuai kebutuhan */
+    display: inline-block;
+    margin-right: 20px; /* Jarak antar gambar */
+    margin-top: 200px;
+}
+
+.container-2 ::-webkit-scrollbar {
+  display: none;
+}
+
+
+.op {
+  display: flex;
+  width: 3100px;
+  animation: slide 15s infinite linear; /* Menambahkan animasi keyframes */
+}
+@keyframes slide {
+  0%, 100% {
+      transform: translateX(0);
+  }
+  25% {
+      transform: translateX(-50);
+  }
+  50% {
+      transform: translateX(-70%);
+  }
+}
+
+
+.box-sidebar {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar{
+  background-color: #111827;
+  width: 260px;
+  padding: 24px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
