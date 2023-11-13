@@ -6,6 +6,7 @@
     font-family: 'Ubuntu', sans-serif;
   }
   
+  
   .text-blk {
     margin-top: 0px;
     margin-right: 0px;
@@ -42,6 +43,12 @@
     font-weight: 500; 
     margin-left: 30px;
 
+}
+
+
+
+body {
+  height: 100%; /* Set tinggi body menjadi 500px */
 }
 
 .navigation a::after {
@@ -406,14 +413,332 @@
 .box-sidebar {
   display: flex;
   min-height: 100vh;
+  
 }
 
 .sidebar{
-  background-color: #111827;
-  width: 260px;
-  padding: 24px;
+  background-color: #0C356A;
+  width: 380px;
+  padding: 20px;
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
 }
+.list-item1 {
+  margin-top: 50%;
+  
+}
 
+.list-item1 a {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  background-color: #286BC2;
+  align-items: center;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+
+
+
+/* Style untuk gambar gamepad */
+.icon-1 {
+  width: 60px; /* Sesuaikan ukuran gambar sesuai kebutuhan */
+  height: auto;
+  margin-right: 25px; /* Sesuaikan margin sesuai kebutuhan */
+  margin-left: 30px
+}
+
+/* Style untuk judul kepala */
+.judul-kepala {
+  font-size: 18px; /* Sesuaikan ukuran font sesuai kebutuhan */
+  font-weight: bold;
+}
+
+
+.logo-beranda  img {
+  width: 100px; /* Sesuaikan ukuran gambar sesuai kebutuhan */
+  height: auto;
+  margin-top: -10px;
+  display: inline-block;
+ 
+}
+
+
+.logo-beranda{
+  text-align: center;
+}
+
+.badan-2 {
+  
+  margin-top: 30px;
+}
+
+
+/* konten dashboard */
+
+.konten-1 {
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  
+}
+.konten-1 a{
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  
+}
+
+.konten-1 a img {
+  width: 32px;
+  margin-right: 20px;
+
+}
+
+.konten-1:hover {
+  background-color: #FF9900; /* Warna hijau yang diinginkan saat dihover */
+}
+.jdl-konten-1 {
+   /* Sesuaikan margin sesuai kebutuhan */
+  font-size: 20px; /* Sesuaikan ukuran font sesuai kebutuhan */
+}
+
+/* ================================== */
+
+.konten-2 {
+  border-radius: 15px;
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.konten-2 a{
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  padding: 20px;
+  
+}
+
+
+.konten-2 :hover {
+  background-color: #FF9900;
+}
+
+
+.konten-2 a img {
+  width: 30px;
+  margin-right: 20px;
+
+}
+
+.jdl-konten-2 {
+  /* Sesuaikan margin sesuai kebutuhan */
+ font-size: 20px; /* Sesuaikan ukuran font sesuai kebutuhan */
+ 
+}
+
+
+/* main conten */
+
+.main-content {
+  display: flex;
+  background-color: #eeee;
+  width: 200vh;
+  position: relative;
+}
+
+
+
+@media (max-width: 768px) {
+  /* Aturan responsif untuk ukuran layar yang lebih kecil atau setara dengan 768px */
+
+  .logo {
+      font-size: 1.5em; /* Menyesuaikan ukuran font pada layar kecil */
+  }
+
+  .navigation a {
+      font-size: 0.9em; /* Menyesuaikan ukuran font pada layar kecil */
+      margin-left: 5px; /* Menyesuaikan margin antar item navigasi pada layar kecil */
+  }
+
+  .responsive-container-block.bigContainer {
+      padding: 10px; /* Menyesuaikan padding pada layar kecil */
+  }
+
+  /* ... Tambahan aturan responsif lainnya ... */
+}
+
+@media (max-width: 500px) {
+  /* Aturan responsif untuk ukuran layar yang lebih kecil atau setara dengan 500px */
+
+  .responsive-container-block.bigContainer {
+      padding: 5px; /* Menyesuaikan padding pada layar sangat kecil */
+  }
+
+  .text-1 {
+      font-size: 20px; /* Menyesuaikan ukuran font pada layar sangat kecil */
+      margin-bottom: 10px; /* Menambahkan margin bawah */
+  }
+
+  /* ... Tambahan aturan responsif lainnya ... */
+}
+
+
+.blank-atas {
+  background-color: #fff;
+  height: 80px;
+  width: 100%;
+  position: relative;
+  
+}
+
+
+.blank-atas img {
+  margin-top: 30px;
+  margin-left: 20px ;
+}
+
+.title-halaman {
+ font-size: 20px;
+ color: #000;
+ margin-left: 20px;
+ margin-top: -5px;
+ text-decoration: none;
+}
+
+.pler2 {
+  text-decoration: none;
+}
+
+
+.search-box {
+
+  display: flex;
+  align-items: center;
+  background-color: #D9D9D9;
+  padding: 8px 14px;
+  border-radius: 30px;
+  max-width: 300px; 
+  margin-left: 150px;
+  margin-top:-50px;
+  
+
+}
+
+.search-icon{
+  font-size: 1.18rem;
+  color:#0C356A ;
+  margin-right: 5px;
+
+}
+
+
+.search-input{
+  transition: .5s;
+  border: none;
+  width: 0px;
+  overflow:hidden ;
+  background: transparent;
+  border-color: #ffffff;
+  
+}
+
+.search-input .input {
+  border: none;
+  background: transparent;
+  outline: none;
+  background-color: unset;
+  padding: 8px;
+  font-weight: bold; 
+  color: #0C356A;
+  
+  
+}
+.search-input .input::placeholder{
+  color: #0C356A;
+}
+
+
+
+
+.search-box:hover .search-input{
+  width: 200px;
+  margin-left: 0px;
+}
+
+
+
+
+
+/* ==================================================== */
+
+.box-drop {
+  margin-left: 88%;
+  display: flex;
+  align-items: center;
+  width: 195px;
+  position: relative;
+  margin-top: -42px;
+  
+}
+
+.img-drop img {
+  margin-top: px;
+}
+
+.img-drop {
+  margin-right: 10px;
+  margin-left: 83%;
+  margin-top: -80px;
+}
+/* Style dropdown button */
+.dropbtn {
+  color: #000;
+  padding: 10px;
+  background-color: #fff;
+  font-size: 23px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;  
+
+
+}
+
+/* Style konten dropdown */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  width: 150px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Style untuk setiap pilihan dalam dropdown */
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  
+}
+
+/* Style ketika kursor berada di atas pilihan dropdown */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropbtn:hover {
+  color: #55e34d;
+}
+
+/* Style gambar di samping teks */
+.dropdown-content img {
+  margin-right: 10px;
+  height: 20px; /* Sesuaikan tinggi gambar */
+}

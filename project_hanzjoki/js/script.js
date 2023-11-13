@@ -56,3 +56,33 @@ function slide(direction) {
     const transform = `translateX(-${currentSlide * slideWidth}px)`;
     slider.style.transform = transform;
 }
+
+
+function toggleDropdown() {
+    var dropdownContent = document.querySelector('.dropdown-content');
+    dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+  }
+
+
+
+
+
+  function toggleDropdown() {
+    var dropdownContent = document.getElementById("myDropdown");
+    dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+  }
+  
+  // Tutup dropdown ketika mengklik di luar dropdown
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.style.display === 'block') {
+          openDropdown.style.display = 'none';
+        }
+      }
+    }
+  }
+  

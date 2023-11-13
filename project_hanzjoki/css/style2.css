@@ -1092,6 +1092,6 @@ input {
     margin-right: 20px;
 }
 
-.box-promo::-webkit-scrollbar {
+/* .box-promo::-webkit-scrollbar {
     display: none;
-}
+} */
