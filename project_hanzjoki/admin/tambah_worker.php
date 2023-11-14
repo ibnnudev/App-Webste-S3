@@ -15,7 +15,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">HanzStore</a>
+            <a class="navbar-brand ps-3" href="#">HanzStore</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -161,6 +161,31 @@
                                     </tbody>
                                     
                                 </table>
+                                                                                
+                                                <script>
+                                                    function searchTable() {
+                                                        var input, filter, table, tr, td, i, txtValue;
+                                                        input = document.getElementById("searchInput");
+                                                        filter = input.value.toUpperCase();
+                                                        table = document.getElementById("datatablesSimple");
+                                                        tr = table.getElementsByTagName("tr");
+
+                                                        for (i = 0; i < tr.length; i++) {
+                                                            // Change the index according to your table structure
+                                                            td = tr[i].getElementsByTagName("td")[2]; // Index 2 represents the "Nama Lengkap" column
+
+                                                            if (td) {
+                                                                txtValue = td.textContent || td.innerText;
+
+                                                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                                    tr[i].style.display = "";
+                                                                } else {
+                                                                    tr[i].style.display = "none";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                </script>
                             </div>
                         </div>
                     </div>
