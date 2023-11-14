@@ -35,7 +35,7 @@
     user-select: none;
     margin-right: auto;
 }
-.navigation a {
+.navigation a { 
     position: relative;
     font-size: 1.1em;
     color: #000000;
@@ -551,6 +551,7 @@ body {
   background-color: #eeee;
   width: 200vh;
   position: relative;
+  flex-direction: column;
 }
 
 
@@ -741,4 +742,62 @@ body {
 .dropdown-content img {
   margin-right: 10px;
   height: 20px; /* Sesuaikan tinggi gambar */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px; /* Atur jarak antara tabel dan elemen di atasnya */
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* CSS untuk pop-up */
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #000;
+  z-index: 1;
+}
+
+
+
+
+.custom-table {
+  width: 60%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.custom-table th, .custom-table td {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #000;
+  overflow: hidden;
+  /* white-space: nowrap;
+  text-overflow: ellipsis; */ 
+}
+
+.custom-table th {
+  background-color: #f2f2f2;
+}
+
+.custom-table tbody {
+  max-height: 820px; /* Atur tinggi maksimum sesuai kebutuhan Anda */
+  overflow-x: auto;
+  display: block;
+  width: 940px;
 }

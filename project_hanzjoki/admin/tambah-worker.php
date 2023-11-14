@@ -81,14 +81,14 @@
                         <span class="judul-kepala">HANZJOKI</span>
                     </a>
                 </div>
-        </div>
-    <!-- ================================================================================================================= -->
+         </div>
+            <!-- ================================================================================================================= -->
 
             <div class="main-content">
                 <div class="blank-atas">
                     <a href="#" class="pler2">
                         <img src="" alt="">
-                        <h1 class="title-halaman">Dashboard</h1>
+                        <h1 class="title-halaman">Worker</h1>
                     </a>
                     
 
@@ -122,24 +122,66 @@
                             </div>
                         </div>
                     </div>
+                    </div>
 
+                                        <table border="1" id="myTable"  class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>NIK</th>
+                                        <th>Nama Lengkap</th>
+                                        <th>Alamat</th>
+                                        <th>Jenis Kelamin</th>
+                                        <th>Nomor WA</th>
+                                        <th>Email</th>
+                                        <th>Pangkat</th>
+                                        <th>Role Utama</th>
+                                        <th>Sebagai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $koneksi = new mysqli("localhost", "root", "", "jokihanz");
+                                        if ($koneksi->connect_error) {
+                                            die("Connection failed: " . $koneksi->connect_error);
+                                        }
 
-                </div>
+                                        $sql = "SELECT id_worker, NIK, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, Role_utama, sebagai, no_wa FROM data_admin_worker";
+                                        $result = $koneksi->query($sql);
 
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>
+                                                        <td>" . $row["id_worker"] . "</td>
+                                                        <td>" . $row["NIK"] . "</td>
+                                                        <td>" . $row["nama_lengkap"] . "</td>
+                                                        <td>" . $row["alamat"] . "</td>
+                                                        <td>" . $row["jenis_kelamin"] . "</td>
+                                                        <td>" . $row["no_wa"] . "</td>
+                                                        <td>" . $row["email"] . "</td>
+                                                        <td>" . $row["pangkat"] . "</td>
+                                                        <td>" . $row["Role_utama"] . "</td>
+                                                        <td>" . $row["sebagai"] . "</td>
+                                                    </tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='10'>0 result</td></tr>";
+                                        }
+
+                                        $koneksi->close();
+                                    ?>
+                                </tbody>
+                            </table>
+                    
+                            <div id="detailPopup" class="popup">
+                                <h2>Detail Data</h2>
+                                <!-- Tempat menampilkan detail data -->
+                            </div>
+                   
+            
+            
             </div>
-
-    </div>
-
-    
-
-
-
-
-
-    
-
-
-
+     </div>
 
     <script src="../js/script.js"></script>
 </body>
