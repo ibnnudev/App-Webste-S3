@@ -52,19 +52,19 @@
                                     <img src="../image/icons8-worker-50.png" alt="">
                                     <span class="jdl-konten-2">Worker</span>
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="data_costumer.php">
                                     <img src="../image/CUstomer.png" alt="">
-                                    <span class="jdl-konten-2">Custemer</span>
+                                    <span class="jdl-konten-2">Customer</span>
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="data_orderan.php">
                                     <img src="../image/icons8-shopping-cart-64.png" alt="">
                                     <span class="jdl-konten-2">Orderan</span>
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="data_joki.php">
                                     <img src="../image/icons8-game-controller-64.png" alt="">
                                     <span class="jdl-konten-2">Joki</span>
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="history.php">
                                 <img src="../image/icons8-history-24.png" alt="">
                                 <span class="jdl-konten-2">History</span>
                             </a>
@@ -93,10 +93,16 @@
                                 Table Data Worker
                             </div>
                             <div class="card-body">
-                                        <div class="search-container mb-3">
-                                <label for="searchInput" class="form-label visually-hidden">Search:</label>
-                                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
-                                                </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="search-container">
+                                                <label for="searchInput" class="form-label visually-hidden">Search:</label>
+                                                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                                            </div>
+                                            <div class="box-add">
+                                                <a href="halaman_add.php" class="btn-add">Add Worker</a>
+                                            </div>
+                                        </div>
+                                        
 
                                 <table id="datatablesSimple" class="custom-table">
                                     
@@ -162,7 +168,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div class="text-muted">Copyright &copy; HanzStore</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;

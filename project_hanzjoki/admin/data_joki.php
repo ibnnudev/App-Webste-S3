@@ -44,7 +44,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Menu</div>
-                            <a class="nav-link" href="home.php" style=" background-color: #FF9900; height: 50px;">
+                            <a class="nav-link" href="home.php" >
                                     <img src="../image/icons8-dashboard-48.png" alt="" >
                                     <span class="jdl-konten-2">Dashboard</span>
                             </a>
@@ -60,7 +60,7 @@
                                     <img src="../image/icons8-shopping-cart-64.png" alt="">
                                     <span class="jdl-konten-2">Orderan</span>
                             </a>
-                            <a class="nav-link" href="data_joki.php">
+                            <a class="nav-link" href="#" style=" background-color: #FF9900; height: 50px;">
                                     <img src="../image/icons8-game-controller-64.png" alt="">
                                     <span class="jdl-konten-2">Joki</span>
                             </a>
@@ -83,7 +83,7 @@
                         <h1 class="mt-4">Selamat Datang </h1>
                         <!-- <?php echo $email; ?> -->
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">Data JOKI</li>
                         </ol>
                        
 

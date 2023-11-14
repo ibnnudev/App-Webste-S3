@@ -4221,6 +4221,7 @@ textarea.form-control-lg {
   flex: 1 1 auto;
   padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
   color: var(--bs-card-color);
+  justify-content: space-between;
 }
 
 .card-title {
@@ -11280,11 +11281,36 @@ body {
   }
 
   .search-container {
-    max-width: 400px; /* Atur lebar maksimum sesuai kebutuhan Anda */
+    max-width: 600px; /* Atur lebar maksimum sesuai kebutuhan Anda */
     /* Agar elemen berada di tengah halaman */
+   
+    
 }
 
 .form-control {
-    width: 100%; /* Agar input mengisi seluruh lebar container */
+    width:100%; /* Agar input mengisi seluruh lebar container */
     box-sizing: border-box; /* Termasuk padding dan border dalam lebar elemen */
+}
+
+
+.btn-primary {
+    /* Sesuaikan sesuai kebutuhan */
+    margin-left: 50%;
+}
+
+.box-add {
+    background-color: #25cff2;
+    padding: 10px;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-add {
+    color: #000;
+    text-decoration: none;
+}
+.btn-add:hover {
+    color: #fff;
 }
