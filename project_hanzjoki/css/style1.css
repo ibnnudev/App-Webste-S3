@@ -780,6 +780,8 @@ th {
   width: 60%;
   border-collapse: collapse;
   table-layout: fixed;
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
 .custom-table th, .custom-table td {
@@ -799,5 +801,5 @@ th {
   max-height: 820px; /* Atur tinggi maksimum sesuai kebutuhan Anda */
   overflow-x: auto;
   display: block;
-  width: 940px;
+  width: 950px;
 }
