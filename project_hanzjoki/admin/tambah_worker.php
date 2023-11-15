@@ -1,4 +1,17 @@
+<?php
+session_start();
 
+// Memeriksa apakah pengguna sudah login
+if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
+    // Jika belum login, redirect ke halaman login
+    header('Location: logindulu.php');
+    exit;
+}
+
+// Menampilkan informasi atau keterangan
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,10 +33,7 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
+                
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -33,7 +43,7 @@
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -72,8 +82,9 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        HanzStore
+                        <div class="small">User : <?php echo $username; ?></div>
+                        <p><?php echo $role; ?></p>
+                        <img src="../image/LOGO HANZJOKI.png" alt="" class="imge-23">
                     </div>
                 </nav>
             </div>
@@ -99,7 +110,7 @@
                                                 <input type="text" id="searchInput" class="form-control" placeholder="Search...">
                                             </div>
                                             <div class="box-add">
-                                                <a href="halaman_add.php" class="btn-add">Add Worker</a>
+                                                <a href="add_worker.php" class="btn-add">Add Worker</a>
                                             </div>
                                         </div>
                                         
@@ -116,20 +127,21 @@
                                         <th>Nomor WA</th>
                                         <th>Email</th>
                                         <th>Pangkat</th>
-                                        <th>Role Utama</th>
-                                        <th>Sebagai</th>
+                                        <th>Role HERO</th>
+                                        <th>sebagai</th>
+                                        <!-- <th>Foto Ktp</th> -->
                                         <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     
                                     <tbody>
                                     <?php
-                                        $koneksi = new mysqli("localhost", "root", "", "jokihanz");
+                                        $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
                                         if ($koneksi->connect_error) {
                                             die("Connection failed: " . $koneksi->connect_error);   
                                         }
 
-                                        $sql = "SELECT id_worker, NIK, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, Role_utama, sebagai, no_wa FROM data_admin_worker";
+                                        $sql = "SELECT id_worker, NIK, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa FROM data_worker";
                                         $result = $koneksi->query($sql);
 
                                         if ($result->num_rows > 0) {
@@ -143,8 +155,9 @@
                                                         <td>" . $row["no_wa"] . "</td>
                                                         <td>" . $row["email"] . "</td>
                                                         <td>" . $row["pangkat"] . "</td>
-                                                        <td>" . $row["Role_utama"] . "</td>
+                                                        <td>" . $row["rolee"] . "</td>
                                                         <td>" . $row["sebagai"] . "</td>
+                                                        
                                                         <td>
                                                         <a href='form_edit.php?id=" . $row['id_worker'] . "' class='btn btn-info'>Edit</a>
                                                         <a href='hapus.php?id_worker=" . $row['id_worker'] . "' class='btn btn-danger'>Hapus</a>

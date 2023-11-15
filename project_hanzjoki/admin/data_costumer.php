@@ -1,4 +1,17 @@
+<?php
+session_start();
 
+// Memeriksa apakah pengguna sudah login
+if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
+    // Jika belum login, redirect ke halaman login
+    header('Location: logindulu.php');
+    exit;
+}
+
+// Menampilkan informasi atau keterangan
+$username = $_SESSION['username'];
+$role = $_SESSION['role'];
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,10 +33,7 @@
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
+            
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -33,7 +43,7 @@
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -72,8 +82,9 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        HanzStore
+                        <div class="small">User : <?php echo $username; ?></div>
+                        <p><?php echo $role; ?></p>
+                        <img src="../image/LOGO HANZJOKI.png" alt="" class="imge-23">
                     </div>
                 </nav>
             </div>

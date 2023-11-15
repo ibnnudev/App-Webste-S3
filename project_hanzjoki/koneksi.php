@@ -4,7 +4,7 @@
 $SERVER = "localhost";
 $username = "root";
 $password = "";
-$db = "jokihanz"; // Mengganti "user" dengan "db" sesuai dengan nama database Anda.
+$db = "hanzjoki"; // Mengganti "user" dengan "db" sesuai dengan nama database Anda.
 
 $err = "";
 $ingataku= "";

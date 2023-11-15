@@ -1,51 +1,53 @@
 <?php
-require('../koneksi.php');
+require_once('../koneksi.php');
 
-if (isset($_POST['update'])) {
-    $idWorker = $_POST['text_id'];
-    $namaLengkap = $_POST['text_nama'];
-    $alamat = $_POST['text_alamat'];
-    $jenisKelamin = $_POST['text_jenis_kelamin'];
-    $noWa = $_POST['text_no_wa'];
-    $email = $_POST['text_email'];
-    $pangkat = $_POST['text_pangkat'];
-    $roleUtama = $_POST['text_role_utama'];
-    $sebagai = $_POST['text_sebagai'];
-    $ktp = $_POST['text_ktp'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $NIK = $_POST['NIK'];
+    $nama_lengkap = $_POST['nama_lengkap'];
+    $alamat = $_POST['alamat'];
+    $jenis_kelamin = $_POST['jenis_kelamin'];
+    $no_wa = $_POST['no_wa'];
+    $pangkat = $_POST['pangkat'];
+    $email = $_POST['email'];
+    $sebagai = $_POST['sebagai'];
+    $Role_utama = $_POST['Role_utama'];
+    $pw = $_POST['pw'];
 
-    $query = "UPDATE data_worker SET 
-              nama_lengkap = '$namaLengkap', 
-              alamat = '$alamat', 
-              jenis_kelamin = '$jenisKelamin', 
-              no_wa = '$noWa', 
-              email = '$email', 
-              pangkat = '$pangkat', 
-              rolee = '$roleUtama', 
-              sebagai = '$sebagai', 
-              img_ktp = '$ktp' 
-              WHERE id_worker='$idWorker'";
+    // Check if the img_ktp key exists and handle the case when no image is uploaded
+    $img_ktp = !empty($_FILES["img_ktp"]["name"]) ? $_FILES["img_ktp"]["name"] : '';
+
+    // Proses upload gambar KTP
+    if (!empty($img_ktp)) {
+        $lokasi_sementara = $_FILES["img_ktp"]["tmp_name"];
+        $lokasi_tujuan = '../upload/' . $img_ktp;
+        move_uploaded_file($lokasi_sementara, $lokasi_tujuan);
+    }
+
+    // Query to insert data into the database
+    $query = "INSERT INTO data_worker (NIK, nama_lengkap, alamat, jenis_kelamin, no_wa, pangkat, email, sebagai, rolee, pw, img_ktp) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    // Use prepared statement
+    $stmt = mysqli_prepare($koneksi, $query);
     
-    $result = mysqli_query($koneksi, $query);
-    header('Location: tambah_worker.php');
-}
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, "sssssssssss", $NIK, $nama_lengkap, $alamat, $jenis_kelamin, $no_wa, $pangkat, $email, $sebagai, $Role_utama, $pw, $img_ktp);
+    
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Data berhasil ditambahkan.";
+    } else {
+        echo "Terjadi kesalahan saat menambahkan data: " . mysqli_error($koneksi);
+    }
 
-$id = $_GET['id'];
-$query = "SELECT * FROM data_worker WHERE id_worker='$id'";
-$result = mysqli_query($koneksi, $query) or die(mysqli_error($koneksi));
-
-while ($row = mysqli_fetch_array($result)) {
-    $idWorker = $row['id_worker'];
-    $namaLengkap = $row['nama_lengkap'];
-    $alamat = $row['alamat'];
-    $jenisKelamin = $row['jenis_kelamin'];
-    $noWa = $row['no_wa'];
-    $email = $row['email'];
-    $pangkat = $row['pangkat'];
-    $roleUtama = $row['Role_utama'];
-    $sebagai = $row['sebagai'];
-    $ktp = $row['img_ktp'];
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($koneksi);
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +57,7 @@ while ($row = mysqli_fetch_array($result)) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" /> 
-        <title>Edit Worker </title>
+        <title>tambah worker</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/style3.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -93,7 +95,7 @@ while ($row = mysqli_fetch_array($result)) {
                                     <img src="../image/icons8-dashboard-48.png" alt="" >
                                     <span class="jdl-konten-2">Dashboard</span>
                             </a>
-                            <a class="nav-link" href="tambah_worker.php" style=" background-color: #FF9900; height: 50px;">
+                            <a class="nav-link" href="tambah_worker.php" style=" background-color: #FF9900; height: 50px;"> 
                                     <img src="../image/icons8-worker-50.png" alt="">
                                     <span class="jdl-konten-2">Worker</span>
                             </a>
@@ -128,24 +130,59 @@ while ($row = mysqli_fetch_array($result)) {
                         <h1 class="mt-4">Selamat Datang </h1>
                         <!-- <?php echo $email; ?> -->
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Edit Worker</li>
+                            <li class="breadcrumb-item active">Tambah data Worker</li>
                         </ol>
-                            <div class="box-edit-worker">
-                                <form action="form_edit.php" method="POST">
-                                    <p><input type="hidden" name="text_id" value="<?php echo $idWorker; ?>"></p>
-                                    <p>Nama Lengkap: <input type="text" name="text_nama" value="<?php echo $namaLengkap; ?>"></p>
-                                    <p>Alamat: <input type="text" name="text_alamat" value="<?php echo $alamat; ?>"></p>
-                                    <p>Jenis Kelamin: <input type="text" name="text_jenis_kelamin" value="<?php echo $jenisKelamin; ?>"></p>
-                                    <p>Nomor WA: <input type="text" name="text_no_wa" value="<?php echo $noWa; ?>"></p>
-                                    <p>Email: <input type="text" name="text_email" value="<?php echo $email; ?>"></p>
-                                    <p>Pangkat: <input type="text" name="text_pangkat" value="<?php echo $pangkat; ?>"></p>
-                                    <p>Role Utama: <input type="text" name="text_role_utama" value="<?php echo $roleUtama; ?>"></p>
-                                    <p>Sebagai: <input type="text" name="text_sebagai" value="<?php echo $sebagai; ?>"></p>
-                                    <p>Foto Ktp: <input type="text" name="text_ktp" value="<?php echo $ktp; ?>"></p>
-                                    <button type="submit" name="update">Update</button>
-                                </form>
+                       
+                            <div class="box-create-worker">
+                            <h2>Form Input Data Pekerja</h2>
+                                    <form action="add_worker.php" method="post" enctype="multipart/form-data">
+                                        <!-- Isian formulir -->
+                                        <label for="NIK">NIK:</label>
+                                        <input type="text" name="NIK" required>
+
+                                        <label for="nama_lengkap">Nama Lengkap:</label>
+                                        <input type="text" name="nama_lengkap" required>
+
+                                        <label for="alamat">Alamat:</label>
+                                        <textarea name="alamat" required></textarea>
+
+                                        <label for="jenis_kelamin">Jenis Kelamin:</label>
+                                        
+                                        <select name="jenis_kelamin" required>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select>
+
+                                        <label for="no_wa">Nomor WhatsApp:</label>
+                                        <input type="text" name="no_wa" required>
+
+                                        <label for="pangkat">Pangkat:</label>
+                                        <input type="text" name="pangkat" required>
+
+                                        <label for="email">Email:</label>
+                                        <input type="email" name="email" required>
+
+                                        <label for="sebagai">Sebagai:</label>
+                                        <input type="text" name="sebagai" required>
+
+                                        <label for="Role_utama">Role Utama:</label>
+                                        <input type="text" name="Role_utama" required>
+
+                                        <label for="pw">Password:</label>
+                                        <input type="password" name="pw" required>
+
+                                        <label for="img_ktp">Unggah Gambar KTP:</label>
+                                        <input type="file" name="img_ktp" accept="image/*">
+
+                                        <input type="submit" value="Simpan">
+                                    </form>
                             </div>
-                        
+
+
+
+
+
+
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
