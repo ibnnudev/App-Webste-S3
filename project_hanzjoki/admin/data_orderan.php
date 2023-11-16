@@ -34,6 +34,10 @@ if (isset($_SESSION['user'])) {
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/style3.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+   
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -112,6 +116,165 @@ if (isset($_SESSION['user'])) {
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Orderan</li>
                         </ol>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Table Orderan
+                            </div>
+                            <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="search-container">
+                                                <label for="searchInput" class="form-label visually-hidden">Search:</label>
+                                                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                                            </div>
+                                        </div>
+                                        
+
+     <table id="datatablesSimple" class="custom-table">
+    <thead>
+        <tr>
+            <th>ID Transaksi</th>
+            <th>Tanggal Order</th>
+            <th>Data Akun</th>
+            <th>Qty</th>
+            <th>Payment</th>
+            <th>Total</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+if ($koneksi->connect_error) {
+    die("Connection failed: " . $koneksi->connect_error);   
+}
+
+$sql = "SELECT 
+            transaksi.id_transaksi,
+            transaksi.tgl_order,
+            transaksi.data_akun,
+            transaksi.qty_order,
+            transaksi.payment,
+            transaksi.total_transaksi
+        FROM 
+            transaksi;";
+$result = $koneksi->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>{$row['id_transaksi']}</td>
+                <td>{$row['tgl_order']}</td>
+                <td>{$row['data_akun']}</td>
+                <td>{$row['qty_order']}</td> 
+                <td>{$row['payment']}</td>
+                <td>{$row['total_transaksi']}</td>
+                <td>
+                    <a href='hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
+                    <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
+                    
+                </td>
+            </tr>";
+    }
+} else {
+    echo "<tr><td colspan='7'>0 result</td></tr>";
+}
+
+$koneksi->close();
+?>
+</tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="popupTitle">Detail Orderan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="popupContent">
+                <!-- Konten popup akan dimuat di sini -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<!-- Script untuk menampilkan popup -->
+<script>
+$(document).ready(function () {
+    // Fungsi untuk menampilkan popup
+    function showPopup(id_transaksi) {
+        // Ganti 'popup_detail_order.php' dengan file yang berisi detail popup Anda
+        $.post('popup_detail_order.php', { id_transaksi: id_transaksi }, function (data) {
+            $('#popupContent').html(data);
+            $('#popup').modal('show');
+        });
+    }
+
+    // Event handler untuk tombol Detail
+    $('.btn-detail').click(function () {
+        // Ambil nilai id_transaksi dari atribut data-id
+        var id_transaksi = $(this).data('id');
+        
+        // Output debug untuk memastikan nilai id_transaksi diambil dengan benar
+        console.log("ID Transaksi yang diklik: " + id_transaksi);
+        
+        // Panggil fungsi untuk menampilkan popup
+        showPopup(id_transaksi);
+    });
+});
+
+function closeModal() {
+    $('#popup').modal('hide');
+}
+</script>
+
+
+
+
+
+
+
+
+                                                                                
+                                                <script>
+                                                    function searchTable() {
+                                                        var input, filter, table, tr, td, i, txtValue;
+                                                        input = document.getElementById("searchInput");
+                                                        filter = input.value.toUpperCase();
+                                                        table = document.getElementById("datatablesSimple");
+                                                        tr = table.getElementsByTagName("tr");
+
+                                                        for (i = 0; i < tr.length; i++) {
+                                                            // Change the index according to your table structure
+                                                            td = tr[i].getElementsByTagName("td")[2]; // Index 2 represents the "Nama Lengkap" column
+
+                                                            if (td) {
+                                                                txtValue = td.textContent || td.innerText;
+
+                                                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                                    tr[i].style.display = "";
+                                                                } else {
+                                                                    tr[i].style.display = "none";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                </script>
+                            </div>
+                        </div>
+
                        
 
                         

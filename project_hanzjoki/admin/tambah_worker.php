@@ -1,6 +1,56 @@
 
 
 <?php
+
+require_once('../koneksi.php');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $NIK = $_POST['NIK'];
+    $nama_lengkap = $_POST['nama_lengkap'];
+    $alamat = $_POST['alamat'];
+    $jenis_kelamin = $_POST['jenis_kelamin'];
+    $no_wa = $_POST['no_wa'];
+    $pangkat = $_POST['pangkat'];
+    $email = $_POST['email'];
+    $Role_utama = $_POST['Role_utama'];
+    $username = $_POST['username'];
+    $pw = $_POST['pw'];
+
+    // Check if the img_ktp key exists and handle the case when no image is uploaded
+    $img_ktp = !empty($_FILES["img_ktp"]["name"]) ? $_FILES["img_ktp"]["name"] : '';
+
+    // Proses upload gambar KTP
+    if (!empty($img_ktp)) {
+        $lokasi_sementara = $_FILES["img_ktp"]["tmp_name"];
+        $lokasi_tujuan = '../upload/' . $img_ktp;
+        move_uploaded_file($lokasi_sementara, $lokasi_tujuan);
+    }
+
+    // Query to insert data into the database
+    $query = "INSERT INTO data_worker (NIK, nama_lengkap, alamat, jenis_kelamin, no_wa, pangkat, email, sebagai, rolee, pw, username, img_ktp) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, 'worker', ?, ?, ?, ?)";
+
+    // Use prepared statement
+    $stmt = mysqli_prepare($koneksi, $query);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, "sssssssssss", $NIK, $nama_lengkap, $alamat, $jenis_kelamin, $no_wa, $pangkat, $email, $Role_utama, $pw, $username, $img_ktp);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Data berhasil ditambahkan.";
+    } else {
+        echo "Terjadi kesalahan saat menambahkan data: " . mysqli_error($koneksi);
+    }
+
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($koneksi);
+}
+
+
+
+
 // Pastikan sesi sudah dimulai
 session_start();
 
@@ -23,6 +73,10 @@ if (isset($_SESSION['user'])) {
     header('Location: login_admin.php');
     exit;
 }
+
+
+
+
 ?>
 
 
@@ -131,7 +185,68 @@ if (isset($_SESSION['user'])) {
                                                 <input type="text" id="searchInput" class="form-control" placeholder="Search...">
                                             </div>
                                             <div class="box-add">
-                                                <a href="add_worker.php" class="btn-add">Add Worker</a>
+                                                    <button type="button" class="btn-add_w" data-bs-toggle="modal" data-bs-target="#workerModal">
+                                                        Tambah Worker
+                                                    </button>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="workerModal" tabindex="-1" aria-labelledby="workerModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <!-- Isi modal -->
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="workerModalLabel">Form Add Worker</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                        <form action="tambah_worker.php" method="post" enctype="multipart/form-data">
+                                        <!-- Isian formulir -->
+                                        <label for="NIK">NIK:</label>
+                                        <input type="text" name="NIK" required>
+
+                                        <label for="nama_lengkap">Nama Lengkap:</label>
+                                        <input type="text" name="nama_lengkap" required>
+
+                                        <label for="alamat">Alamat:</label>
+                                        <textarea name="alamat" required></textarea>
+
+                                        <label for="jenis_kelamin">Jenis Kelamin:</label>
+                                        
+                                        <select name="jenis_kelamin" required>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select>
+
+                                        <label for="no_wa">Nomor WhatsApp:</label>
+                                        <input type="text" name="no_wa" required>
+
+                                        <label for="pangkat">Pangkat:</label>
+                                        <input type="text" name="pangkat" required>
+
+                                        <label for="email">Email:</label>
+                                        <input type="email" name="email" required>
+
+                                        <!-- <label for="sebagai">Sebagai:</label>
+                                        <input type="text" name="sebagai" value="worker" readonly> -->
+
+                                        <label for="username">username:</label>
+                                        <input type="text" name="username" required>
+
+                                        <label for="Role_utama">Role Utama:</label>
+                                        <input type="text" name="Role_utama" required>
+
+                                        <label for="pw">Password:</label>
+                                        <input type="password" name="pw" required>
+
+                                        <label for="img_ktp">Unggah Gambar KTP:</label>
+                                        <input type="file" name="img_ktp" accept="image/*">
+
+                                        <input type="submit" value="Simpan">
+                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                             </div>
                                         </div>
                                         
@@ -196,6 +311,7 @@ if (isset($_SESSION['user'])) {
                                     </tbody>
                                     
                                 </table>
+                                
                                                                                 
                                                 <script>
                                                     function searchTable() {

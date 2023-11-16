@@ -114,6 +114,93 @@ if (isset($_SESSION['user'])) {
                         </ol>
                        
 
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Table Data Customer
+                            </div>
+                            <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div class="search-container">
+                                                <label for="searchInput" class="form-label visually-hidden">Search:</label>
+                                                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                                            </div>
+                                        </div>
+                                        
+
+                                <table id="datatablesSimple" class="custom-table">
+                                    
+                                    <thead>
+                                        <tr>
+                                        <th>ID_Customer</th>
+                                        <th>Nama Depan</th>
+                                        <th>Nama Belakang</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        
+                                        
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                    <?php
+                                        $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+                                        if ($koneksi->connect_error) {
+                                            die("Connection failed: " . $koneksi->connect_error);   
+                                        }
+
+                                        $sql = "SELECT id_customer, nama_depan, nama_belakang , email, username FROM data_customer";
+                                        $result = $koneksi->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>
+                                                        <td>" . $row["id_customer"] . "</td>
+                                                        <td>" . $row["nama_depan"] . "</td>
+                                                        <td>" . $row["nama_belakang"] . "</td>
+                                                        <td>" . $row["email"] . "</td>
+                                                        <td>" . $row["username"] . "</td>                            
+                                                        
+                                                        
+                                                    </tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='10'>0 result</td></tr>";
+                                        }
+
+                                        $koneksi->close();
+                                    ?>
+                                    </tbody>
+                                    
+                                </table>
+                                                                                
+                                                <script>
+                                                    function searchTable() {
+                                                        var input, filter, table, tr, td, i, txtValue;
+                                                        input = document.getElementById("searchInput");
+                                                        filter = input.value.toUpperCase();
+                                                        table = document.getElementById("datatablesSimple");
+                                                        tr = table.getElementsByTagName("tr");
+
+                                                        for (i = 0; i < tr.length; i++) {
+                                                            // Change the index according to your table structure
+                                                            td = tr[i].getElementsByTagName("td")[2]; // Index 2 represents the "Nama Lengkap" column
+
+                                                            if (td) {
+                                                                txtValue = td.textContent || td.innerText;
+
+                                                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                                    tr[i].style.display = "";
+                                                                } else {
+                                                                    tr[i].style.display = "none";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                </script>
+                            </div>
+                        </div>
+
                         
                     </div>
                 </main>
