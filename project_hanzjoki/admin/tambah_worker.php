@@ -1,17 +1,31 @@
+
+
 <?php
+// Pastikan sesi sudah dimulai
 session_start();
 
-// Memeriksa apakah pengguna sudah login
-if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
-    // Jika belum login, redirect ke halaman login
-    header('Location: logindulu.php');
+// Periksa apakah pengguna telah login
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+
+    // Menentukan keterangan berdasarkan peran pengguna
+    $keterangan = '';
+    if ($user['sebagai'] === 'admin') {
+        $keterangan = '' . $user['username'];
+    } elseif ($user['sebagai'] === 'worker') {
+        $keterangan = 'Halo, Worker ' . $user['nama_worker'];
+    }
+
+    // Output keterangan
+    echo $keterangan;
+} else {
+    // Jika pengguna belum login, kembalikan ke halaman login
+    header('Location: login_admin.php');
     exit;
 }
-
-// Menampilkan informasi atau keterangan
-$username = $_SESSION['username'];
-$role = $_SESSION['role'];
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -82,8 +96,15 @@ $role = $_SESSION['role'];
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">User : <?php echo $username; ?></div>
-                        <p><?php echo $role; ?></p>
+                        <div class="small"><?php
+                                if ($user['sebagai'] === 'admin') {
+                                    echo '' . $user['username'];
+                                } elseif ($user['sebagai'] === 'worker') {
+                                    echo 'Halo, Worker ' . $user['nama_worker'];
+                                }
+                                ?></div>
+                            <h1> <br></h1>
+                        
                         <img src="../image/LOGO HANZJOKI.png" alt="" class="imge-23">
                     </div>
                 </nav>
@@ -129,6 +150,7 @@ $role = $_SESSION['role'];
                                         <th>Pangkat</th>
                                         <th>Role HERO</th>
                                         <th>sebagai</th>
+                                        <th>username</th>
                                         <!-- <th>Foto Ktp</th> -->
                                         <th>Aksi</th>
                                         </tr>
@@ -141,7 +163,7 @@ $role = $_SESSION['role'];
                                             die("Connection failed: " . $koneksi->connect_error);   
                                         }
 
-                                        $sql = "SELECT id_worker, NIK, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa FROM data_worker";
+                                        $sql = "SELECT id_worker, NIK, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa ,username FROM data_worker";
                                         $result = $koneksi->query($sql);
 
                                         if ($result->num_rows > 0) {
@@ -157,7 +179,7 @@ $role = $_SESSION['role'];
                                                         <td>" . $row["pangkat"] . "</td>
                                                         <td>" . $row["rolee"] . "</td>
                                                         <td>" . $row["sebagai"] . "</td>
-                                                        
+                                                        <td>" . $row["username"] . "</td>                             
                                                         <td>
                                                         <a href='form_edit.php?id=" . $row['id_worker'] . "' class='btn btn-info'>Edit</a>
                                                         <a href='hapus.php?id_worker=" . $row['id_worker'] . "' class='btn btn-danger'>Hapus</a>

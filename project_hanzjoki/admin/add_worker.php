@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $sebagai = $_POST['sebagai'];
     $Role_utama = $_POST['Role_utama'];
+    $username = $_POST['username'];
     $pw = $_POST['pw'];
 
     // Check if the img_ktp key exists and handle the case when no image is uploaded
@@ -24,14 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Query to insert data into the database
-    $query = "INSERT INTO data_worker (NIK, nama_lengkap, alamat, jenis_kelamin, no_wa, pangkat, email, sebagai, rolee, pw, img_ktp) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO data_worker (NIK, nama_lengkap, alamat, jenis_kelamin, no_wa, pangkat, email, sebagai, rolee, pw, username, img_ktp) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Use prepared statement
     $stmt = mysqli_prepare($koneksi, $query);
     
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "sssssssssss", $NIK, $nama_lengkap, $alamat, $jenis_kelamin, $no_wa, $pangkat, $email, $sebagai, $Role_utama, $pw, $img_ktp);
+    mysqli_stmt_bind_param($stmt, "ssssssssssss", $NIK, $nama_lengkap, $alamat, $jenis_kelamin, $no_wa, $pangkat, $email, $sebagai, $Role_utama, $pw, $username, $img_ktp);
     
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -164,6 +165,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                         <label for="sebagai">Sebagai:</label>
                                         <input type="text" name="sebagai" required>
+
+                                        <label for="username">username:</label>
+                                        <input type="text" name="username" required>
 
                                         <label for="Role_utama">Role Utama:</label>
                                         <input type="text" name="Role_utama" required>

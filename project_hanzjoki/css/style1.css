@@ -803,3 +803,90 @@ th {
   display: block;
   width: 950px;
 }
+
+
+
+/* Styling the container */
+.container-65 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+/* Styling the login box */
+.box-login-admin {
+  width: 300px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: auto; 
+  margin-top: 140px;
+  
+}
+
+/* Styling form elements */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 8px;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Styling the submit button */
+input[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/* Styling the login button */
+button {
+    background-color: #0C356A; /* Warna latar belakang */
+    color: white; /* Warna teks */
+    padding: 10px 20px; /* Padding di sekitar teks */
+    border: none; /* Menghapus border */
+    border-radius: 5px; /* Corner radius */
+    cursor: pointer; /* Mengubah kursor menjadi pointer saat diarahkan */
+}
+
+/* Style untuk box-foto */
+.box-foto {
+  text-align: center; /* Agar konten berada di tengah */
+}
+
+/* Style untuk gambar */
+.foto-login {
+  width: 70px; /* Sesuaikan dengan ukuran gambar Anda */
+  height: auto; /* Sesuaikan dengan ukuran gambar Anda */
+  display: block; /* Menghapus efek inline */
+  margin: 0 auto; /* Membuat gambar berada di tengah */
+}
+
+/* Style untuk teks di bawah gambar */
+.title-wawe {
+  display: block; /* Membuat teks menjadi block element */
+  margin-top: 10px; 
+  font-size: 19px;
+  font-family: 'Poppins', sans-serif; /* Menggunakan font Poppins atau fallback sans-serif jika Poppins tidak tersedia */
+    font-weight: bold; /* Membuat teks menjadi bold */
+  
+}

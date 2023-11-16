@@ -1,18 +1,27 @@
 <?php
+// Pastikan sesi sudah dimulai
 session_start();
 
-// Memeriksa apakah pengguna sudah login
-if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
-    // Jika belum login, redirect ke halaman login
-    header('Location: logindulu.php');
+// Periksa apakah pengguna telah login
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+
+    // Menentukan keterangan berdasarkan peran pengguna
+    $keterangan = '';
+    if ($user['sebagai'] === 'admin') {
+        $keterangan = '' . $user['username'];
+    } elseif ($user['sebagai'] === 'worker') {
+        $keterangan = 'Halo, Worker ' . $user['nama_worker'];
+    }
+
+    // Output keterangan
+    echo $keterangan;
+} else {
+    // Jika pengguna belum login, kembalikan ke halaman login
+    header('Location: login_admin.php');
     exit;
 }
-
-// Menampilkan informasi atau keterangan
-$username = $_SESSION['username'];
-$role = $_SESSION['role'];
 ?>
-
 
 
 <!DOCTYPE html>
@@ -88,8 +97,14 @@ $role = $_SESSION['role'];
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small"> <?php echo $username; ?></div>
-                        <p><?php echo $role; ?></p>
+                    <div class="small"> <?php
+                                if ($user['sebagai'] === 'admin') {
+                                    echo '' . $user['username'];
+                                } elseif ($user['sebagai'] === 'worker') {
+                                    echo 'Halo, Worker ' . $user['nama_worker'];
+                                }
+                                ?></div>
+                        <!-- <p></p> --> <h1> <br></h1>
                         <img src="../image/LOGO HANZJOKI.png" alt="" class="imge-23">
                     </div>
                 </nav>

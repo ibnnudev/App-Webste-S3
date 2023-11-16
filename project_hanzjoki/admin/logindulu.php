@@ -1,54 +1,46 @@
 <?php
-// Memulai sesi
+require('../koneksi.php');
 session_start();
 
-// Menyertakan file koneksi database
-require('../koneksi.php');
-
-// Mengecek apakah tombol submit diklik
 if (isset($_POST['submit'])) {
-    // Mengambil nilai email/username dan password dari formulir
-    $emailOrUsername = $_POST['email'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Mengeksekusi kueri SQL untuk memeriksa keberadaan pengguna dengan email/username dan password yang sesuai
-    $query = "SELECT * FROM data_customer WHERE (email = ? OR username = ?)";
-    
+    if (empty(trim($email)) || empty(trim($password))) {
+        $_SESSION['error'] = 'Email dan Password harus diisi dengan benar!';
+        header('Location: logindulu.php');
+        exit;
+    }
+
+    // Use parameterized query to prevent SQL Injection
+    $query = "SELECT * FROM data_customer WHERE (email = ? OR username = ?) AND pw = ?";
     $stmt = mysqli_prepare($koneksi, $query);
 
-    // Mengecek apakah kueri berhasil diprepare
-    if ($stmt) {
-        mysqli_stmt_bind_param($stmt, 'ss', $emailOrUsername, $emailOrUsername);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        // Mengecek apakah hasil kueri ditemukan
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-
-            // Mengecek apakah email/username dan password sesuai
-            if ($row && password_verify($password, $row['pw'])) {
-                $_SESSION['email'] = $row['email'];
-                $_SESSION['username'] = $row['username']; 
-
-                // Memeriksa peran pengguna dan mengarahkannya ke halaman yang sesuai
-                header('Location: ../customer/dashboardcust.php');
-                exit;
-            } else {
-                // Menampilkan pesan kesalahan jika email/username atau password tidak sesuai
-                $_SESSION['error'] = 'Email/Username atau password tidak valid!';
-                header('Location: logindulu.php');
-                exit;
-            }
-        } else {
-            // Menampilkan pesan kesalahan jika eksekusi kueri gagal
-            $_SESSION['error'] = 'Terjadi kesalahan dalam eksekusi query!';
-            header('Location: logindulu.php');
-            exit;
-        }
-    } else {
-        // Menampilkan pesan kesalahan jika persiapan kueri gagal
+    if (!$stmt) {
         $_SESSION['error'] = 'Terjadi kesalahan dalam query!';
+        header('Location: logindulu.php');
+        exit;
+    }
+
+    mysqli_stmt_bind_param($stmt, 'sss', $email, $email, $password);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (!$result) {
+        $_SESSION['error'] = 'Terjadi kesalahan dalam eksekusi query!';
+        header('Location: logindulu.php');
+        exit;
+    }
+
+    $row = mysqli_fetch_assoc($result);
+    $num = mysqli_num_rows($result);
+
+    if ($num == 1) {
+        // Header langsung ke dashboard tanpa memeriksa peran
+        header('Location: ../customer/dashboardcust.php');
+        exit;
+    } else {
+        $_SESSION['error'] = 'Harap masukkan username/email/password dengan benar!';
         header('Location: logindulu.php');
         exit;
     }
@@ -64,7 +56,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin</title>
+    <title>Login customer</title>
     <link rel="stylesheet" href="../css/style1.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap">
