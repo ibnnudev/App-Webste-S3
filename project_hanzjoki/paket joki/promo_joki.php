@@ -2,6 +2,38 @@
 // Pastikan sesi sudah dimulai
 session_start();
 
+
+require_once('../koneksi.php');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_paket = isset($_POST['id_paket']) ? $_POST['id_paket'] : null;
+
+    $judul_paket = $_POST['judul_paket'];
+    $nama_paket = $_POST['nama_paket'];
+    $harga = $_POST['harga'];
+
+    // Query to insert data into the database
+    $query = "INSERT INTO paket_joki_rank (id_paket, judul_paket, nama_paket, harga) 
+              VALUES (?, ?, ?, ?)";
+
+    // Use prepared statement
+    $stmt = mysqli_prepare($koneksi, $query);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, "ssss", $id_paket, $judul_paket, $nama_paket, $harga);
+
+    // Execute the statement
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Data promo berhasil ditambahkan.";
+    } else {
+        echo "Terjadi kesalahan saat menambahkan data promo: " . mysqli_error($koneksi);
+    }
+
+    // Close the statement and connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($koneksi);
+}
+
 // Periksa apakah pengguna telah login
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
@@ -18,7 +50,7 @@ if (isset($_SESSION['user'])) {
     echo $keterangan;
 } else {
     // Jika pengguna belum login, kembalikan ke halaman login
-    header('Location: login_admin.php');
+    header('Location: ../admin/login_admin.php');
     exit;
 }
 ?>
@@ -67,19 +99,19 @@ if (isset($_SESSION['user'])) {
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Menu</div>
-                            <a class="nav-link" href="home.php" >
+                            <a class="nav-link" href="../admin/home.php" >
                                     <img src="../image/icons8-dashboard-48.png" alt="" >
                                     <span class="jdl-konten-2">Dashboard</span>
                             </a>
-                            <a class="nav-link" href="tambah_worker.php">
+                            <a class="nav-link" href="../admin/tambah_worker.php">
                                     <img src="../image/icons8-worker-50.png" alt="">
                                     <span class="jdl-konten-2">Worker</span>
                             </a>
-                            <a class="nav-link" href="data_costumer.php">
+                            <a class="nav-link" href="../admin/data_costumer.php">
                                     <img src="../image/CUstomer.png" alt="">
                                     <span class="jdl-konten-2">Customer</span>
                             </a>
-                            <a class="nav-link" href="data_orderan.php">
+                            <a class="nav-link" href="../admin/data_orderan.php">
                                     <img src="../image/icons8-shopping-cart-64.png" alt="">
                                     <span class="jdl-konten-2">Orderan</span>
                             </a>
@@ -87,7 +119,7 @@ if (isset($_SESSION['user'])) {
                                     <img src="../image/icons8-game-controller-64.png" alt="">
                                     <span class="jdl-konten-2">Joki</span>
                             </a>
-                            <a class="nav-link" href="history.php">
+                            <a class="nav-link" href="../admin/history.php">
                                 <img src="../image/icons8-history-24.png" alt="">
                                 <span class="jdl-konten-2">History</span>
                             </a>
@@ -116,7 +148,7 @@ if (isset($_SESSION['user'])) {
                             <li class="breadcrumb-item active">Data JOKI</li>
                         </ol>
                         <div class="box-pilihan">
-                                <a href="../paket joki/promo_joki.php" >
+                                <a href="#" >
                                     <span>Promo Joki</span>
                                 </a>
                                 <a href="halaman2.html">
@@ -146,22 +178,53 @@ if (isset($_SESSION['user'])) {
                                     
                                 </a>
                          </div>
-
-
-                                
-
-                       
-
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Table Orderan
+                                Table Promo joki
                             </div>
-                        <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="search-container">
-                                                <label for="searchInput" class="form-label visually-hidden">Search:</label>
-                                                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                            <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <div class="search-container">
+                                                    <label for="searchInput" class="form-label visually-hidden">Search:</label>
+                                                    <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                                                </div>
+
+                                                <div class="box-add">
+    <button type="button" class="btn-add_w" data-bs-toggle="modal" data-bs-target="#addPromoModal">
+        Tambah Promo
+    </button>
+</div>
+<div class="modal fade" id="addPromoModal" tabindex="-1" aria-labelledby="addPromoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Isi modal -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPromoModalLabel">Form Tambah Promo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="promo_joki.php" method="post" id="promoForm">
+                    <!-- Isian formulir -->
+                    <label for="id">ID:</label>
+                    <input type="text" name="id_paket" id="id_paket" required>
+
+                    <label for="judul_paket">Judul paket:</label>
+                    <input type="text" name="judul_paket" required>
+
+                    <label for="nama_paket">Nama Paket:</label>
+                    <input type="text" name="nama_paket" required>
+
+                    <label for="harga_promo">Harga:</label>
+                    <input type="text" name="harga" required>
+
+                    <input type="submit" value="Simpan">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
                                             </div>
                                         </div>
                                         
@@ -169,61 +232,212 @@ if (isset($_SESSION['user'])) {
      <table id="datatablesSimple" class="custom-table">
     <thead>
         <tr>
-            <th>ID Transaksi</th>
-            <th>Tanggal Order</th>
-            <th>Data Akun</th>
-            <th>Qty</th>
-            <th>Payment</th>
-            <th>Total</th>
+            <th>ID</th>
+            <th>Judul Paket</th>
+            <th>Nama Paket</th>
+            <th>harga</th>         
             <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
+                                
+    
     <?php
+// Koneksi ke database
 $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
 if ($koneksi->connect_error) {
-    die("Connection failed: " . $koneksi->connect_error);   
+    die("Koneksi gagal: " . $koneksi->connect_error);
 }
 
-$sql = "SELECT 
-            transaksi.id_transaksi,
-            transaksi.tgl_order,
-            transaksi.data_akun,
-            transaksi.qty_order,
-            transaksi.payment,
-            transaksi.total_transaksi
-        FROM 
-            transaksi;";
+// Query untuk menampilkan data
+$sql = "SELECT id_paket, judul_paket, nama_paket, harga
+        FROM paket_joki_rank
+        WHERE judul_paket = 'Promo'";
 $result = $koneksi->query($sql);
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-                <td>{$row['id_transaksi']}</td>
-                <td>{$row['tgl_order']}</td>
-                <td>{$row['data_akun']}</td>
-                <td>{$row['qty_order']}</td> 
-                <td>{$row['payment']}</td>
-                <td>{$row['total_transaksi']}</td>
-                <td>
-                    <a href='hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
-                    <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
-                    
-                </td>
-            </tr>";
+// Validasi form submission dan update data jika ada request POST
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
+    $id_paket = $_POST['id_paket'];
+    $nama_paket = $_POST['nama_paket'];
+    $harga = $_POST['harga'];
+
+
+    // Prepare statement
+    $update_stmt = $koneksi->prepare($update_query);
+
+    // Bind parameter ke statement
+    $update_stmt->bind_param("ssi", $nama_paket, $harga, $id_paket);
+
+    // Eksekusi statement
+    if ($update_stmt->execute()) {
+        echo "Data berhasil diupdate.";
+    } else {
+        echo "Terjadi kesalahan saat mengupdate data: " . $update_stmt->error;
     }
-} else {
-    echo "<tr><td colspan='7'>0 result</td></tr>";
+
+    // Tutup statement
+    $update_stmt->close();
 }
 
 $koneksi->close();
 ?>
-</tbody>
+        <?php
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                        <td>{$row['id_paket']}</td> 
+                        <td>{$row['judul_paket']}</td>
+                        <td>{$row['nama_paket']}</td>
+                        <td>{$row['harga']}</td> 
+                        <td>
+                            <a href='hapus.php?id_paket={$row['id_paket']}' class='btn btn-danger'>Hapus</a>
+                            <a href='form_edit_promo.php?id=" . $row['id_paket'] . "' class='btn btn-info'>Edit</a>
+                        </td>
+                    </tr>";
+            }
+        } else {
+            echo "<tr><td colspan='5'>0 hasil</td></tr>";
+        }
+        ?>
+    </tbody>
 </table>
-                        
 
 
-                                                <script>
+
+<!-- ---------------------------------------------------------------------------------------------------------------------- -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Menangkap submit form
+        document.getElementById('promoForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Mencegah form submit secara default
+
+            // Menggunakan Fetch API untuk mengirim form data ke server
+            fetch('promo_joki.php', {
+                method: 'POST',
+                body: new FormData(this),
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Menampilkan pesan berhasil ke dalam modal
+                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+                
+                // Membersihkan formulir setelah submit berhasil
+                this.reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Menambahkan event listener untuk menutup modal ketika modal tertutup
+        document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+            // Mengarahkan ke halaman promo_joki.php
+            window.location.href = 'promo_joki.php';
+        });
+    });
+</script>
+ <!-- OTOMATAIS KEISI ID PAKET DAN JUDUL PAKET -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Mendapatkan elemen tombol "Tambah Promo"
+        var tambahPromoButton = document.querySelector('.btn-add_w');
+
+        // Menambahkan event listener untuk tombol "Tambah Promo"
+        tambahPromoButton.addEventListener('click', function () {
+            // Mendapatkan elemen input ID dan Judul Paket
+            var idInput = document.querySelector('input[name="id_paket"]');
+            var judulPaketInput = document.querySelector('input[name="judul_paket"]');
+
+            // Menyimpan nomor urut terakhir ke dalam sessionStorage
+            var count = sessionStorage.getItem('promoCount') || 0;
+
+            // Menginkrementasi nomor urut
+            count++;
+
+            // Menyimpan nomor urut ke sessionStorage
+            sessionStorage.setItem('promoCount', count);
+
+            // Menggabungkan "PK" dengan nomor urut yang terakhir disimpan
+            var id = 'PK' + ('000' + count).slice(-3);
+
+            // Mengisi nilai ID pada formulir
+            idInput.value = id;
+
+            // Mengisi otomatis Judul Paket dengan "PROMO"
+            judulPaketInput.value = 'PROMO';
+        });
+
+        // Menambahkan event listener untuk formulir ketika disubmit
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Mencegah form submit secara default
+
+            // Mendapatkan nomor urut terakhir dari sessionStorage
+            var count = sessionStorage.getItem('promoCount') || 0;
+
+            // Menginkrementasi nomor urut
+            count++;
+
+            // Menyimpan nomor urut ke sessionStorage
+            sessionStorage.setItem('promoCount', count);
+
+            // Menggunakan Fetch API untuk mengirim form data ke server
+            fetch('promo_joki.php', {
+                method: 'POST',
+                body: new FormData(this),
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Menampilkan pesan berhasil ke dalam modal
+                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+
+                // Membersihkan formulir setelah submit berhasil
+                this.reset();
+
+                // Merefresh halaman web
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // Menambahkan event listener untuk menutup modal ketika modal tertutup
+        document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+            // Mendapatkan elemen input ID dan Judul Paket
+            var idInput = document.querySelector('input[name="id_paket"]');
+            var judulPaketInput = document.querySelector('input[name="judul_paket"]');
+
+            // Mengosongkan nilai ID dan Judul Paket setelah pop-up ditutup
+            idInput.value = '';
+            judulPaketInput.value = '';
+        });
+    });
+</script>
+<!-- Modal untuk menampilkan pesan berhasil -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Sukses</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Data promo berhasil ditambahkan.
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+                
+  <!-- logika search  -->
+ <script>
                                                     function searchTable() {
                                                         var input, filter, table, tr, td, i, txtValue;
                                                         input = document.getElementById("searchInput");
@@ -246,12 +460,7 @@ $koneksi->close();
                                                             }
                                                         }
                                                     }
-                                                </script>
-
-
-
-
-
+ </script>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">

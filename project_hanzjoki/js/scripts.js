@@ -59,3 +59,48 @@ window.addEventListener('DOMContentLoaded', event => {
             }
         });
     });
+
+    // $(document).ready(function () {
+    //     $('.btn-detail').click(function () {
+    //         var id_paket = $(this).data('id');
+            
+    //         // Mengambil data dari server menggunakan AJAX dan memperbarui nilai bidang modal
+    //         $.ajax({
+    //             url: 'fetch_data.php', // Ganti dengan URL sebenarnya untuk mengambil data
+    //             type: 'GET',
+    //             data: { id: id_paket },
+    //             success: function (data) {
+    //                 $('#editJudulPaket').val(data.judul_paket);
+    //                 $('#editNamaPaket').val(data.nama_paket);
+    //                 $('#editHarga').val(data.harga);
+    //                 $('#editModalPopup').modal('show');
+    //             },
+    //             error: function () {
+    //                 alert('Error mengambil data');
+    //             }
+    //         });
+    //     });
+    
+    //     $('#editForm').submit(function (e) {
+    //         e.preventDefault();
+    //         // Memproses data formulir menggunakan AJAX dan menutup modal jika berhasil
+    //         $.ajax({
+    //             url: 'update_data.php', // Ganti dengan URL sebenarnya untuk memperbarui data
+    //             type: 'POST',
+    //             data: $('#editForm').serialize(),
+    //             success: function () {
+    //                 $('#editModalPopup').modal('hide');
+    //                 // Secara opsional, Anda dapat me-reload atau memperbarui data tabel di sini
+    //             },
+    //             error: function () {
+    //                 alert('Error memperbarui data');
+    //             }
+    //         });
+    //     });
+    
+    //     // Menangani penutupan modal dengan tombol close
+    //     $('.edit-close').click(function () {
+    //         $('#editModalPopup').modal('hide');
+    //     });
+    // });
+    

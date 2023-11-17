@@ -11425,3 +11425,91 @@ input[type="submit"]:hover {
   max-width: 100%; /* Gambar akan disesuaikan agar tidak melebihi lebar parent */
   max-height: 100%; /* Gambar akan disesuaikan agar tidak melebihi tinggi parent */
 }
+
+.box-pilihan {
+  display: flex;
+  
+  margin-bottom: 50px;
+}
+
+.box-pilihan a {
+  text-decoration: none;
+  color: #fff; /* Warna teks */
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+  background-color: #0056b3;
+  border-radius: 10px;
+  width: 140px;
+  height: 40px;
+  margin-right: 30px;
+}
+
+.box-pilihan a:hover {
+  transform: scale(1.1); /* Efek scaling saat hover */
+}
+
+.box-pilihan img {
+  width: 100%; /* Agar gambar mengisi lebar elemen */
+  border-radius: 8px; /* Sudut lengkung gambar */
+}
+
+.box-pilihan span {
+  display: block;
+  margin-top: 8px; /* Jarak antara gambar dan teks */
+  /* font-weight: bold; */
+}
+/* Tambahkan CSS untuk popup/modal */
+
+/* Gaya untuk Modal Edit */
+
+.edit-modal-content {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.edit-modal-header {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 5px;
+}
+
+.edit-modal-footer {
+  background-color: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+}
+
+.edit-close {
+  color: #fff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+#editForm button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.edit-modal-footer button {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.edit-modal-footer button:hover {
+  background-color: #495057;
+}
+
+.btn-edit-promo{
+  
+}
