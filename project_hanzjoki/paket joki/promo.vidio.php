@@ -148,32 +148,32 @@ if (isset($_SESSION['user'])) {
                             <li class="breadcrumb-item active">Data JOKI</li>
                         </ol>
                         <div class="box-pilihan">
-                                <a href="../paket joki/promo_joki.php" >
+                                <a href="promo_joki.php" >
                                     <span>Promo Joki</span>
                                 </a>
-                                <a href="../paket joki/promo_star.php">
+                                <a href="promo_star.php">
                                     <span>Joki/star</span>
                                 </a>
-                                <a href="../paket joki/paket_murah_joki.php">
+                                <a href="paket_murah_joki.php">
                                     <span>Paket murah joki</span>
                                 </a>
-                                <a href="../paket joki/promo_mcl.php">
+                                <a href="promo_mcl.php">
                                     <span>Joki MCL</span>
                                 </a>
-                                <a href="../paket joki/promo_mabar.php">
+                                <a href="promo_mabar.php">
                                     <span>Jasa Mabar</span>
                                 </a>
-                                <a href="../paket joki/promo_day.php">
+                                <a href="promo_day.php">
                                     <span>Promo hari ini</span>
                                 </a>
-                                <a href="../paket joki/promo.clasic.php">
+                                <a href="promo.clasic.php">
                                     <span>Joki classic</span>      
                                 </a>
-                                <a href="../paket joki/promo.vidio.php">
+                                <a href="promo.vidio.php" style=" background-color: #FF9900; height: 40px;">
                                     <span>Joki video</span>
                                     
                                 </a>
-                                <a href="../admin/data_joki.php" style=" background-color: #FF9900; height: 40px;">
+                                <a href="../admin/data_joki.php">
                                     <span>All</span>
                                     
                                 </a>
@@ -191,18 +191,18 @@ if (isset($_SESSION['user'])) {
                                                 </div>
 
                                                 <div class="box-add">
-    <!-- <button type="button" class="btn-add_w" data-bs-toggle="modal" data-bs-target="#addPromoModal">
+    <button type="button" class="btn-add_w" data-bs-toggle="modal" data-bs-target="#addPromoModal">
         Tambah Promo
-    </button> -->
+    </button>
 </div>
 <div class="modal fade" id="addPromoModal" tabindex="-1" aria-labelledby="addPromoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Isi modal -->
-            <!-- <div class="modal-header">
+            <div class="modal-header">
                 <h5 class="modal-title" id="addPromoModalLabel">Form Tambah Promo</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div> -->
+            </div>
             <div class="modal-body">
                 <form action="promo_joki.php" method="post" id="promoForm">
                     <!-- Isian formulir -->
@@ -252,7 +252,7 @@ if ($koneksi->connect_error) {
 // Query untuk menampilkan data
 $sql = "SELECT id_paket, judul_paket, nama_paket, harga
         FROM paket_joki_rank
-        ";
+        WHERE judul_paket = 'Vidio Montage'";
 $result = $koneksi->query($sql);
 
 // Validasi form submission dan update data jika ada request POST

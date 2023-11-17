@@ -148,32 +148,32 @@ if (isset($_SESSION['user'])) {
                             <li class="breadcrumb-item active">Data JOKI</li>
                         </ol>
                         <div class="box-pilihan">
-                                <a href="#" >
+                                <a href="promo_joki.php" style=" background-color: #FF9900; height: 40px;">
                                     <span>Promo Joki</span>
                                 </a>
-                                <a href="halaman2.html">
+                                <a href="promo_star.php">
                                     <span>Joki/star</span>
                                 </a>
-                                <a href="halaman3.html">
+                                <a href="paket_murah_joki.php" >
                                     <span>Paket murah joki</span>
                                 </a>
-                                <a href="halaman4.html">
+                                <a href="promo_mcl.php">
                                     <span>Joki MCL</span>
                                 </a>
-                                <a href="halaman4.html">
+                                <a href="promo_mabar.php">
                                     <span>Jasa Mabar</span>
                                 </a>
-                                <a href="halaman4.html">
+                                <a href="promo_day.php">
                                     <span>Promo hari ini</span>
                                 </a>
-                                <a href="halaman4.html">
+                                <a href="promo.clasic.php">
                                     <span>Joki classic</span>      
                                 </a>
-                                <a href="halaman4.html">
+                                <a href="promo.vidio.php">
                                     <span>Joki video</span>
                                     
                                 </a>
-                                <a href="halaman4.html">
+                                <a href="../admin/data_joki.php">
                                     <span>All</span>
                                     
                                 </a>
@@ -252,7 +252,7 @@ if ($koneksi->connect_error) {
 // Query untuk menampilkan data
 $sql = "SELECT id_paket, judul_paket, nama_paket, harga
         FROM paket_joki_rank
-        WHERE judul_paket = 'Promo'";
+        WHERE judul_paket = 'PROMO'";
 $result = $koneksi->query($sql);
 
 // Validasi form submission dan update data jika ada request POST
