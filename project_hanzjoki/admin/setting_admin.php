@@ -36,6 +36,58 @@ if (isset($_SESSION['user'])) {
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/style3.css">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <style>
+        /* CSS untuk popup */
+        .overlay-pp {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+        .title-pp{
+            
+        }
+        
+/* CSS untuk menyusun elemen-elemen secara sejajar */
+.profile-pop h2,
+.profile-pop label,
+.profile-pop input,
+.profile-pop img,
+.profile-pop button {
+    margin-bottom: 10px;
+}
+
+.profile-pop label {
+    display: block;
+}
+        .profile-pop {
+            display: none;
+            background: #fff;
+            padding: 40px;
+            border-radius: 5px;
+            margin: 0;
+            margin-left: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <script>
+        // JavaScript untuk menampilkan popup
+        function showProfilePopup() {
+            document.getElementById('profileOverlay').style.display = 'flex';
+            document.getElementById('profilePop').style.display = 'block';
+        }
+
+        function closeProfilePopup() {
+            document.getElementById('profileOverlay').style.display = 'none';
+            document.getElementById('profilePop').style.display = 'none';
+        }
+    </script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -55,7 +107,7 @@ if (isset($_SESSION['user'])) {
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="setting_admin.php">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="add_admin.php">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="logout.php">Logout</a></li>
@@ -115,9 +167,136 @@ if (isset($_SESSION['user'])) {
                         <h1 class="mt-4">Selamat Datang </h1>
                         
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">Setting</li>
                         </ol>
                        
+
+
+<!-- Tombol untuk membuka popup -->
+<button onclick="showProfilePopup()">Buka Profil</button>
+
+<!-- Overlay untuk popup profil -->
+<div id="profileOverlay" class="overlay-pp">
+    <!-- Popup Profil -->
+    <div id="profilePop" class="profile-pop">
+        <!-- Konten popup -->
+        <h2 class="title-pp">Profile</h2>
+        <form action="setting_admin.php" method="post" enctype="multipart/form-data" >
+            <!-- Input untuk mengubah email -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <!-- Input untuk mengubah username -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <!-- Input untuk mengubah password -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <!-- Input untuk mengunggah foto -->
+            <label for="photo">Upload Foto:</label>
+            <input type="file" id="photo" name="photo">
+
+            <!-- Tampilkan foto yang diunggah -->
+            <img id="previewPhoto" src="#" alt="Preview Foto" style="max-width: 100%; max-height: 150px; margin-top: 10px; display: none;">
+
+            <!-- Tombol untuk menutup popup -->
+            <button type="button" onclick="closeProfilePopup()">Tutup</button>
+            <!-- Tombol untuk menyimpan perubahan -->
+            <button type="submit">Simpan</button>
+        </form>
+    </div>
+</div>
+
+<!-- JavaScript untuk menampilkan preview foto -->
+<script>
+    document.getElementById('photo').addEventListener('change', function (e) {
+        var preview = document.getElementById('previewPhoto');
+        preview.style.display = 'block';
+        preview.src = URL.createObjectURL(e.target.files[0]);
+    });
+</script>
+<?php
+require('../koneksi.php');
+
+// Mulai sesi
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ambil data yang dikirimkan melalui formulir
+    $id_admin = $_POST['id_admin'];
+    $email = $_POST['email'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Query untuk melakukan update data profil
+    $sql = "UPDATE data_admin SET email=?, username=?, pw=? WHERE id_admin=?";
+
+    // Bind parameter
+    $stmt = $koneksi->prepare($sql);
+    $stmt->bind_param("sssi", $email, $username, $password, $id_admin);
+
+    // Eksekusi query
+    if ($stmt->execute()) {
+        echo "Profil berhasil diperbarui.";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $koneksi->close();
+}
+?>
+
+<!-- ========================================================================== -->
+<?php
+// Mulai sesi
+
+// Periksa apakah pengguna telah login
+if (isset($_SESSION['id_admin'])) {
+    // Jika sudah login, ambil informasi pengguna
+    $id_admin = $_SESSION['id_admin'];
+    $email = $_SESSION['email'];
+    $username = $_SESSION['username'];
+
+    // Tampilkan tombol untuk membuka popup
+    echo "<button onclick=\"showProfilePopup('$id_admin', '$email', '$username')\">Buka Profil</button>";
+} else {
+    // Jika belum login, tampilkan form login atau redirect ke halaman login
+    // header("Location: login.php");
+    exit();
+}
+?>
+
+<!-- Include CSS dan JavaScript untuk popup dari pertanyaan sebelumnya -->
+
+<script>
+    function showProfilePopup(id_admin, email, username) {
+        // Set nilai dari input pada popup
+        document.getElementById('id_admin').value = id_admin;
+        document.getElementById('email').value = email;
+        document.getElementById('username').value = username;
+
+        // Tampilkan popup
+        document.getElementById('profileOverlay').style.display = 'flex';
+        document.getElementById('profilePop').style.display = 'block';
+    }
+
+    // Fungsi lainnya...
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 
                         
                     </div>

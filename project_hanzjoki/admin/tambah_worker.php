@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Role_utama = $_POST['Role_utama'];
     $img_ktp = !empty($_FILES["img_ktp"]["name"]) ? $_FILES["img_ktp"]["name"] : '';
     // Check if the img_ktp key exists and handle the case when no image is uploaded
-
+ 
     // Proses upload gambar KTP
     if (!empty($img_ktp)) {
         $lokasi_sementara = $_FILES["img_ktp"]["tmp_name"];
