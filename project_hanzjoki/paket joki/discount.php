@@ -239,36 +239,37 @@ if (isset($_SESSION['user'])) {
         </thead>
         <tbody>
         <?php
-        // Koneksi ke database (hapus inisialisasi koneksi yang sudah ada)
-        $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-        if ($koneksi->connect_error) {
-            die("Koneksi gagal: " . $koneksi->connect_error);
+// Koneksi ke database (hapus inisialisasi koneksi yang sudah ada)
+$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+if ($koneksi->connect_error) {
+    die("Koneksi gagal: " . $koneksi->connect_error);
+}
+
+// Query untuk menampilkan data (revisi query)
+$sql = "SELECT  nama_discount, potongan FROM discount";
+$result = $koneksi->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Tambahkan kondisi berikut untuk menyembunyikan baris jika nilai nama_discount adalah "no discount" dan nilai potongan adalah 0
+        if ($row['nama_discount'] != "no discount" || $row['potongan'] != 0) {
+            echo "<tr>
+                    <td>{$row['nama_discount']}</td>
+                    <td>{$row['potongan']}</td>
+                    <td>
+                        <a href='hapus_ds.php?no={$row['nama_discount']}' class='btn btn-danger'>Hapus</a>
+                    </td>
+                </tr>";
         }
+    }
+} else {
+    echo "<tr><td colspan='4'>0 hasil</td></tr>";
+}
 
-        // Query untuk menampilkan data (revisi query)
-        $sql = "SELECT  nama_discount, potongan FROM discount";
-        $result = $koneksi->query($sql);
+// Tutup koneksi
+$koneksi->close();
+?>
 
-        if ($result->num_rows > 0) {
-           
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>
-                        
-                        <td>{$row['nama_discount']}</td>
-                        <td>{$row['potongan']}</td>
-                        <td>
-                            <a href='hapus_ds.php?no={$row['nama_discount']}' class='btn btn-danger'>Hapus</a>
-                        </td>
-                    </tr>";
-                
-            }
-        } else {
-            echo "<tr><td colspan='4'>0 hasil</td></tr>";
-        }
-
-        // Tutup koneksi
-        $koneksi->close();
-        ?>
         </tbody>
     </table>
 
