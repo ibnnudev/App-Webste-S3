@@ -223,6 +223,9 @@ if (isset($_SESSION['user'])) {
                     <label for="harga_promo">Harga:</label>
                     <input type="text" name="harga" required>
 
+                    <label for="nama_discount">Discount:</label>
+                    <input type="text" name="nama_discount" required>
+
                     <input type="submit" value="Simpan">
                 </form>
             </div>
@@ -240,7 +243,8 @@ if (isset($_SESSION['user'])) {
             <th>ID</th>
             <th>Judul Paket</th>
             <th>Nama Paket</th>
-            <th>harga</th>         
+            <th>harga</th> 
+            <th>discount</th>       
             <th>Aksi</th>
         </tr>
     </thead>
@@ -255,7 +259,7 @@ if ($koneksi->connect_error) {
 }
 
 // Query untuk menampilkan data
-$sql = "SELECT id_paket, judul_paket, nama_paket, harga
+$sql = "SELECT id_paket, judul_paket, nama_paket, harga, nama_discount
         FROM paket_joki_rank
         ";
 $result = $koneksi->query($sql);
@@ -265,13 +269,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     $id_paket = $_POST['id_paket'];
     $nama_paket = $_POST['nama_paket'];
     $harga = $_POST['harga'];
-
+    $nama_discount = $_POST['nama_discount'];
 
     // Prepare statement
     $update_stmt = $koneksi->prepare($update_query);
 
     // Bind parameter ke statement
-    $update_stmt->bind_param("ssi", $nama_paket, $harga, $id_paket);
+    $update_stmt->bind_param("sssi", $nama_paket, $harga, $nama_discount, $id_paket);
 
     // Eksekusi statement
     if ($update_stmt->execute()) {
@@ -294,6 +298,7 @@ $koneksi->close();
                         <td>{$row['judul_paket']}</td>
                         <td>{$row['nama_paket']}</td>
                         <td>{$row['harga']}</td> 
+                        <td>{$row['nama_discount']}</td>
                         <td>
                             <a href='../paket joki/hapus-promo1.php?id_paket={$row['id_paket']}' class='btn btn-danger'>Hapus</a>
                         </td>

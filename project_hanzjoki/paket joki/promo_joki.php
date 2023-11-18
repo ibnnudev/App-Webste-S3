@@ -11,16 +11,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $judul_paket = $_POST['judul_paket'];
     $nama_paket = $_POST['nama_paket'];
     $harga = $_POST['harga'];
+    $nama_discount = $_POST['nama_discount'];
 
     // Query to insert data into the database
-    $query = "INSERT INTO paket_joki_rank (id_paket, judul_paket, nama_paket, harga) 
-              VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO paket_joki_rank (id_paket, judul_paket, nama_paket, harga, nama_discount) 
+              VALUES (?, ?, ?, ?, ?)";
 
     // Use prepared statement
     $stmt = mysqli_prepare($koneksi, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "ssss", $id_paket, $judul_paket, $nama_paket, $harga);
+    mysqli_stmt_bind_param($stmt, "sssss", $id_paket, $judul_paket, $nama_paket, $harga, $nama_discount);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -225,6 +226,40 @@ if (isset($_SESSION['user'])) {
                     <label for="harga_promo">Harga:</label>
                     <input type="text" name="harga" required>
 
+                    <label for="nama_discount">Discount:</label>
+<select name="nama_discount" required>
+    <?php
+    // Koneksi ke database
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "hanzjoki";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Periksa koneksi
+    if ($conn->connect_error) {
+        die("Koneksi gagal: " . $conn->connect_error);
+    }
+
+    // Query untuk mengambil nilai dari database
+    $sql = "SELECT nama_discount FROM discount";
+    $result = $conn->query($sql);
+
+    // Tambahkan pilihan ke dalam elemen select
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo '<option value="' . $row['nama_discount'] . '">' . $row['nama_discount'] . '</option>';
+        }
+    } else {
+        echo '<option value="" disabled selected>Tidak ada data nama_discount</option>';
+    }
+
+    // Tutup koneksi ke database
+    $conn->close();
+    ?>
+</select>
+
                     <input type="submit" value="Simpan">
                 </form>
             </div>
@@ -242,7 +277,8 @@ if (isset($_SESSION['user'])) {
             <th>ID</th>
             <th>Judul Paket</th>
             <th>Nama Paket</th>
-            <th>harga</th>
+            <th>Harga</th>
+            <th>Discount</th>
             <th>Aksi</th>
     </thead>
     <tbody>
@@ -256,23 +292,24 @@ if ($koneksi->connect_error) {
 }
 
 // Query untuk menampilkan data
-$sql = "SELECT id_paket, judul_paket, nama_paket, harga
-        FROM paket_joki_rank
+$sql = "SELECT id_paket, judul_paket, nama_paket, harga, nama_discount FROM paket_joki_rank
         WHERE judul_paket = 'PROMO'";
 $result = $koneksi->query($sql);
 
 // Validasi form submission dan update data jika ada request POST
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     $id_paket = $_POST['id_paket'];
+    $judul_paket = $_POST['judul_paket'];
     $nama_paket = $_POST['nama_paket'];
     $harga = $_POST['harga'];
+    $nama_discount = $_POST['nama_discount'];
 
 
     // Prepare statement
     $update_stmt = $koneksi->prepare($update_query);
 
     // Bind parameter ke statement
-    $update_stmt->bind_param("ssi", $nama_paket, $harga, $id_paket);
+    $update_stmt->bind_param("sssss", $judul_paket, $nama_paket, $harga, $nama_discount, $id_paket);
 
     // Eksekusi statement
     if ($update_stmt->execute()) {
@@ -294,7 +331,8 @@ $koneksi->close();
                         <td>{$row['id_paket']}</td> 
                         <td>{$row['judul_paket']}</td>
                         <td>{$row['nama_paket']}</td>
-                        <td>{$row['harga']}</td> 
+                        <td>{$row['harga']}</td>
+                        <td>{$row['nama_discount']}</td>
                         <td>
                             <a href='hapus.php?id_paket={$row['id_paket']}' class='btn btn-danger'>Hapus</a>
                         </td>
