@@ -210,20 +210,20 @@ if (isset($_SESSION['user'])) {
             <div class="modal-body">
                 <form action="promo_joki.php" method="post" id="promoForm">
                     <!-- Isian formulir -->
-
                     <label for="nama_discount">Nama Discount:</label>
                     <input type="text" id="nama_discount" name="nama_discount" required>
 
                     <label for="potongan">Potongan:</label>
                     <input type="number" id="potongan" name="potongan" required>
 
-                    <button type="button" onclick="addData()">Tambah</button>
-                    <button type="button" onclick="closePopup()">Batal</button>
+                    <button type="submit" class="btn-add-dc">Tambah</button>
+                   
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
                                             </div>
                                         </div>
@@ -258,8 +258,7 @@ if (isset($_SESSION['user'])) {
                         <td>{$row['nama_discount']}</td>
                         <td>{$row['potongan']}</td>
                         <td>
-                            <a href='hapus.php?no={$row['nama_discount']}' class='btn btn-danger'>Hapus</a>
-                            <a href='form_edit_promo.php?no={$row['nama_discount']}' class='btn btn-info'>Edit</a>
+                            <a href='hapus_ds.php?no={$row['nama_discount']}' class='btn btn-danger'>Hapus</a>
                         </td>
                     </tr>";
                 
@@ -273,6 +272,10 @@ if (isset($_SESSION['user'])) {
         ?>
         </tbody>
     </table>
+
+
+<!-- ================================================================================================================ -->
+
 
 <?php
 // Koneksi ke database
@@ -314,6 +317,16 @@ $koneksi->close();
 ?>
 
 <!-- ---------------------------------------------------------------------------------------------------------------------- -->
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Bootstrap JS (popper.js and jQuery are required) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Menangkap submit form

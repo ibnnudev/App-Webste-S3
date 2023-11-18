@@ -43,7 +43,7 @@
         <h1 class="nama-joki">Joki Rank</h1>
         <img src="../image/rankpler.png" >
         <h1 class="time">orderan joki di chek<br>pukul 09:00-21:00</h1>
-        <h1 class="ket-1">(Jika Orderan melewati<br>batas pengecekan <br>orderan, maka orderan<br>dicek di hari berikutnya</h1>
+        <h1 class="ket-1">Jika Orderan melewati<br>batas pengecekan <br>orderan, maka orderan<br>dicek di hari berikutnya</h1>
 
             <div class="ket-2" >
                 <h1 class="caraorder">Cara Order :</h1>
@@ -142,8 +142,8 @@ include '../koneksi.php'; // Include your database connection file
 
             // Loop through the data and display it
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="data-item">';
-                echo '<label></label>' . $row['judul_paket'];
+                echo '<div class="promo">';
+                echo '<label></label>'. $row['judul_paket'];
                 echo '</div>';
             }
         ?>

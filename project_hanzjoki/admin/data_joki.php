@@ -295,8 +295,8 @@ $koneksi->close();
                         <td>{$row['nama_paket']}</td>
                         <td>{$row['harga']}</td> 
                         <td>
-                            <a href='hapus.php?id_paket={$row['id_paket']}' class='btn btn-danger'>Hapus</a>
-                            <a href='form_edit_promo.php?id=" . $row['id_paket'] . "' class='btn btn-info'>Edit</a>
+                            <a href='../paket joki/hapus.php?id_paket={$row['id_paket']}' class='btn btn-danger'>Hapus</a>
+                           
                         </td>
                     </tr>";
             }
