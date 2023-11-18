@@ -142,8 +142,8 @@ include '../koneksi.php'; // Include your database connection file
 
             // Loop through the data and display it
             while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="data-item">';
-                echo '<label></label>' . $row['judul_paket'];
+                echo '<div class="promo">';
+                echo '<label></label>'. $row['judul_paket'];
                 echo '</div>';
             }
         ?>

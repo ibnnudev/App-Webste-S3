@@ -210,7 +210,6 @@ if (isset($_SESSION['user'])) {
             <div class="modal-body">
                 <form action="promo_joki.php" method="post" id="promoForm">
                     <!-- Isian formulir -->
-
                     <label for="nama_discount">Nama Discount:</label>
                     <input type="text" id="nama_discount" name="nama_discount" required>
 
@@ -218,11 +217,16 @@ if (isset($_SESSION['user'])) {
                     <input type="number" id="potongan" name="potongan" required>
 
                     <button type="submit" class="btn-add-dc">Tambah</button>
+<<<<<<< HEAD
+=======
+                   
+>>>>>>> f6d1e2ebf3f18df959552a695e5279e70407b168
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
                                             </div>
                                         </div>
@@ -272,6 +276,10 @@ if (isset($_SESSION['user'])) {
         </tbody>
     </table>
 
+
+<!-- ================================================================================================================ -->
+
+
 <?php
 // Koneksi ke database
 $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
@@ -312,6 +320,16 @@ $koneksi->close();
 ?>
 
 <!-- ---------------------------------------------------------------------------------------------------------------------- -->
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- Bootstrap JS (popper.js and jQuery are required) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Menangkap submit form
