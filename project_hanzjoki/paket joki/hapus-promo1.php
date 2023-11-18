@@ -2,7 +2,7 @@
 require_once('../koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id_paket'])) {
-    $id_paket = $_GET[''];
+    $id_paket = $_GET['id_paket'];
 
     // Query to delete data from the database
     $query = "DELETE FROM paket_joki_rank WHERE id_paket = ?";

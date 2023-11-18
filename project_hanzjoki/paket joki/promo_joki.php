@@ -184,7 +184,7 @@ if (isset($_SESSION['user'])) {
                                 </div>
                             </div>
 
-                            
+
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -243,6 +243,7 @@ if (isset($_SESSION['user'])) {
             <th>Judul Paket</th>
             <th>Nama Paket</th>
             <th>harga</th>
+            <th>Aksi</th>
     </thead>
     <tbody>
                                 

@@ -12,7 +12,7 @@ if (!empty($id_transaksi)) {
         $stmt->close();
 
         // Redirect ke halaman data_orderan.php setelah penghapusan
-        header("Location: data_orderan.php");
+        header("Location: ../admin/data_orderan.php");
         exit();
     } else {
         // Tampilkan pesan kesalahan jika prepare statement gagal

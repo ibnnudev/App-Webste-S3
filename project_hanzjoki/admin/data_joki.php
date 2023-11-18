@@ -295,13 +295,7 @@ $koneksi->close();
                         <td>{$row['nama_paket']}</td>
                         <td>{$row['harga']}</td> 
                         <td>
-<<<<<<< HEAD
                             <a href='../paket joki/hapus-promo1.php?id_paket={$row['id_paket']}' class='btn btn-danger'>Hapus</a>
-                            
-=======
-                            <a href='../paket joki/hapus.php?id_paket={$row['id_paket']}' class='btn btn-danger'>Hapus</a>
-                           
->>>>>>> f6d1e2ebf3f18df959552a695e5279e70407b168
                         </td>
                     </tr>";
             }

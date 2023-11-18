@@ -217,10 +217,6 @@ if (isset($_SESSION['user'])) {
                     <input type="number" id="potongan" name="potongan" required>
 
                     <button type="submit" class="btn-add-dc">Tambah</button>
-<<<<<<< HEAD
-=======
-                   
->>>>>>> f6d1e2ebf3f18df959552a695e5279e70407b168
                 </form>
             </div>
         </div>

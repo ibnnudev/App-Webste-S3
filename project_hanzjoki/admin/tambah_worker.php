@@ -294,7 +294,7 @@ if (isset($_SESSION['user'])) {
                                                         <td>" . $row["username"] . "</td>                             
                                                         <td>
                                                         <a href='form_edit.php?id=" . $row['id_worker'] . "' class='btn btn-info'>Edit</a>
-                                                        <a href='hapus.php?id_worker=" . $row['id_worker'] . "' class='btn btn-danger'>Hapus</a>
+                                                        <a href='../crud/worker_hapus.php?id_worker=" . $row['id_worker'] . "' class='btn btn-danger'>Hapus</a>
                                                         <a href='detail_worker.php?id=" . $row['id_worker'] . "' class='btn btn-info'>detail</a>
                                                         </td>
                                                     </tr>";
