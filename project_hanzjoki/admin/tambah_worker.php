@@ -5,19 +5,18 @@
 require_once('../koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $NIK = $_POST['NIK'];
+    $NIK = $_POST['id_worker'];
+    $email = $_POST['email'];
+    $username = $_POST['username'];
+    $pw = $_POST['pw'];
     $nama_lengkap = $_POST['nama_lengkap'];
     $alamat = $_POST['alamat'];
     $jenis_kelamin = $_POST['jenis_kelamin'];
-    $no_wa = $_POST['no_wa'];
     $pangkat = $_POST['pangkat'];
-    $email = $_POST['email'];
+    $no_wa = $_POST['no_wa'];
     $Role_utama = $_POST['Role_utama'];
-    $username = $_POST['username'];
-    $pw = $_POST['pw'];
-
-    // Check if the img_ktp key exists and handle the case when no image is uploaded
     $img_ktp = !empty($_FILES["img_ktp"]["name"]) ? $_FILES["img_ktp"]["name"] : '';
+    // Check if the img_ktp key exists and handle the case when no image is uploaded
 
     // Proses upload gambar KTP
     if (!empty($img_ktp)) {
@@ -27,14 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Query to insert data into the database
-    $query = "INSERT INTO data_worker (NIK, nama_lengkap, alamat, jenis_kelamin, no_wa, pangkat, email, sebagai, rolee, pw, username, img_ktp) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, 'worker', ?, ?, ?, ?)";
+    $query = "INSERT INTO data_worker (id_worker, email, username, pw, nama_lengkap,  alamat, jenis_kelamin, pangkat, no_wa,
+                rolee, img_ktp, sebagai) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'worker')";
 
     // Use prepared statement
     $stmt = mysqli_prepare($koneksi, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "sssssssssss", $NIK, $nama_lengkap, $alamat, $jenis_kelamin, $no_wa, $pangkat, $email, $Role_utama, $pw, $username, $img_ktp);
+    mysqli_stmt_bind_param($stmt, "sssssssssss", $NIK, $email, $username, $pw, $nama_lengkap, $alamat, $jenis_kelamin, $pangkat, $no_wa, $Role_utama, $img_ktp);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -200,8 +200,18 @@ if (isset($_SESSION['user'])) {
                                                                 <div class="modal-body">
                                         <form action="tambah_worker.php" method="post" enctype="multipart/form-data">
                                         <!-- Isian formulir -->
-                                        <label for="NIK">NIK:</label>
-                                        <input type="text" name="NIK" required>
+                                        <label for="id_worker">NIK:</label>
+                                        <input type="number" name="id_worker" pattern="\d+" required>
+
+
+                                        <label for="email">Email:</label>
+                                        <input type="email" name="email" required>
+                                        
+                                        <label for="username">username:</label>
+                                        <input type="text" name="username" required>
+
+                                        <label for="pw">Password:</label>
+                                        <input type="password" name="pw" required>
 
                                         <label for="nama_lengkap">Nama Lengkap:</label>
                                         <input type="text" name="nama_lengkap" required>
@@ -216,26 +226,14 @@ if (isset($_SESSION['user'])) {
                                             <option value="Perempuan">Perempuan</option>
                                         </select>
 
-                                        <label for="no_wa">Nomor WhatsApp:</label>
-                                        <input type="text" name="no_wa" required>
-
                                         <label for="pangkat">Pangkat:</label>
                                         <input type="text" name="pangkat" required>
 
-                                        <label for="email">Email:</label>
-                                        <input type="email" name="email" required>
-
-                                        <!-- <label for="sebagai">Sebagai:</label>
-                                        <input type="text" name="sebagai" value="worker" readonly> -->
-
-                                        <label for="username">username:</label>
-                                        <input type="text" name="username" required>
+                                        <label for="no_wa">Nomor WhatsApp:</label>
+                                        <input type="text" name="no_wa" required>
 
                                         <label for="Role_utama">Role Utama:</label>
                                         <input type="text" name="Role_utama" required>
-
-                                        <label for="pw">Password:</label>
-                                        <input type="password" name="pw" required>
 
                                         <label for="img_ktp">Unggah Gambar KTP:</label>
                                         <input type="file" name="img_ktp" accept="image/*">
@@ -255,7 +253,7 @@ if (isset($_SESSION['user'])) {
                                     
                                     <thead>
                                         <tr>
-                                        <th>ID</th>
+                                        
                                         <th>NIK</th>
                                         <th>Nama Lengkap</th>
                                         <th>Alamat</th>
@@ -278,14 +276,13 @@ if (isset($_SESSION['user'])) {
                                             die("Connection failed: " . $koneksi->connect_error);   
                                         }
 
-                                        $sql = "SELECT id_worker, NIK, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa ,username FROM data_worker";
+                                        $sql = "SELECT id_worker, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa ,username FROM data_worker";
                                         $result = $koneksi->query($sql);
 
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr>
                                                         <td>" . $row["id_worker"] . "</td>
-                                                        <td>" . $row["NIK"] . "</td>
                                                         <td>" . $row["nama_lengkap"] . "</td>
                                                         <td>" . $row["alamat"] . "</td>
                                                         <td>" . $row["jenis_kelamin"] . "</td>

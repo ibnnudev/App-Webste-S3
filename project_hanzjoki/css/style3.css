@@ -11561,3 +11561,16 @@ input[type="submit"]:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
+
+
+.btn-add-dc {
+  background-color: #FF9900;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.btn-close {
+  background-color: #FF9900;
+  margin-top: 10px;
+  border-radius: 10px;
+}

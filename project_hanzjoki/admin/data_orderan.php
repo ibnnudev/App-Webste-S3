@@ -171,7 +171,7 @@ if ($result->num_rows > 0) {
                 <td>{$row['payment']}</td>
                 <td>{$row['total_transaksi']}</td>
                 <td>
-                    <a href='hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
+                    <a href='hapus-tr.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
                     <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
                     
                 </td>

@@ -217,8 +217,7 @@ if (isset($_SESSION['user'])) {
                     <label for="potongan">Potongan:</label>
                     <input type="number" id="potongan" name="potongan" required>
 
-                    <button type="button" onclick="addData()">Tambah</button>
-                    <button type="button" onclick="closePopup()">Batal</button>
+                    <button type="submit" class="btn-add-dc">Tambah</button>
                 </form>
             </div>
         </div>
@@ -258,8 +257,7 @@ if (isset($_SESSION['user'])) {
                         <td>{$row['nama_discount']}</td>
                         <td>{$row['potongan']}</td>
                         <td>
-                            <a href='hapus.php?no={$row['nama_discount']}' class='btn btn-danger'>Hapus</a>
-                            <a href='form_edit_promo.php?no={$row['nama_discount']}' class='btn btn-info'>Edit</a>
+                            <a href='hapus_ds.php?no={$row['nama_discount']}' class='btn btn-danger'>Hapus</a>
                         </td>
                     </tr>";
                 
