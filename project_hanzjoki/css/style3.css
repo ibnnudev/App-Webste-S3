@@ -11455,8 +11455,7 @@ input[type="submit"]:hover {
 
 .box-pilihan span {
   display: block;
-  margin-top: 8px; /* Jarak antara gambar dan teks */
-  /* font-weight: bold; */
+  margin-top: 8px; 
 }
 /* Tambahkan CSS untuk popup/modal */
 
@@ -11512,4 +11511,41 @@ input[type="submit"]:hover {
 
 .btn-edit-promo{
   
+}
+
+.title-pil-joki {
+  
+}
+
+.box-lainya {
+  display: flex;
+  flex-direction: column; /* Set flex container direction to column */
+}
+
+.atas-bgn,
+.bwh-bgn {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  
+}
+
+.atas-bgn a,
+.bwh-bgn a {
+  margin-right: 10px; /* Adjust as needed */
+  text-decoration: none;
+  color: #000; /* Adjust the color as needed */
+  padding: 5px 10px;
+  border: 1px solid #ccc; /* Add border as needed */
+  border-radius: 5px; /* Add border-radius as needed */
+}
+
+.atas-bgn a:hover,
+.bwh-bgn a:hover {
+  background-color: #ddd; /* Add hover background color as needed */
+  
+}
+
+.bwh-bgn {
+  margin-bottom: 20px;
 }

@@ -1055,17 +1055,19 @@ input {
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 5px;
+    position: relative;
+    
 }
 
 
 .box-harga1{
    
     background-color: #0C356A;
-    margin-left: 590px;
+    margin-left: 574px;
     border-radius: 15px;
     margin-right: 20px;
     height: 350px;
-    margin-top: 20px;
+    margin-top: -20px;
 }
 
 .box-promo {
@@ -1095,3 +1097,11 @@ input {
 /* .box-promo::-webkit-scrollbar {
     display: none;
 } */
+
+
+.title-pil-joki {
+    margin-top: 50px;
+    color: #fff;
+    margin-left: 20px;
+    position: relative;
+}

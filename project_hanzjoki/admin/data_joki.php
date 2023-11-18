@@ -147,37 +147,42 @@ if (isset($_SESSION['user'])) {
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Data JOKI</li>
                         </ol>
-                        <div class="box-pilihan">
-                                <a href="../paket joki/promo_joki.php" >
-                                    <span>Promo Joki</span>
-                                </a>
-                                <a href="../paket joki/promo_star.php">
-                                    <span>Joki/star</span>
-                                </a>
-                                <a href="../paket joki/paket_murah_joki.php">
-                                    <span>Paket murah joki</span>
-                                </a>
-                                <a href="../paket joki/promo_mcl.php">
-                                    <span>Joki MCL</span>
-                                </a>
-                                <a href="../paket joki/promo_mabar.php">
-                                    <span>Jasa Mabar</span>
-                                </a>
-                                <a href="../paket joki/promo_day.php">
-                                    <span>Promo hari ini</span>
-                                </a>
-                                <a href="../paket joki/promo.clasic.php">
-                                    <span>Joki classic</span>      
-                                </a>
-                                <a href="../paket joki/promo.vidio.php">
-                                    <span>Joki video</span>
-                                    
-                                </a>
-                                <a href="../admin/data_joki.php" style=" background-color: #FF9900; height: 40px;">
-                                    <span>All</span>
-                                    
-                                </a>
-                         </div>
+                        <div class="box-lainya">
+                                <div class="atas-bgn">
+                                    <a href="#" style="background-color: #FF9900; height: 40px; color: #FFf;">
+                                        <span>All</span>
+                                    </a>
+                                    <a href="../paket joki/promo_joki.php" >
+                                        <span>Promo Joki</span>
+                                    </a>
+                                    <a href="../paket joki/promo_star.php" >
+                                        <span>Joki/star</span>
+                                    </a>
+                                    <a href="../paket joki/paket_murah_joki.php">
+                                        <span>Paket murah joki</span>
+                                    </a>
+                                    <a href="../paket joki/promo_mcl.php" >
+                                        <span>Joki MCL</span>
+                                    </a>
+                                </div>
+                                <div class="bwh-bgn">
+                                    <a href="../paket joki/promo_mabar.php" >
+                                        <span>Jasa Mabar</span>
+                                    </a>
+                                    <a href="../paket joki/promo_day.php" >
+                                        <span>Promo hari ini</span>
+                                    </a>
+                                    <a href="../paket joki/promo.clasic.php" >
+                                        <span>Joki classic</span>
+                                    </a>
+                                    <a href="../paket joki/promo.vidio.php" >
+                                        <span>Joki video</span>
+                                    </a>
+                                    <a href="../paket joki/discount.php">
+                                        <span>Discount</span>
+                                    </a>
+                                </div>
+                            </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>

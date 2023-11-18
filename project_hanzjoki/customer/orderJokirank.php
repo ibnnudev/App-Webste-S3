@@ -128,13 +128,25 @@
         </div>
     </div>
     
+       <?php
+include '../koneksi.php'; // Include your database connection file
 
+?>
 
-    <div  class="box-harga1">
-        <h1 class="title-pil-jok">Pilih Joki Rank</h1>
-        <div >
-            
-        </div>
+<div class="box-harga1">
+    <h1 class="title-pil-joki">Pilih Joki Rank</h1>
+    <div id="data-container">
+        <?php
+            // Assume $koneksi is your database connection
+            $result = mysqli_query($koneksi, "SELECT *  FROM paket_joki_rank WHERE judul_paket = 'Promo'");
+
+            // Loop through the data and display it
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="data-item">';
+                echo '<label></label>' . $row['judul_paket'];
+                echo '</div>';
+            }
+        ?>
     </div>
 
 

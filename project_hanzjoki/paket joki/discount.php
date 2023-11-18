@@ -1,26 +1,21 @@
 <?php
-// Pastikan sesi sudah dimulai
-session_start();
 
+session_start();
 
 require_once('../koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_paket = isset($_POST['id_paket']) ? $_POST['id_paket'] : null;
-
-    $judul_paket = $_POST['judul_paket'];
-    $nama_paket = $_POST['nama_paket'];
-    $harga = $_POST['harga'];
+    $nama_discount = $_POST['nama_discount'];
+    $potongan = $_POST['potongan'];
 
     // Query to insert data into the database
-    $query = "INSERT INTO paket_joki_rank (id_paket, judul_paket, nama_paket, harga) 
-              VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO discount (nama_discount, potongan) VALUES (?, ?)";
 
     // Use prepared statement
     $stmt = mysqli_prepare($koneksi, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "ssss", $id_paket, $judul_paket, $nama_paket, $harga);
+    mysqli_stmt_bind_param($stmt, "ss", $nama_discount, $potongan);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -29,10 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Terjadi kesalahan saat menambahkan data promo: " . mysqli_error($koneksi);
     }
 
-    // Close the statement and connection
+    // Close the statement
     mysqli_stmt_close($stmt);
     mysqli_close($koneksi);
 }
+
+
+
 
 // Periksa apakah pengguna telah login
 if (isset($_SESSION['user'])) {
@@ -152,13 +150,13 @@ if (isset($_SESSION['user'])) {
                                     <a href="../admin/data_joki.php">
                                         <span>All</span>
                                     </a>
-                                    <a href="promo_joki.php" style="background-color: #FF9900; height: 40px; color: #FFf;">
+                                    <a href="promo_joki.php">
                                         <span>Promo Joki</span>
                                     </a>
                                     <a href="promo_star.php">
                                         <span>Joki/star</span>
                                     </a>
-                                    <a href="paket_murah_joki.php">
+                                    <a href="paket_murah_joki.php" >
                                         <span>Paket murah joki</span>
                                     </a>
                                     <a href="promo_mcl.php">
@@ -178,13 +176,12 @@ if (isset($_SESSION['user'])) {
                                     <a href="promo.vidio.php">
                                         <span>Joki video</span>
                                     </a>
-                                    <a href="discount.php">
+                                    <a href="#" style="background-color: #FF9900; height: 40px; color: #FFf;">
                                         <span>Discount</span>
                                     </a>
                                 </div>
                             </div>
-
-                            
+                         
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -199,7 +196,7 @@ if (isset($_SESSION['user'])) {
 
                                                 <div class="box-add">
     <button type="button" class="btn-add_w" data-bs-toggle="modal" data-bs-target="#addPromoModal">
-        Tambah Promo
+        Tambah Discount
     </button>
 </div>
 <div class="modal fade" id="addPromoModal" tabindex="-1" aria-labelledby="addPromoModalLabel" aria-hidden="true">
@@ -213,17 +210,13 @@ if (isset($_SESSION['user'])) {
             <div class="modal-body">
                 <form action="promo_joki.php" method="post" id="promoForm">
                     <!-- Isian formulir -->
-                    <label for="id">ID:</label>
-                    <input type="text" name="id_paket" id="id_paket" required>
 
-                    <label for="judul_paket">Judul paket:</label>
-                    <input type="text" name="judul_paket" required>
+                    <label for="nama_discount">Nama Discount:</label>
+                    <input type="text" name="nama_discount" required>
 
-                    <label for="nama_paket">Nama Paket:</label>
-                    <input type="text" name="nama_paket" required>
+                    <label for="potongan">Potongan:</label>
+                    <input type="text" name="potongan" required>
 
-                    <label for="harga_promo">Harga:</label>
-                    <input type="text" name="harga" required>
 
                     <input type="submit" value="Simpan">
                 </form>
@@ -236,20 +229,52 @@ if (isset($_SESSION['user'])) {
                                         </div>
                                         
 
-     <table id="datatablesSimple" class="custom-table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Judul Paket</th>
-            <th>Nama Paket</th>
-            <th>harga</th>         
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-                                
-    
-    <?php
+ <table id="datatablesSimple" class="custom-table">
+        <thead>
+            <tr>
+                
+                <th>Nama Discount</th>
+                <th>Potongan</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        // Koneksi ke database (hapus inisialisasi koneksi yang sudah ada)
+        $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+        if ($koneksi->connect_error) {
+            die("Koneksi gagal: " . $koneksi->connect_error);
+        }
+
+        // Query untuk menampilkan data (revisi query)
+        $sql = "SELECT  nama_discount, potongan FROM discount";
+        $result = $koneksi->query($sql);
+
+        if ($result->num_rows > 0) {
+           
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>
+                        
+                        <td>{$row['nama_discount']}</td>
+                        <td>{$row['potongan']}</td>
+                        <td>
+                            <a href='hapus.php?no={$row['nama_discount']}' class='btn btn-danger'>Hapus</a>
+                            <a href='form_edit_promo.php?no={$row['nama_discount']}' class='btn btn-info'>Edit</a>
+                        </td>
+                    </tr>";
+                
+            }
+        } else {
+            echo "<tr><td colspan='4'>0 hasil</td></tr>";
+        }
+
+        // Tutup koneksi
+        $koneksi->close();
+        ?>
+        </tbody>
+    </table>
+
+<?php
 // Koneksi ke database
 $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
 if ($koneksi->connect_error) {
@@ -257,9 +282,8 @@ if ($koneksi->connect_error) {
 }
 
 // Query untuk menampilkan data
-$sql = "SELECT id_paket, judul_paket, nama_paket, harga
-        FROM paket_joki_rank
-        WHERE judul_paket = 'PROMO'";
+$sql = "SELECT nama_discount, potongan
+        FROM discount";
 $result = $koneksi->query($sql);
 
 // Validasi form submission dan update data jika ada request POST
@@ -288,28 +312,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
 
 $koneksi->close();
 ?>
-        <?php
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>
-                        <td>{$row['id_paket']}</td> 
-                        <td>{$row['judul_paket']}</td>
-                        <td>{$row['nama_paket']}</td>
-                        <td>{$row['harga']}</td> 
-                        <td>
-                            <a href='hapus.php?id_paket={$row['id_paket']}' class='btn btn-danger'>Hapus</a>
-                            <a href='form_edit_promo.php?id=" . $row['id_paket'] . "' class='btn btn-info'>Edit</a>
-                        </td>
-                    </tr>";
-            }
-        } else {
-            echo "<tr><td colspan='5'>0 hasil</td></tr>";
-        }
-        ?>
-    </tbody>
-</table>
-
-
 
 <!-- ---------------------------------------------------------------------------------------------------------------------- -->
 <script>
@@ -319,7 +321,7 @@ $koneksi->close();
             event.preventDefault(); // Mencegah form submit secara default
 
             // Menggunakan Fetch API untuk mengirim form data ke server
-            fetch('promo_joki.php', {
+            fetch('discount.php', {
                 method: 'POST',
                 body: new FormData(this),
             })
@@ -340,40 +342,41 @@ $koneksi->close();
         // Menambahkan event listener untuk menutup modal ketika modal tertutup
         document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
             // Mengarahkan ke halaman promo_joki.php
-            window.location.href = 'promo_joki.php';
+            window.location.href = 'discount.php';
         });
     });
 </script>
  <!-- OTOMATAIS KEISI ID PAKET DAN JUDUL PAKET -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Mendapatkan elemen tombol "Tambah Promo"
-        var tambahPromoButton = document.querySelector('.btn-add_w');
+    
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     // Mendapatkan elemen tombol "Tambah Promo"
+    //     var tambahPromoButton = document.querySelector('.btn-add_w');
 
-        // Menambahkan event listener untuk tombol "Tambah Promo"
-        tambahPromoButton.addEventListener('click', function () {
-            // Mendapatkan elemen input ID dan Judul Paket
-            var idInput = document.querySelector('input[name="id_paket"]');
-            var judulPaketInput = document.querySelector('input[name="judul_paket"]');
+    //     // Menambahkan event listener untuk tombol "Tambah Promo"
+    //     tambahPromoButton.addEventListener('click', function () {
+    //         // Mendapatkan elemen input ID dan Judul Paket
+    //         var idInput = document.querySelector('input[name="id_paket"]');
+    //         var judulPaketInput = document.querySelector('input[name="judul_paket"]');
 
-            // Menyimpan nomor urut terakhir ke dalam sessionStorage
-            var count = sessionStorage.getItem('promoCount') || 0;
+    //         // Menyimpan nomor urut terakhir ke dalam sessionStorage
+    //         var count = sessionStorage.getItem('promoCount') || 0;
 
-            // Menginkrementasi nomor urut
-            count++;
+    //         // Menginkrementasi nomor urut
+    //         count++;
 
-            // Menyimpan nomor urut ke sessionStorage
-            sessionStorage.setItem('promoCount', count);
+    //         // Menyimpan nomor urut ke sessionStorage
+    //         sessionStorage.setItem('promoCount', count);
 
-            // Menggabungkan "PK" dengan nomor urut yang terakhir disimpan
-            var id = 'PK' + ('000' + count).slice(-3);
+    //         // Menggabungkan "PK" dengan nomor urut yang terakhir disimpan
+    //         var id = 'DC' + ('000' + count).slice(-3);
 
-            // Mengisi nilai ID pada formulir
-            idInput.value = id;
+    //         // Mengisi nilai ID pada formulir
+    //         idInput.value = id;
 
-            // Mengisi otomatis Judul Paket dengan "PROMO"
-            judulPaketInput.value = 'PROMO';
-        });
+    //         // Mengisi otomatis Judul Paket dengan "PROMO"
+    //         judulPaketInput.value = 'Paket murah joki';
+    //     }); 
 
         // Menambahkan event listener untuk formulir ketika disubmit
         document.querySelector('form').addEventListener('submit', function (event) {
@@ -389,7 +392,7 @@ $koneksi->close();
             sessionStorage.setItem('promoCount', count);
 
             // Menggunakan Fetch API untuk mengirim form data ke server
-            fetch('promo_joki.php', {
+            fetch('discount.php', {
                 method: 'POST',
                 body: new FormData(this),
             })
@@ -414,13 +417,13 @@ $koneksi->close();
         document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
             // Mendapatkan elemen input ID dan Judul Paket
             var idInput = document.querySelector('input[name="id_paket"]');
-            var judulPaketInput = document.querySelector('input[name="judul_paket"]');
+            var judulPaketInput = document.querySelector('input[name="nama_paket"]');
 
             // Mengosongkan nilai ID dan Judul Paket setelah pop-up ditutup
             idInput.value = '';
             judulPaketInput.value = '';
         });
-    });
+    
 </script>
 <!-- Modal untuk menampilkan pesan berhasil -->
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
