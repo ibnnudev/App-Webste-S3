@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "INSERT INTO paket_joki_rank (id_paket, judul_paket, nama_paket, harga, nama_discount) 
     VALUES (?, ?, ?, ?, 'no discount')";
 
+
+
     // Use prepared statement
     $stmt = mysqli_prepare($koneksi, $query);
 

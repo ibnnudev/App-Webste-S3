@@ -223,6 +223,9 @@ if (isset($_SESSION['user'])) {
                     <label for="harga_promo">Harga:</label>
                     <input type="text" name="harga" required>
 
+                    <label for="nama_discount">Discount:</label>
+                    <input type="text" name="nama_discount" required>
+
                     <input type="submit" value="Simpan">
                 </form>
             </div>
@@ -241,7 +244,7 @@ if (isset($_SESSION['user'])) {
             <th>Judul Paket</th>
             <th>Nama Paket</th>
             <th>harga</th> 
-            <th>discount</th>               
+            <th>discount</th>                    
             <th>Aksi</th>
         </tr>
     </thead>
