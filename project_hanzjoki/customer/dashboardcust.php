@@ -38,7 +38,7 @@
     </div>
     <nav class="navigation2">
         <a href="../register.php">Daftar Sekarang</a>
-        <a href="../login.php">Masuk</a>
+        <a href="../admin/logindulu.php">Masuk</a>
     </nav>
     
 </header>
@@ -67,7 +67,7 @@
         
 <div class="Jasa-rank">
     <div class="link">
-        <a href="orderJokirank.html">
+        <a href="orderJokirank.php">
                 <img src="../image/JASA RANK.png" alt="">
                
         </a>
@@ -75,7 +75,7 @@
 </div>
 <div class="Jasa-mcl">
     <div class="link">
-        <a href="#harga-genshin">
+        <a href="orderjokimcl.html">
                 <img src="../image/JASA MCL.png" alt="">
             
         </a>

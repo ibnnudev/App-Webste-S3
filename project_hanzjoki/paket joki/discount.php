@@ -212,13 +212,13 @@ if (isset($_SESSION['user'])) {
                     <!-- Isian formulir -->
 
                     <label for="nama_discount">Nama Discount:</label>
-                    <input type="text" name="nama_discount" required>
+                    <input type="text" id="nama_discount" name="nama_discount" required>
 
                     <label for="potongan">Potongan:</label>
-                    <input type="text" name="potongan" required>
+                    <input type="number" id="potongan" name="potongan" required>
 
-
-                    <input type="submit" value="Simpan">
+                    <button type="button" onclick="addData()">Tambah</button>
+                    <button type="button" onclick="closePopup()">Batal</button>
                 </form>
             </div>
         </div>
