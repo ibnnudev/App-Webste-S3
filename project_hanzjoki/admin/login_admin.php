@@ -57,7 +57,7 @@ if (isset($_POST['login'])) {
 
         if ($rowWorker && $rowWorker['sebagai'] === 'worker') {
             $_SESSION['user'] = $rowWorker;
-            header('Location: penjoki.php');
+            header('Location: ../worker/worker_dashboard.php');
             exit;
         } else {
             echo "Login worker gagal. Periksa email/username dan password Anda atau hubungi administrator.";

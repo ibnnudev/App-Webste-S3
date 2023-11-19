@@ -28,7 +28,7 @@
                     <span class="link-text">Lacak Orderan</span>
                 </a>
                 <a href="hubungikami.php" style="text-decoration: none; color: #06D85F;">
-                    <span class="link-text">Hubungi Kami</span>
+                    <span class="link-wa">Hubungi Kami</span>
                 </a>
                 <a href="calculator.php">
                     <span class="link-text">Calculator Ml</span>
@@ -51,14 +51,14 @@
 
 
     <div class="kotak"> 
-        <div class="box1">
+        <div class="box1" href="http://wa.me/+6285259990293">
             <img src="../image/wa.png" alt="WhatsApp" class="wa">
             Masalah Transaksi?  
             <p class="textkota1">
                 Pesanan kamu tidak sampai? atau ada kesalahan teknis saat transaksi? kamu dapat menghubungi kami dengan mengklik tombol dibawah ini.
             </p>
             <div class="boxtap1">
-                <a href="#" >Hubungi Kami -> </a>
+                <a href="http://wa.me/+6285259990293" >Hubungi Kami -> </a>
             </div>
         </div>
 
