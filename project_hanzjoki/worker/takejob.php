@@ -71,7 +71,7 @@ if (isset($_SESSION['user'])) {
                             <div class="sb-sidenav-menu-heading">Menu</div>
                             <a class="nav-link" href="worker_dashboard.php" >
                                     <img src="../image/icons8-dashboard-48.png" alt="" >
-                                    <span class="jdl-konten-2">Dashboard</span>
+                                    <span class="jdl-kgonten-2">Dashboard</span>
                             </a>
                             <a class="nav-link" href="takejob.php" style=" background-color: #FF9900; height: 50px;">
                                     <img src="../image/icons8-game-controller-64.png" alt="">
@@ -104,7 +104,7 @@ if (isset($_SESSION['user'])) {
                         <h1 class="mt-4">Selamat Datang </h1>
                         
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active">Take JOB</li>
                         </ol>
                        
 

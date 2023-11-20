@@ -1,3 +1,32 @@
+
+<?php
+// Koneksi ke database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hanzjoki";
+
+$koneksi = new mysqli($servername, $username, $password, $dbname);
+
+if ($koneksi->connect_error) {
+    die("Koneksi gagal: " . $koneksi->connect_error);
+}
+
+// Query untuk mengambil data dari database
+$sql = "SELECT paket_joki_rank.*, discount.potongan, (paket_joki_rank.harga - discount.potongan) AS hasil
+FROM paket_joki_rank
+LEFT JOIN discount ON paket_joki_rank.nama_discount = discount.nama_discount
+WHERE paket_joki_rank.judul_paket = 'promo';";
+
+// Eksekusi query
+$result = $koneksi->query($sql);
+
+// Periksa apakah query berhasil dieksekusi
+if ($result === false) {
+    die("Error saat mengeksekusi query: " . $koneksi->error);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,27 +156,50 @@
             </div>
         </div>
     </div>
-    
-       <?php
-include '../koneksi.php'; // Include your database connection file
-
-?>
-
-<div class="box-harga1">
-    <h1 class="title-pil-joki">Pilih Joki Rank</h1>
-    <div id="data-container">
+     
+    <div class="container-promo">
+    <div class="container-1">
         <?php
-            // Assume $koneksi is your database connection
-            $result = mysqli_query($koneksi, "SELECT *  FROM paket_joki_rank WHERE judul_paket = 'Promo'");
+        // Loop untuk menampilkan data dari database
+        $counter = 0; // Menggunakan counter untuk melacak indeks data
+        while ($row = $result->fetch_assoc()) {
+            $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
+        ?>
+            <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>')">
+                <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="off">
+                <label class="btn btn-outline-light col-12">
+                    <div class="row">
+                        <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
+                        <!-- Menampilkan harga_setelah_discount -->
+                        <div class="col-12"><span class="text-warning">Rp. <?= number_format($row['hasil'], 0, ',', '.'); ?></span></div>
+                        <div class="col-12">
+                            <span class="text-warning" style="text-decoration: line-through; text-decoration-thickness: 4px;">
+                                Rp. <s><?= number_format($row['harga'], 0, ',', '.'); ?></s>
+                            </span>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        <?php
+            $counter++;
+        }
 
-            // Loop through the data and display it
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="promo">';
-                echo '<label></label>'. $row['judul_paket'];
-                echo '</div>';
-            }
+        // Tutup koneksi database
+        $koneksi->close();
         ?>
     </div>
+</div>
+
+<script>
+    function selectRadio(optionId) {
+        var option = document.getElementById(optionId);
+        option.checked = true;
+    }
+</script>
+
+
+<!-- =============================================================================== -->
+<!-- php box -->
 
 
 

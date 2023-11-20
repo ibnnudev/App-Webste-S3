@@ -890,3 +890,43 @@ button {
     font-weight: bold; /* Membuat teks menjadi bold */
   
 }
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-md-4 {
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.btn-check:checked + .btn-outline-light {
+  background-color: #286BC2;
+  color: #fff;
+ 
+}
+
+.btn-outline-light {
+  border-color: #286BC2;
+}
+
+.column-font {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.text-warning {
+  color: #ffc107;
+}
+
+.even-background {
+  background-color: #286BC2; /* Warna latar belakang untuk box data genap */
+  margin-left: 30px;
+}
+
+.odd-background {
+  background-color: #286BC2; /* Warna latar belakang untuk box data ganjil */
+  margin-left: 30px;
+}
