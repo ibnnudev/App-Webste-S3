@@ -1106,11 +1106,12 @@ input {
     position: relative;
 }
 
+/* Style untuk container promo */
 .container-promo {
-    background-color: #0C356A; /* Warna latar belakang */
-    padding: 20px; /* Padding agar konten terlihat */
-    border-radius: 10px; /* Border radius untuk bentuk sudut */
-    overflow: hidden; /* Mengatasi overflow */
+    background-color: #0C356A;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: hidden;
     width: 1310px;
     margin-left: 570px;
     margin-top: 30px;
@@ -1124,49 +1125,157 @@ input {
     background-color: #0C356A;
 }
 
+/* Style untuk setiap kolom */
 .col-md-4 {
     margin-bottom: 10px;
     padding: 10px;
     margin-top: 10px;
+    text-align: center;
+    position: relative; /* Menentukan posisi relatif untuk child element */
+    
 }
 
+/* Style ketika radio button terpilih */
 .btn-check:checked + .btn-outline-light {
     background-color: #1a3553;
     color: #fff;
 }
 
+/* Style untuk tombol outline light */
 .btn-outline-light {
-    /* border-color: ; */
-}
+    cursor: pointer; /* Mengubah kursor menjadi pointer saat diarahkan ke tombol */
+}   
 
+/* Style untuk teks kolom */
 .column-font {
     font-size: 14px;
     font-weight: bold;
 }
 
+/* Style untuk teks warning */
 .text-warning {
     color: #ffc107;
 }
 
+/* Style untuk background genap */
 .even-background {
-    background-color: #f8f9fa; /* Warna latar belakang untuk box data genap */
     border-radius: 10px;
-    margin-right: 15px;
+    margin-right: 10px;
     width: 200px;
     height: inherit;
-    
 }
 
+/* Style untuk background ganjil */
 .odd-background {
-    background-color: #e9ecef; /* Warna latar belakang untuk box data ganjil */
+    
     border-radius: 10px;
-    margin-right: 15px;
+    margin-right: 10px;
     width: 200px;
     
 }
 
 /* Style untuk harga yang tercoret */
 span.text-warning s {
-    text-decoration: line-through; /* Garis strikethrough untuk harga yang tercoret */
-    color: #ffc107 /* Warna teks yang tercoret */
+    text-decoration: line-through;
+    color: #06D85F;
 }
+
+/* Style untuk menyembunyikan radio button */
+.btn-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.pembayan-metode{
+    background-color: #0C356A; /* Warna latar belakang */
+    padding: 20px; /* Padding agar konten terlihat */
+    border-radius: 10px; /* Border radius untuk bentuk sudut */
+    overflow: hidden; /* Mengatasi overflow */
+    width: 1310px;
+    margin-left: 570px;
+    margin-top: 30px;
+    height: auto;
+}
+
+/* Styling card-header */
+.card-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* Styling card-body */
+.card-body {
+    margin-top: 15px;
+}
+
+/* Styling row g-3 */
+.row.g-3 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Styling E-Wallet h6 */
+.pembayaran-metode h6 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+/* Styling col-md-3 */
+.col-md-3 {
+    box-sizing: border-box;
+    margin-left: -50px;
+    margin-top: 20px;
+    position: relative;
+}
+
+/* Styling btn-check */
+.col-md-3 .btn-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+.btn-check {
+
+}
+/* Styling btn-outline-light label */
+.btn.btn-outline-light {
+    width: 170px;
+    text-align: center;
+    margin-right: 80px;
+    padding: 10px;
+    
+    border-radius: 10px;
+    background-color: #fff;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Styling btn-outline-light label hover */
+.btn.btn-outline-light:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Styling images inside label */
+.btn.btn-outline-light img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.ppw {
+    color: #fff;
+}
+

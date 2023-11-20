@@ -34,10 +34,10 @@
                     </a>
                 </nav>
             </div>
-            <nav class="navigation2">
+            <!-- <nav class="navigation2">
                 <a href="../register.php">Daftar Sekarang</a>
                 <a href="../login.php">Masuk</a>
-            </nav>
+            </nav> -->
             
     </header>   
 

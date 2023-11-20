@@ -62,10 +62,10 @@ if ($result === false) {
                 </a>
             </nav>
         </div>
-        <nav class="navigation2">
+        <!-- <nav class="navigation2">
             <a href="../register.php">Daftar Sekarang</a>
             <a href="../login.php">Masuk</a>
-        </nav>
+        </nav> -->
     </header> 
 
     <div class="content-jokirank">
@@ -156,9 +156,12 @@ if ($result === false) {
             </div>
         </div>
     </div>
-     
     <div class="container-promo">
+    <div class="card-header">
+                          Pilih PROMO
+                          </div>
     <div class="container-1">
+    
         <?php
         // Loop untuk menampilkan data dari database
         $counter = 0; // Menggunakan counter untuk melacak indeks data
@@ -197,9 +200,49 @@ if ($result === false) {
     }
 </script>
 
+<script>
+    function toggleCheckbox(optionId) {
+        var option = document.getElementById(optionId);
+        option.checked = !option.checked; // Toggle checkbox state
+    }
+</script>
 
-<!-- =============================================================================== -->
-<!-- php box -->
+<!-- =========================================================================================================================== -->
+<!-- ----------------------promo---------------------- -->
+
+<div class="pembayan-metode">
+                <div class="card-header">
+                          Pilih Metode Pembayaran
+                          </div>
+                          <div class="card-body text-white">
+                            <div class="row g-3">
+                              <h6 class="ppw">E- Wallet</h6>
+
+                              <div class="col-md-3" width = "100px">
+                                <input type="radio" class="btn-check" name="pembayaran" id="dana" autocomplete="off">
+                                <label class="col-12 btn btn-outline-light" for="dana">
+                                  <div class="row">
+                                    <div class="col"><img src="../image/dana.png" width="100px" height="100px" alt=""></div>
+                                  </div>
+                                </label>
+                              </div>
+
+                              <div class="col-md-3">
+                                <input type="radio" class="btn-check" name="pembayaran" id="ovo" autocomplete="off">
+                                <label class="col-12 btn btn-outline-light" for="ovo">
+                                  <div class="row">
+                                    <div class="col"><img src="../image/ovo.png" width="100px" height="70px" alt=""></div>
+                                  </div>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+</div>
+
+
+
+
 
 
 
