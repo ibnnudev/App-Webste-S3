@@ -141,7 +141,7 @@ if (isset($_SESSION['user'])) {
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
+                <div class="container-fluid px-4">
                         <h1 class="mt-4">Promo </h1>
                         <!-- <?php echo $email; ?> -->
                         <ol class="breadcrumb mb-4">
@@ -156,27 +156,27 @@ if (isset($_SESSION['user'])) {
                                         <span>Promo Joki</span>
                                     </a>
                                     <a href="promo_star.php" style="background-color: #FF9900; height: 40px; color: #FFf;">
-                                        <span>Joki/star</span>
+                                        <span>Joki/Star</span>
                                     </a>
                                     <a href="paket_murah_joki.php">
-                                        <span>Paket murah joki</span>
+                                        <span>Paket Murah Joki</span>
                                     </a>
-                                    <a href="promo_mcl.php" >
+                                    <a href="promo_mcl.php">
                                         <span>Joki MCL</span>
                                     </a>
                                 </div>
                                 <div class="bwh-bgn">
-                                    <a href="promo_mabar.php" >
+                                    <a href="promo_mabar.php">
                                         <span>Jasa Mabar</span>
                                     </a>
                                     <a href="promo_day.php" >
-                                        <span>Promo hari ini</span>
+                                        <span>Promo Hari ini</span>
                                     </a>
                                     <a href="promo.clasic.php">
-                                        <span>Joki classic</span>
+                                        <span>Joki Classic</span>
                                     </a>
                                     <a href="promo.vidio.php">
-                                        <span>Joki video</span>
+                                        <span>Joki Video</span>
                                     </a>
                                     <a href="discount.php">
                                         <span>Discount</span>
@@ -257,7 +257,7 @@ if ($koneksi->connect_error) {
 // Query untuk menampilkan data
 $sql = "SELECT id_paket, judul_paket, nama_paket, harga
         FROM paket_joki_rank
-        WHERE judul_paket = 'JOKI/Star'";
+        WHERE judul_paket = 'JOKI/STAR'";
 $result = $koneksi->query($sql);
 
 // Validasi form submission dan update data jika ada request POST
@@ -369,7 +369,7 @@ $koneksi->close();
             idInput.value = id;
 
             // Mengisi otomatis Judul Paket dengan "PROMO"
-            judulPaketInput.value = 'JOKI/Star';
+            judulPaketInput.value = 'JOKI/STAR';
         });
 
         // Menambahkan event listener untuk formulir ketika disubmit

@@ -86,7 +86,7 @@ if (isset($_SESSION['user'])) {
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="../admin/logout.php">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -139,7 +139,7 @@ if (isset($_SESSION['user'])) {
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
+                <div class="container-fluid px-4">
                         <h1 class="mt-4">Promo </h1>
                         <!-- <?php echo $email; ?> -->
                         <ol class="breadcrumb mb-4">
@@ -154,10 +154,10 @@ if (isset($_SESSION['user'])) {
                                         <span>Promo Joki</span>
                                     </a>
                                     <a href="promo_star.php">
-                                        <span>Joki/star</span>
+                                        <span>Joki/Star</span>
                                     </a>
-                                    <a href="paket_murah_joki.php" >
-                                        <span>Paket murah joki</span>
+                                    <a href="paket_murah_joki.php">
+                                        <span>Paket Murah Joki</span>
                                     </a>
                                     <a href="promo_mcl.php">
                                         <span>Joki MCL</span>
@@ -168,15 +168,15 @@ if (isset($_SESSION['user'])) {
                                         <span>Jasa Mabar</span>
                                     </a>
                                     <a href="promo_day.php" >
-                                        <span>Promo hari ini</span>
+                                        <span>Promo Hari ini</span>
                                     </a>
                                     <a href="promo.clasic.php">
-                                        <span>Joki classic</span>
+                                        <span>Joki Classic</span>
                                     </a>
                                     <a href="promo.vidio.php">
-                                        <span>Joki video</span>
+                                        <span>Joki Video</span>
                                     </a>
-                                    <a href="#" style="background-color: #FF9900; height: 40px; color: #FFf;">
+                                    <a href="discount.php" style="background-color: #FF9900; height: 40px; color: #FFf;">
                                         <span>Discount</span>
                                     </a>
                                 </div>

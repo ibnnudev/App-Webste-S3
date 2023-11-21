@@ -1010,6 +1010,10 @@ h3 {
     margin-top: -1790px;
     margin-right: 20px;
     height: 350px;
+   
+    padding: 20px;
+
+    overflow: hidden;
 }
 .id-id{
     color: #fff;
@@ -1024,9 +1028,13 @@ h3 {
     width: 600px; /* Lebar masing-masing bagian */
     float: left; /* Float ke kiri */
     box-sizing: border-box; /* Mengatasi masalah dengan padding dan border */
-    margin-left: 35px;
+    margin-left:15px;
+    
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 30px;
+}
+.left-input {
+    margin-right: 30px;
 }
 
 .input-container {
@@ -1127,9 +1135,9 @@ input {
 
 /* Style untuk setiap kolom */
 .col-md-4 {
-    margin-bottom: 10px;
+    margin-bottom: -10px;
     padding: 10px;
-    margin-top: 10px;
+    
     text-align: center;
     position: relative; /* Menentukan posisi relatif untuk child element */
     
@@ -1160,16 +1168,17 @@ input {
 /* Style untuk background genap */
 .even-background {
     border-radius: 10px;
-    margin-right: 10px;
+    margin-right: 5px;
     width: 200px;
     height: inherit;
+    margin-bottom: -15px;
 }
 
 /* Style untuk background ganjil */
 .odd-background {
     
     border-radius: 10px;
-    margin-right: 10px;
+    margin-right: 5px;
     width: 200px;
     
 }
@@ -1278,4 +1287,145 @@ span.text-warning s {
 .ppw {
     color: #fff;
 }
+/* =========================================================== */
 
+
+
+.paket-star{
+    background-color: #0C356A;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 1310px;
+    margin-left: 570px;
+    margin-top: 30px;
+    height: auto;
+}
+
+.paket-murah-joki {
+    background-color: #0C356A; /* Warna latar belakang */
+    padding: 20px; /* Padding agar konten terlihat */
+    border-radius: 10px; /* Border radius untuk bentuk sudut */
+    overflow: hidden; /* Mengatasi overflow */
+    width: 1310px;
+    margin-left: 570px;
+    margin-top: 30px;
+    height: auto;
+}
+
+.order-pt {
+    margin-left: 570px;
+    margin-top: 30px;
+    height: auto;
+}
+
+.promo-classic {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 20px;
+    
+}
+
+.qty-od {
+    margin-left: 10px;
+    width: 50%;
+    margin-top: 20px;
+}
+
+.bg-order {
+    background-color: #ffc107;
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+    display: flex;
+    margin-left: 10px;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.bg-order a{
+    color: #000;
+    text-decoration: none;
+    flex: 1;
+    text-align: center;
+}
+
+.bg-order img {
+    width: 30px;
+    height: auto;
+}
+.tabel-keranjang{
+    background-color: #0C356A; /* Warna latar belakang */
+    padding: 20px; /* Padding agar konten terlihat */
+    border-radius: 10px; /* Border radius untuk bentuk sudut */
+    overflow: hidden; /* Mengatasi overflow */
+    width: 1310px;
+    margin-left: 570px;
+    margin-top: 30px;
+    height: auto;
+}
+
+.tableok {
+    border-collapse: collapse;
+    width: 50%;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    
+}
+
+form {
+    margin-top: 20px;
+}
+
+input, button {
+    margin-bottom: 10px;
+}
+
+
+
+.table-keranjang{
+    color: #ffffff;
+}
+.btn-warning {
+    background-color: #06D85F;
+    border-radius: 10px;
+    height: auto;
+    width: 170px;
+    font-size: 17px;
+}
+#orderForm button:active {
+    transform: scale(1.25);
+}
+
+.ppq{
+    color: #fff;
+    margin-left: 5px;
+}
+.text_keranjang {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; /* Choose your preferred text color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.bro {
+    background-color: #0C356A; /* Warna latar belakang */
+    color: white; /* Warna teks */
+    border: none; /* Menghapus border (jika ada) */
+    font-size: 18px; /* Mengatur ukuran teks */
+    font-weight: bold; /* Membuat teks menjadi tebal */
+    padding: 8px; /* Menambahkan padding agar tampilan lebih baik */
+    outline: none; 
+}

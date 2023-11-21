@@ -1,32 +1,3 @@
-
-<?php
-// Koneksi ke database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hanzjoki";
-
-$koneksi = new mysqli($servername, $username, $password, $dbname);
-
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
-
-// Query untuk mengambil data dari database
-$sql = "SELECT paket_joki_rank.*, discount.potongan, (paket_joki_rank.harga - discount.potongan) AS hasil
-FROM paket_joki_rank
-LEFT JOIN discount ON paket_joki_rank.nama_discount = discount.nama_discount
-WHERE paket_joki_rank.judul_paket = 'promo';";
-
-// Eksekusi query
-$result = $koneksi->query($sql);
-
-// Periksa apakah query berhasil dieksekusi
-if ($result === false) {
-    die("Error saat mengeksekusi query: " . $koneksi->error);
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,7 +94,7 @@ if ($result === false) {
     </div>
 
     <div class="box-id-input">
-        <h1 class="id-id">Lengkapi Data</h1>
+    <div class="card-header">Lengkapi Data</div>
         <div class="left-input">
             <div class="input-container">
     
@@ -156,59 +127,319 @@ if ($result === false) {
             </div>
         </div>
     </div>
-    <div class="container-promo">
-    <div class="card-header">
-                          Pilih PROMO
-                          </div>
+
+    <?php
+// Koneksi ke database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hanzjoki";
+
+$koneksi = new mysqli($servername, $username, $password, $dbname);
+
+if ($koneksi->connect_error) {
+    die("Koneksi gagal: " . $koneksi->connect_error);
+}
+
+// Query untuk mengambil data promo
+$sql_promo = "SELECT paket_joki_rank.*, discount.potongan, (paket_joki_rank.harga - discount.potongan) AS hasil
+              FROM paket_joki_rank
+              LEFT JOIN discount ON paket_joki_rank.nama_discount = discount.nama_discount
+              WHERE paket_joki_rank.judul_paket = 'promo';";
+$result_promo = $koneksi->query($sql_promo);
+if ($result_promo === false) {
+    die("Error saat mengeksekusi query promo: " . $koneksi->error);
+}
+
+// Query untuk mengambil data joki star
+$sql_joki_star = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'JOKI/Star'";
+$result_joki_star = $koneksi->query($sql_joki_star);
+if ($result_joki_star === false) {
+    die("Error saat mengeksekusi query joki star: " . $koneksi->error);
+}
+
+// Query untuk mengambil data paket murah joki
+$sql_murah_joki = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'Paket murah joki'";
+$result_murah_joki = $koneksi->query($sql_murah_joki);
+if ($result_murah_joki === false) {
+    die("Error saat mengeksekusi query paket murah joki: " . $koneksi->error);
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="path/to/your/bootstrap/css/file.css"> <!-- Sesuaikan path dengan lokasi file CSS Bootstrap -->
+    <title>Contoh Joki Rank</title>
+</head>
+<body>
+
+<div class="container-promo">
+    <!-- Promo Joki Rank -->
+    <div class="card-header" id="judulPromoRank" style="display: none;">JOKI RANK</div>
+
+    <!-- Promo Joki Rank -->
+    <div class="promo-classic">Promo Joki Rank</div>
     <div class="container-1">
-    
         <?php
-        // Loop untuk menampilkan data dari database
-        $counter = 0; // Menggunakan counter untuk melacak indeks data
-        while ($row = $result->fetch_assoc()) {
+        // Menampilkan data promo
+        $counter = 0;
+        $data_promo = $result_promo->fetch_all(MYSQLI_ASSOC);
+        foreach ($data_promo as $row) {
             $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
-        ?>
+            ?>
             <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>')">
                 <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="off">
                 <label class="btn btn-outline-light col-12">
                     <div class="row">
                         <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                        <!-- Menampilkan harga_setelah_discount -->
-                        <div class="col-12"><span class="text-warning">Rp. <?= number_format($row['hasil'], 0, ',', '.'); ?></span></div>
+                        <div class="col-12"><span class="text-warning"><?= number_format($row['hasil'], 0, ',', '.'); ?></span></div>
                         <div class="col-12">
-                            <span class="text-warning" style="text-decoration: line-through; text-decoration-thickness: 4px;">
-                                Rp. <s><?= number_format($row['harga'], 0, ',', '.'); ?></s>
-                            </span>
+                            
                         </div>
                     </div>
                 </label>
             </div>
-        <?php
+            <?php
             $counter++;
         }
-
-        // Tutup koneksi database
-        $koneksi->close();
         ?>
     </div>
-</div>
+
+    <!-- Joki Rank / Star -->
+    <div class="promo-classic">Joki Rank / Star</div>
+    <div class="container-1">
+        <?php
+        // Menampilkan data joki star
+        $counter = 0;
+        $data_joki_star = $result_joki_star->fetch_all(MYSQLI_ASSOC);
+        foreach ($data_joki_star as $row) {
+            $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
+            ?>
+            <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>')">
+                <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="off">
+                <label class="btn btn-outline-light col-12">
+                    <div class="row">
+                        <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
+                        <div class="col-12"><span class="text-warning"><?= number_format($row['harga'], 0, ',', '.'); ?></span></div>
+                        <div class="col-12">
+                            <!-- Isi sesuai kebutuhan -->
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <?php
+            $counter++;
+        }
+        ?>
+    </div>
+
+    <!-- Paket Joki Murah -->
+    <div class="promo-classic">Paket Joki Murah</div>
+    <div class="container-1">
+        <?php
+        // Menampilkan data paket murah joki
+        $counter = 0;
+        $data_murah_joki = $result_murah_joki->fetch_all(MYSQLI_ASSOC);
+        foreach ($data_murah_joki as $row) {
+            $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
+            ?>
+            <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>')">
+                <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="on">
+                <label class="btn btn-outline-light col-12">
+                    <div class="row">
+                        <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
+                        <div class="col-12"><span class="text-warning"><?= number_format($row['harga'], 0, '', '.'); ?></span></div>
+
+                        <div class="col-12">
+                            <!-- Isi sesuai kebutuhan -->
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <?php
+            $counter++;
+        }
+        ?>
+    
+    </div>
+    <form id="orderForm">
+        <label for="qtyid" class="ppq"> Jumlah: </label>
+        <input type="number" id="qtyid" required>
+        <button type="button" class="btn btn-warning mt-3" onclick="order()"><i class="bi bi-cart"></i> Masukan Keranjang</button> 
+        <div class="text_keranjang">
+            Keranjang
+        </div>
+    </form>
+
+    <!-- Tabel Keranjang -->
+    <div class="tabelok">
+        <!-- <div class="card-header">
+            Tabel Keranjang
+        </div> -->
+        <table class="table-keranjang" id="keranjangsementara">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nama Barang</th>
+                    <th scope="col">Harga</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Aksi</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data tabel keranjang akan ditampilkan di sini -->
+            </tbody>
+        </table>
+    </div>
+    <form id="totalForm">
+        <label for="total" class="ppq"> Total: </label>
+        <input type="text" class="bro" id="total" readonly>
+        
+    </form>
+    </div>
+    <!-- ... Your HTML code ... -->
 
 <script>
+    function hitungTotal() {
+        var tabelKeranjang = document.getElementById('keranjangsementara');
+        var baris = tabelKeranjang.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        var total = 0;
+
+        for (var i = 0; i < baris.length; i++) {
+            var hasilakhir = baris[i].getElementsByTagName('td')[4];
+            if (hasilakhir) {
+                total += parseInt(hasilakhir.innerText);
+            }
+        }
+
+        // Memasukkan total ke dalam input total
+        document.getElementById('total').value = total;
+    }
     function selectRadio(optionId) {
-        var option = document.getElementById(optionId);
-        option.checked = true;
-    }
-</script>
+        // Unselect all radio buttons
+        var radioButtons = document.getElementsByName('nominal');
+        radioButtons.forEach(function (radioButton) {
+            radioButton.closest('.col-md-4').classList.remove('selected-background');
+            radioButton.checked = false;
+        });
 
-<script>
-    function toggleCheckbox(optionId) {
-        var option = document.getElementById(optionId);
-        option.checked = !option.checked; // Toggle checkbox state
+        // Remove the "option" prefix from the ID
+        var idWithoutOption = optionId.replace('option', '');
+
+        // Select the clicked radio button
+        var selectedRadio = document.getElementById(optionId);
+        selectedRadio.checked = true;
+        selectedRadio.closest('.col-md-4').classList.toggle('selected-background');
+    }
+
+    function order() {
+    // Get the selected radio button
+    var selectedRadio = document.querySelector('input[name="nominal"]:checked');
+
+    // Check if a radio button is selected
+    if (selectedRadio) {
+        // Get the quantity value
+        var quantity = document.getElementById('qtyid').value;
+
+        // Check if the quantity is valid
+        if (quantity > 0) {
+            // Get the data from the selected radio button
+            var packageName = selectedRadio.parentNode.querySelector('.column-font').innerText;
+            var price = selectedRadio.parentNode.querySelector('.text-warning').innerText;
+
+            // Remove the "option" prefix from the ID
+            var idWithoutOption = selectedRadio.id.replace('option', '');
+
+            // Add the order to the cart table
+            addToCart(idWithoutOption, packageName, price, quantity);
+
+            // Clear the selected radio button
+            selectedRadio.checked = false;
+
+            // Clear the quantity input
+            document.getElementById('qtyid').value = '';
+
+            // Menghitung total setelah menambah item
+            hitungTotal();
+        } else {
+            alert('Please enter a valid quantity.');
+        }
+    } else {
+        alert('Please select a package.');
+    }
+}
+
+
+    function addToCart(id, packageName, price, quantity, subtotal, deleteButton) {
+    var cartTable = document.getElementById('keranjangsementara').getElementsByTagName('tbody')[0];
+    var newRow = cartTable.insertRow();
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    var cell4 = newRow.insertCell(3);
+    var cell5 = newRow.insertCell(4);
+    var cell6 = newRow.insertCell(5);
+
+    cell1.innerHTML = id;
+    cell2.innerHTML = packageName;
+    cell3.innerHTML = price; // Format price as currency
+    cell4.innerHTML = quantity;
+
+    // Calculate subtotal as an integer
+    var calculatedSubtotal = price * quantity;
+    hasilakhir = calculatedSubtotal + '000';
+     cell5.innerHTML = hasilakhir;
+
+    var deleteButton = document.createElement('button');
+        deleteButton.innerHTML = 'Hapus';
+        deleteButton.className = 'btn btn-danger btn-sm';
+        deleteButton.onclick = function () {
+            deleteRow(this);
+        };
+
+        // Append the delete button to the cell
+        cell6.appendChild(deleteButton);
+    }
+
+    function deleteRow(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
     }
 </script>
+</body>
+</form>
+</html>
+
+
 
 <!-- =========================================================================================================================== -->
 <!-- ----------------------promo---------------------- -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<script src="asset/node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+
+<script>
+  function order() {
+    Swal.fire({
+      title: 'Simpan perubahan?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: Don't save,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Pembelian sedang di proses, tunggu!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Terjadi Kesalahan pada proses pembelian', '', 'info')
+      }
+    });
+  }
+</script>
+
 
 <div class="pembayan-metode">
                 <div class="card-header">
@@ -236,6 +467,8 @@ if ($result === false) {
                                 </label>
                               </div>
                             </div>
+                            <label for="qtyid" class="ppq"> Masukan No WhatsApp: </label>
+                                <input type="number" id="qtyid" required>
                           </div>
 
 </div>
