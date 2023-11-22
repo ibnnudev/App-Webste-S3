@@ -136,8 +136,8 @@ if (isset($_SESSION['user'])) {
                                         <th>Tanggal</th>
                                         <th>Nama Paket</th>
                                         <th>Payment</th>
-                                        <!-- <th>Aksi</th> -->
                                         <th>Status</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
 
@@ -148,7 +148,7 @@ if (isset($_SESSION['user'])) {
                                         die("Connection failed: " . $koneksi->connect_error);
                                     }
 
-                                    $sql = "SELECT id, tanggal, nama_paket, payment,null,null FROM job_worker";
+                                    $sql = "SELECT id, tanggal, nama_paket, payment,aksi,null FROM job_worker";
                                     $result = $koneksi->query($sql);
 
                                     if ($result->num_rows > 0) {
@@ -161,7 +161,7 @@ if (isset($_SESSION['user'])) {
                                                         <td>" . $row["aksi"] . "</td>                             
                                                         <td>
                                                         <a href='form_edit.php?id=" . $row['id'] . "' class='btn btn-info'>Edit</a>
-                                                        <a href='../crud/worker_hapus.php?id=" . $row['id='] . "' class='btn btn-danger'>hapus</a>
+                                                        <a href='../crud/worker_hapus.php?id=" . $row['id'] . "' class='btn btn-danger'>hapus</a>
                                                         </td>
                                                     </tr>";
                                         }
