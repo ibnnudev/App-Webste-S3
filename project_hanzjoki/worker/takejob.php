@@ -161,7 +161,7 @@ if (isset($_SESSION['user'])) {
                                                         <td>" . $row["aksi"] . "</td>                             
                                                         <td>
                                                         <a href='form_edit.php?id=" . $row['id'] . "' class='btn btn-info'>Edit</a>
-                                                        <a href='../crud/worker_hapus.php?id=" . $row['id'] . "' class='btn btn-danger'>hapus</a>
+                                                        <a href='../crud/job_hapus.php?id=" . $row['id'] . "' class='btn btn-danger'>hapus</a>
                                                         </td>
                                                     </tr>";
                                         }
