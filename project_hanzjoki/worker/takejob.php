@@ -116,7 +116,7 @@ if (isset($_SESSION['user'])) {
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Table Data Worker
+                            Table Data Job
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -127,15 +127,17 @@ if (isset($_SESSION['user'])) {
                             </div>
 
 
-                            <table id="datatablesSimple" class="custom-table">
+                            <table id="datatablesSimple" class="custom-table" border="2">
 
                                 <thead>
                                     <tr>
-
                                         <th>Id</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Paket</th>
-                                        <th>Payment</th>
+                                        <th>Id Transaksi</th>
+                                        <th>Id Worker</th>
+                                        <th>Data Akun</th>
+                                        <th>Qty Order</th>
+                                        <th>Gaji</th>
+                                        <th>Laporan</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -148,17 +150,20 @@ if (isset($_SESSION['user'])) {
                                         die("Connection failed: " . $koneksi->connect_error);
                                     }
 
-                                    $sql = "SELECT id, tanggal, nama_paket, payment,aksi,null FROM job_worker";
+                                    $sql = "SELECT id,id_transaksi,id_worker,data_akun,qty_order,gaji,laporan,statsdone,null FROM take_job";
                                     $result = $koneksi->query($sql);
 
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<tr>
                                                         <td>" . $row["id"] . "</td>
-                                                        <td>" . $row["tanggal"] . "</td>
-                                                        <td>" . $row["nama_paket"] . "</td>
-                                                        <td>" . $row["payment"] . "</td>
-                                                        <td>" . $row["aksi"] . "</td>                             
+                                                        <td>" . $row["id_transaksi"] . "</td>
+                                                        <td>" . $row["id_worker"] . "</td>
+                                                        <td>" . $row["data_akun"] . "</td>
+                                                        <td>" . $row["qty_order"] . "</td>
+                                                        <td>" . $row["gaji"] . "</td>
+                                                        <td>" . $row["laporan"] . "</td>                             
+                                                        <td>" . $row["statsdone"] . "</td>                              
                                                         <td>
                                                         <a href='form_edit.php?id=" . $row['id'] . "' class='btn btn-info'>Edit</a>
                                                         <a href='../crud/job_hapus.php?id=" . $row['id'] . "' class='btn btn-danger'>hapus</a>
