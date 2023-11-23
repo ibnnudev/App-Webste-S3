@@ -116,7 +116,7 @@ if (isset($_SESSION['user'])) {
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Table Data Worker
+                            Table Data Job
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -150,14 +150,14 @@ if (isset($_SESSION['user'])) {
                                         die("Connection failed: " . $koneksi->connect_error);
                                     }
 
-                                    $sql = "SELECT id_transaksi,id_worker,data_akun,qty_order,gaji,laporan,statsdone,null FROM take_job";
+                                    $sql = "SELECT id,id_transaksi,id_worker,data_akun,qty_order,gaji,laporan,statsdone,null FROM take_job";
                                     $result = $koneksi->query($sql);
 
                                     if ($result->num_rows > 0) {
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<tr>
                                                         <td>" . $row["id"] . "</td>
-                                                        <td>" . $row["id_transaski"] . "</td>
+                                                        <td>" . $row["id_transaksi"] . "</td>
                                                         <td>" . $row["id_worker"] . "</td>
                                                         <td>" . $row["data_akun"] . "</td>
                                                         <td>" . $row["qty_order"] . "</td>
