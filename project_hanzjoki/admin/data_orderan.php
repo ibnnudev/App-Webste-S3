@@ -117,6 +117,20 @@ if (isset($_SESSION['user'])) {
                             <li class="breadcrumb-item active">Orderan</li>
                         </ol>
 
+                        <div class="box-lainya">
+                                <div class="atas-bgn">
+                                    <a href="../admin/data_orderan.php">
+                                        <span>Belum Lunas</span>
+                                    </a>
+                                    <a href="promo_joki.php">
+                                        <span>Lunas</span>
+                                    </a>
+                                    <a href="promo_star.php">
+                                        <span>Done</span>
+                                    </a>
+                                    
+                                </div>
+                                
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
