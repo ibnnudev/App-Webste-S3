@@ -2,19 +2,20 @@
 require('../koneksi.php');
 
 if (isset($_POST['update'])) {
-    $id = $_POST['id'];
-    $tanggal = $_POST['tanggal'];
-    $nama_paket = $_POST['nama_paket'];
-    $payment = $_POST['payment'];
-    $aksi = $_POST['aksi'];
-    $status = $_POST['status'];
+    $id_transaksi = $_POST['id_transaksi'];
+    $id_worker = $_POST['id_worker'];
+    $data_akun = $_POST['data_akun'];
+    $qty_order = $_POST['qty_order'];
+    $laporan = $_POST['laporan'];
+    $statsdone = $_POST['statsdone'];
 
-    $query = "UPDATE job_worker SET 
-              tanggal = '$namaLengkap', 
-              nama_paket = '$nama_paket', 
-              payment = '$payment', 
-              aksi = '$aksi', 
-              status = '$status' 
+    $query = "UPDATE take_job SET 
+              id_transaksi = '$id_transaksi', 
+              id_worker = '$id_worker', 
+              data_akun = '$data_akun', 
+              qty_order = '$qty_order', 
+              laporan = '$laporan', 
+              statsdone = '$statsdone', 
               WHERE id='$id'";
     
     $result = mysqli_query($koneksi, $query);
@@ -22,16 +23,17 @@ if (isset($_POST['update'])) {
 }
 
 $id = $_GET['id'];
-$query = "SELECT * FROM job_worker WHERE id='$id'";
+$query = "SELECT * FROM take_job WHERE id='$id'";
 $result = mysqli_query($koneksi, $query) or die(mysqli_error($koneksi));
 
 while ($row = mysqli_fetch_array($result)) {
     $id = $row['id'];
-    $tanggal = $row['tanggal'];
-    $nama_paket = $row['nama_paket'];
-    $payment = $row['payment'];
-    $aksi = $row['aksi'];
-    $status = $row['status'];
+    $id_transaksi = $row['id_transaksi'];
+    $id_worker = $row['id_worker'];
+    $data_akun = $row['data_akun'];
+    $qty_order = $row['qty_order'];
+    $laporan = $row['laporan'];
+    $statsdone = $row['statsdone'];
 }
 ?>
 
@@ -110,11 +112,12 @@ while ($row = mysqli_fetch_array($result)) {
                             <div class="box-edit-worker">
                                 <form action="form_edit.php" method="POST">
                                     <p><input type="hidden" name="id" value="<?php echo $id; ?>"></p>
-                                    <p>Tanggal: <input type="date" name="tanggal" value="<?php echo $tanggal; ?>"></p>
-                                    <p>Nama Paket: <input type="text" name="nama_paket" value="<?php echo $nama_paket; ?>"></p>
-                                    <p>Payment: <input type="number" name="payment" value="<?php echo $payment; ?>"></p>
-                                    <p>Aksi: <input type="text" name="aksi" value="<?php echo $aksi; ?>"></p>
-                                    <p>Status: <input type="text" name="status" value="<?php echo $status; ?>"></p>
+                                    <p><input type="hidden" name="id_transaksi" value="<?php echo $id_transaksi; ?>"></p>
+                                    <p><input type="hidden" name="id_worker" value="<?php echo $id_worker; ?>"></p>
+                                    <p>Data Akun: <input type="text" name="data_akun" value="<?php echo $data_akun; ?>"></p>
+                                    <p>QTY Order: <input type="number" name="qty_order" value="<?php echo $qty_order; ?>"></p>
+                                    <p>gaji: <input type="number" name="gaji" value="<?php echo $gaji; ?>"></p>
+                                    <p>Status: <input type="text" name="statsdone" value="<?php echo $statsdone; ?>"></p>
                                     <button type="submit" name="update">Update</button>
                                 </form>
                             </div>

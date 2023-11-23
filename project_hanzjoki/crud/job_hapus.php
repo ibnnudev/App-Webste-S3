@@ -6,7 +6,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($id > 0) {
     // Gunakan parameterized query untuk mencegah SQL injection
-    $stmt = $koneksi->prepare("DELETE FROM job_worker WHERE id=?");
+    $stmt = $koneksi->prepare("DELETE FROM take_job WHERE id=?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
