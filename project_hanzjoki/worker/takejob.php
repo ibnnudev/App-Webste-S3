@@ -131,52 +131,57 @@ if (isset($_SESSION['user'])) {
 
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
+                                        
                                         <th>Id Transaksi</th>
                                         <th>Id Worker</th>
                                         <th>Data Akun</th>
                                         <th>Qty Order</th>
+                                        <th>Tanggal</th>
                                         <th>Gaji</th>
                                         <th>Laporan</th>
+                                        <th>Pengerjaan</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <?php
-                                    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-                                    if ($koneksi->connect_error) {
-                                        die("Connection failed: " . $koneksi->connect_error);
-                                    }
+    <?php
+    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    if ($koneksi->connect_error) {
+        die("Connection failed: " . $koneksi->connect_error);
+    }
 
-                                    $sql = "SELECT id,id_transaksi,id_worker,data_akun,qty_order,gaji,laporan,statsdone,null FROM take_job";
-                                    $result = $koneksi->query($sql);
+    $sql = "SELECT id_transaksi, id_worker, data_akun, qty_order, tgl_order, gaji, laporan, statsdone, stats FROM take_job";
+    $result = $koneksi->query($sql);
 
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<tr>
-                                                        <td>" . $row["id"] . "</td>
-                                                        <td>" . $row["id_transaksi"] . "</td>
-                                                        <td>" . $row["id_worker"] . "</td>
-                                                        <td>" . $row["data_akun"] . "</td>
-                                                        <td>" . $row["qty_order"] . "</td>
-                                                        <td>" . $row["gaji"] . "</td>
-                                                        <td>" . $row["laporan"] . "</td>                             
-                                                        <td>" . $row["statsdone"] . "</td>                              
-                                                        <td>
-                                                        <a href='form_edit.php?id=" . $row['id'] . "' class='btn btn-info'>Edit</a>
-                                                        <a href='../crud/job_hapus.php?id=" . $row['id'] . "' class='btn btn-danger'>hapus</a>
-                                                        </td>
-                                                    </tr>";
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='10'>0 result</td></tr>";
-                                    }
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                    <td>" . $row["id"] . "</td>
+                    <td>" . $row["id_transaksi"] . "</td>
+                    <td>" . $row["id_worker"] . "</td>
+                    <td>" . $row["data_akun"] . "</td>
+                    <td>" . $row["qty_order"] . "</td>
+                    <td>" . $row["tgl_order"] . "</td>
+                    <td>" . $row["gaji"] . "</td>
+                    <td>" . $row["laporan"] . "</td>                             
+                    <td>" . $row["statsdone"] . "</td>      
+                    <td>" . $row["stats"] . "</td>                         
+                    <td>
+                        <a href='form_edit.php?id=" . $row['id'] . "' class='btn btn-info'>Edit</a>
+                        <a href='../crud/job_hapus.php?id=" . $row['id'] . "' class='btn btn-danger'>hapus</a>
+                    </td>
+                </tr>";
+        }
+    } else {
+        echo "<tr><td colspan='10'>0 result</td></tr>";
+    }
 
-                                    $koneksi->close();
-                                    ?>
-                                </tbody>
+    $koneksi->close();
+    ?>
+</tbody>
+
 
                             </table>
 
