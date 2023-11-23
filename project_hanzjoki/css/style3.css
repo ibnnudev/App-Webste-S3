@@ -11528,6 +11528,7 @@ input[type="submit"]:hover {
   flex-wrap: wrap;
   margin-top: 10px;
   
+  
 }
 
 .atas-bgn a,
@@ -11538,6 +11539,7 @@ input[type="submit"]:hover {
   padding: 5px 10px;
   border: 1px solid #ccc; /* Add border as needed */
   border-radius: 5px; /* Add border-radius as needed */
+  
 }
 
 .atas-bgn a:hover,
@@ -11548,6 +11550,7 @@ input[type="submit"]:hover {
 
 .bwh-bgn {
   margin-bottom: 20px;
+  
 }
 
 .popup2 {

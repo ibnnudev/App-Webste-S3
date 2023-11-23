@@ -119,7 +119,7 @@ if (isset($_SESSION['user'])) {
 
                         <div class="box-lainya">
                                 <div class="bwh-bgn" >
-                                    <a href="#" style="background-color: #FF9900; height: 40px; color: #FFf;">
+                                    <a href="data_orderan.php" >
                                         <span>Belum Lunas</span>
                                     </a>
                                     <a href="data_orderan_lunas.php">
