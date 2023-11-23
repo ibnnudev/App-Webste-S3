@@ -22,6 +22,7 @@ if (isset($_SESSION['user'])) {
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -122,7 +123,7 @@ if (isset($_SESSION['user'])) {
                                     <a href="data_orderan.php" >
                                         <span>Belum Lunas</span>
                                     </a>
-                                    <a href="data_orderan_lunas.php">
+                                    <a href="data_orderan_lunas.php" style="background-color: #FF9900; height: 40px; color: #FFf;">
                                         <span>Lunas</span>
                                     </a>
                                     <a href="data_orderan_done.php">
@@ -149,12 +150,17 @@ if (isset($_SESSION['user'])) {
     <thead>
         <tr>
             <th>ID Transaksi</th>
-            <th>Tanggal Order</th>
-            <th>Data Akun</th>
-            <th>Qty</th>
-            <th>Payment</th>
-            <th>Total</th>
-            <th>Aksi</th>
+            <th>ID Worker</th>
+            <th>ID customer</th>
+            <th>data akun</th>
+            <th>qty orderan</th>
+            <th>Tanggal</th>
+            <th>Gaji</th>
+            <th>laporan</th>
+            <th>Status lunas </th>
+            <th>Status progres</th>
+            <th>Aksi </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -165,25 +171,33 @@ if ($koneksi->connect_error) {
 }
 
 $sql = "SELECT 
-            transaksi.id_transaksi,
-            transaksi.tgl_order,
-            transaksi.data_akun,
-            transaksi.qty_order,
-            transaksi.payment,
-            transaksi.total_transaksi
-        FROM 
-            transaksi;";
+take_job.id_transaksi,
+take_job.id_worker,
+take_job.id_customer,
+take_job.data_akun,
+take_job.qty_order,
+take_job.gaji,
+take_job.laporan,
+take_job.statsdone,
+take_job.stats,
+take_job.tgl_order
+FROM 
+take_job";
 $result = $koneksi->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
                 <td>{$row['id_transaksi']}</td>
-                <td>{$row['tgl_order']}</td>
+                <td>{$row['id_worker']}</td>
+                <td>{$row['id_customer']}</td>
                 <td>{$row['data_akun']}</td>
                 <td>{$row['qty_order']}</td> 
-                <td>{$row['payment']}</td>
-                <td>{$row['total_transaksi']}</td>
+                <td>{$row['tgl_order']}</td>
+                <td>{$row['gaji']}</td>
+                <td>{$row['laporan']}</td>
+                <td>{$row['stats']}</td>
+                <td>{$row['statsdone']}</td>
                 <td>
                     <a href='../crud/transaksi_hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
                     <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
@@ -199,6 +213,48 @@ $koneksi->close();
 ?>
 </tbody>
 </table>
+<!-- ================================================================================================= -->
+<!-- ---------------------------------php insert------------------------------ -->
+<?php
+$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+
+if ($koneksi->connect_error) {
+    die("Connection failed: " . $koneksi->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_transaksi = $_POST["id_transaksi"];
+
+    // Lakukan validasi atau operasi lain sesuai kebutuhan
+
+    // Simpan data ke dalam tabel take_job
+    $sql_insert = "INSERT INTO take_job (id_transaksi) VALUES ('$id_transaksi')";
+    if ($koneksi->query($sql_insert) === TRUE) {
+        echo json_encode(["status" => "success"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => $koneksi->error]);
+    }
+}
+
+$koneksi->close();
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">

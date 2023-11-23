@@ -11521,8 +11521,12 @@ input[type="submit"]:hover {
   display: flex;
   flex-direction: column; /* Set flex container direction to column */
 }
-
+.dtjoki{
+      
+  margin-top:300px;
+}
 .atas-bgn,
+
 .bwh-bgn {
   display: flex;
   flex-wrap: wrap;
@@ -11576,4 +11580,11 @@ input[type="submit"]:hover {
   background-color: #FF9900;
   margin-top: 10px;
   border-radius: 10px;
+}
+
+.dddds {
+  margin-bottom: 23px;
+  font-size: 16px;
+  color: #6c757d;
+  font-weight: normal;
 }

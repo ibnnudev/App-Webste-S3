@@ -78,7 +78,7 @@ if (isset($_SESSION['user'])) {
                             </a>
                             <a class="nav-link" href="data_costumer.php">
                                     <img src="../image/CUstomer.png" alt="">
-                                    <span class="jdl-konten-2">Customer</span>
+                       ~             <span class="jdl-konten-2">Customer</span>
                             </a>
                             <a class="nav-link" href="#" style=" background-color: #FF9900; height: 50px;">
                                     <img src="../image/icons8-shopping-cart-64.png" alt="">
@@ -129,6 +129,7 @@ if (isset($_SESSION['user'])) {
                                         <span>Done</span>
                                     </a>
                                     
+                                    
                                 </div>
                                 
                         <div class="card mb-4">
@@ -154,6 +155,7 @@ if (isset($_SESSION['user'])) {
             <th>Qty</th>
             <th>Payment</th>
             <th>Total</th>
+            <th>status</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -165,15 +167,20 @@ if ($koneksi->connect_error) {
 }
 
 $sql = "SELECT 
-            transaksi.id_transaksi,
-            transaksi.tgl_order,
-            transaksi.data_akun,
-            transaksi.qty_order,
-            transaksi.payment,
-            transaksi.total_transaksi
-        FROM 
-            transaksi;";
+transaksi.id_transaksi,
+transaksi.tgl_order,
+transaksi.data_akun,
+transaksi.qty_order,
+transaksi.payment,
+transaksi.total_transaksi,
+transaksi.stats
+FROM 
+transaksi
+WHERE 
+transaksi.stats = 'belum lunas '";
+
 $result = $koneksi->query($sql);
+
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -184,9 +191,12 @@ if ($result->num_rows > 0) {
                 <td>{$row['qty_order']}</td> 
                 <td>{$row['payment']}</td>
                 <td>{$row['total_transaksi']}</td>
+                <td>{$row['stats']}</td>
                 <td>
-                    <a href='../crud/transaksi_hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
+                <button class='btn btn-danger btn-ready' data-id='{$row['id_transaksi']}'>Ready</button>
                     <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
+                    <a href='../crud/transaksi_hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
+                    
                     
                 </td>
             </tr>";
@@ -199,6 +209,79 @@ $koneksi->close();
 ?>
 </tbody>
 </table>
+
+<!-- ========================================================================================== -->
+<!-- -----------------------------READY BUTTOM-------------------------- -->
+<script><script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const readyButtons = document.querySelectorAll('.btn-danger');
+        readyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id_transaksi = this.getAttribute('data-id');
+                handleReadyButtonClick(id_transaksi);
+            });
+        });
+
+        function handleReadyButtonClick(id_transaksi) {
+            fetch('data_orderan_lunas.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id_transaksi=${id_transaksi}`,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Kesalahan HTTP! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Rekaman berhasil disisipkan ke dalam take_job:', data);
+                // Anda dapat memperbarui antarmuka pengguna atau melakukan tindakan lain sesuai kebutuhan
+            })
+            .catch(error => {
+                console.error('Kesalahan menyisipkan rekaman ke dalam take_job:', error);
+            });
+        }
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".btn-ready").click(function() {
+        var id_transaksi = $(this).data('id');
+        
+        // Kirim permintaan AJAX ke server
+        $.ajax({
+            type: 'POST',
+            url: 'data_orderan_lunas.php', // Gantilah dengan file yang sebenarnya menangani permintaan
+            data: { id_transaksi: id_transaksi },
+            success: function(response) {
+                // Tangani respons dari server jika diperlukan
+                console.log(response);
+            },
+            error: function(error) {
+                // Tangani kesalahan jika diperlukan
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">

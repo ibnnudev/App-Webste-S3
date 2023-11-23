@@ -142,9 +142,7 @@ if (isset($_SESSION['user'])) {
                 <div class="container-fluid px-4">
                         <h1 class="mt-4">Promo </h1>
                         <!-- <?php echo $email; ?> -->
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Data JOKI</li>
-                        </ol>
+                        <h1 class="dddds">Data JOKI</h1>
                         <div class="box-lainya">
                                 <div class="atas-bgn">
                                     <a href="../admin/data_joki.php">
