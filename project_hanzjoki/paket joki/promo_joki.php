@@ -6,22 +6,22 @@ session_start();
 require_once('../koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_paket = isset($_POST['id_paket']) ? $_POST['id_paket'] : null;
+    
+    // Set id_paket to an empty string to ensure it is empty
+    
 
-    $judul_paket = $_POST['judul_paket'];
     $nama_paket = $_POST['nama_paket'];
     $harga = $_POST['harga'];
     $nama_discount = $_POST['nama_discount'];
 
     // Query to insert data into the database
-    $query = "INSERT INTO paket_joki_rank (id_paket, judul_paket, nama_paket, harga, nama_discount) 
-              VALUES (?, ?, ?, ?, ?)";
-
+    $query = "INSERT INTO paket_joki_rank ( id_paket, judul_paket, nama_paket, harga, nama_discount) 
+              VALUES ('','PROMO', ?, ?, ?)";
     // Use prepared statement
     $stmt = mysqli_prepare($koneksi, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "sssss", $id_paket, $judul_paket, $nama_paket, $harga, $nama_discount);
+    mysqli_stmt_bind_param($stmt, "sss", $nama_paket, $harga, $nama_discount);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_close($stmt);
     mysqli_close($koneksi);
 }
+
 
 // Periksa apakah pengguna telah login
 if (isset($_SESSION['user'])) {
@@ -214,11 +215,8 @@ if (isset($_SESSION['user'])) {
             <div class="modal-body">
                 <form action="promo_joki.php" method="post" id="promoForm">
                     <!-- Isian formulir -->
-                    <label for="id">ID:</label>
-                    <input type="text" name="id_paket" id="id_paket" required>
-
-                    <label for="judul_paket">Judul paket:</label>
-                    <input type="text" name="judul_paket" required>
+                    
+                
 
                     <label for="nama_paket">Nama Paket:</label>
                     <input type="text" name="nama_paket" required>
@@ -381,35 +379,7 @@ $koneksi->close();
 </script>
  <!-- OTOMATAIS KEISI ID PAKET DAN JUDUL PAKET -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Mendapatkan elemen tombol "Tambah Promo"
-        var tambahPromoButton = document.querySelector('.btn-add_w');
-
-        // Menambahkan event listener untuk tombol "Tambah Promo"
-        tambahPromoButton.addEventListener('click', function () {
-            // Mendapatkan elemen input ID dan Judul Paket
-            var idInput = document.querySelector('input[name="id_paket"]');
-            var judulPaketInput = document.querySelector('input[name="judul_paket"]');
-
-            // Menyimpan nomor urut terakhir ke dalam sessionStorage
-            var count = sessionStorage.getItem('promoCount') || 0;
-
-            // Menginkrementasi nomor urut
-            count++;
-
-            // Menyimpan nomor urut ke sessionStorage
-            sessionStorage.setItem('promoCount', count);
-
-            // Menggabungkan "PK" dengan nomor urut yang terakhir disimpan
-            var id = 'PK' + ('000' + count).slice(-3);
-
-            // Mengisi nilai ID pada formulir
-            idInput.value = id;
-
-            // Mengisi otomatis Judul Paket dengan "PROMO"
-            judulPaketInput.value = 'PROMO';
-        });
-
+    
         // Menambahkan event listener untuk formulir ketika disubmit
         document.querySelector('form').addEventListener('submit', function (event) {
             event.preventDefault(); // Mencegah form submit secara default
@@ -448,11 +418,11 @@ $koneksi->close();
         // Menambahkan event listener untuk menutup modal ketika modal tertutup
         document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
             // Mendapatkan elemen input ID dan Judul Paket
-            var idInput = document.querySelector('input[name="id_paket"]');
+            
             var judulPaketInput = document.querySelector('input[name="judul_paket"]');
 
             // Mengosongkan nilai ID dan Judul Paket setelah pop-up ditutup
-            idInput.value = '';
+            
             judulPaketInput.value = '';
         });
     });

@@ -6,15 +6,13 @@ session_start();
 require_once('../koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_paket = isset($_POST['id_paket']) ? $_POST['id_paket'] : null;
 
-    $judul_paket = $_POST['judul_paket'];
     $nama_paket = $_POST['nama_paket'];
     $harga = $_POST['harga'];
 
     // Query to insert data into the database
     $query = "INSERT INTO paket_joki_rank (id_paket, judul_paket, nama_paket, harga, nama_discount) 
-    VALUES (?, ?, ?, ?, 'no discount')";
+    VALUES ('', 'Joki Classic', ?, ?, 'no discount')";
 
 
 
@@ -22,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = mysqli_prepare($koneksi, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "ssss", $id_paket, $judul_paket, $nama_paket, $harga);
+    mysqli_stmt_bind_param($stmt, "ss", $nama_paket, $harga);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -214,11 +212,6 @@ if (isset($_SESSION['user'])) {
             <div class="modal-body">
                 <form action="promo_joki.php" method="post" id="promoForm">
                     <!-- Isian formulir -->
-                    <label for="id">ID:</label>
-                    <input type="text" name="id_paket" id="id_paket" required>
-
-                    <label for="judul_paket">Judul paket:</label>
-                    <input type="text" name="judul_paket" required>
 
                     <label for="nama_paket">Nama Paket:</label>
                     <input type="text" name="nama_paket" required>
@@ -260,7 +253,7 @@ if ($koneksi->connect_error) {
 // Query untuk menampilkan data
 $sql = "SELECT id_paket, judul_paket, nama_paket, harga
         FROM paket_joki_rank
-        WHERE judul_paket = 'Joki clasic'";
+        WHERE judul_paket = 'Joki Classic'";
 $result = $koneksi->query($sql);
 
 // Validasi form submission dan update data jika ada request POST

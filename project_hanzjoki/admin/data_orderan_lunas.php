@@ -123,7 +123,11 @@ if (isset($_SESSION['user'])) {
                                     <a href="data_orderan.php" >
                                         <span>Belum Lunas</span>
                                     </a>
+<<<<<<< Updated upstream
                                     <a href="data_orderan_lunas.php" style="background-color: #FF9900; height: 40px; color: #FFf;">
+=======
+                                    <a href="#" style="background-color: #FF9900; height: 40px; color: #FFf;">
+>>>>>>> Stashed changes
                                         <span>Lunas</span>
                                     </a>
                                     <a href="data_orderan_done.php">
@@ -150,6 +154,7 @@ if (isset($_SESSION['user'])) {
     <thead>
         <tr>
             <th>ID Transaksi</th>
+<<<<<<< Updated upstream
             <th>ID Worker</th>
             <th>ID customer</th>
             <th>data akun</th>
@@ -161,6 +166,15 @@ if (isset($_SESSION['user'])) {
             <th>Status progres</th>
             <th>Aksi </th>
             
+=======
+            <th>Tanggal Order</th>
+            <th>Data Akun</th>
+            <th>Qty</th>
+            <th>Payment</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Aksi</th>
+>>>>>>> Stashed changes
         </tr>
     </thead>
     <tbody>
@@ -171,6 +185,7 @@ if ($koneksi->connect_error) {
 }
 
 $sql = "SELECT 
+<<<<<<< Updated upstream
 take_job.id_transaksi,
 take_job.id_worker,
 take_job.id_customer,
@@ -183,6 +198,18 @@ take_job.stats,
 take_job.tgl_order
 FROM 
 take_job";
+=======
+            transaksi.id_transaksi,
+            transaksi.tgl_order,
+            transaksi.data_akun,
+            transaksi.qty_order,
+            transaksi.payment,
+            transaksi.total_transaksi,
+            transaksi.stats
+            
+        FROM 
+            transaksi;";
+>>>>>>> Stashed changes
 $result = $koneksi->query($sql);
 
 if ($result->num_rows > 0) {
@@ -193,11 +220,18 @@ if ($result->num_rows > 0) {
                 <td>{$row['id_customer']}</td>
                 <td>{$row['data_akun']}</td>
                 <td>{$row['qty_order']}</td> 
+<<<<<<< Updated upstream
                 <td>{$row['tgl_order']}</td>
                 <td>{$row['gaji']}</td>
                 <td>{$row['laporan']}</td>
                 <td>{$row['stats']}</td>
                 <td>{$row['statsdone']}</td>
+=======
+                <td>{$row['payment']}</td>
+                <td>{$row['total_transaksi']}</td>
+                <td>{$row['stats']}</td>
+                
+>>>>>>> Stashed changes
                 <td>
                     <a href='../crud/transaksi_hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
                     <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>

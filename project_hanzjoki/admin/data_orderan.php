@@ -167,6 +167,7 @@ if ($koneksi->connect_error) {
 }
 
 $sql = "SELECT 
+<<<<<<< Updated upstream
 transaksi.id_transaksi,
 transaksi.tgl_order,
 transaksi.data_akun,
@@ -179,6 +180,17 @@ transaksi
 WHERE 
 transaksi.stats = 'belum lunas '";
 
+=======
+            transaksi.id_transaksi,
+            transaksi.tgl_order,
+            transaksi.data_akun,
+            transaksi.qty_order,
+            transaksi.payment,
+            transaksi.total_transaksi,
+            transaksi.stats
+        FROM 
+            transaksi;";
+>>>>>>> Stashed changes
 $result = $koneksi->query($sql);
 
 
