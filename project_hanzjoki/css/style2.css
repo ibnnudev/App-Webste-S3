@@ -1147,6 +1147,7 @@ input {
 .btn-check:checked + .btn-outline-light{
     background-color: #0174BE;
     color: #ffffff;
+    
 }
 
 /* Style untuk tombol outline light */
@@ -1273,7 +1274,7 @@ span.text-warning s {
     padding: 10px;
     
     border-radius: 10px;
-    background-color: #FFF0CE;
+    background-color: #ffffff;
     cursor: pointer;
     margin-top: 20px;
     transition: background-color 0.3s, border-color 0.3s;
@@ -1328,7 +1329,7 @@ span.text-warning s {
 }
 
 .promo-classic {
-    color: #ffc107;
+    color: #ffffff;
     font-size: 18px;
     font-weight: bold;
     text-decoration: underline;
@@ -1407,12 +1408,17 @@ input, button {
     color: #ffffff;
 }
 .btn-warning {
-    background-color: #06D85F;
+    background-color: #4CAF50;
     border-radius: 10px;
-    height: auto;
+    height: 40px;
     width: 170px;
-    font-size: 17px;
+    font-size: 16px;
+    font-weight: bold; /* Menambahkan bold */
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: white;
 }
+
 #orderForm button:active {
     transform: scale(1.25);
 }
@@ -1472,3 +1478,13 @@ input, button {
     transform: scale(1.1); /* Perbesar tombol saat dihover */
 }
 
+.diskon {
+    font-style: italic; /* Membuat teks miring */
+    text-decoration: line-through; /* Menambah garis tengah */
+    text-decoration-color: white; /* Warna garis tengah putih */
+    cursor: pointer; /* Mengubah kursor menjadi tanda panah saat berada di atasnya */
+}
+
+.diskon:hover {
+    color: blue; /* Warna teks berubah menjadi biru saat kursor di atasnya */
+}

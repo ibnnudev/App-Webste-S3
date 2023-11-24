@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="../css/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One?query=mochiy+ ">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyD8dJQ2W4G1xlCyD4pD9e2n4P7i8PRDj" crossorigin="anonymous">
+
 </head>
 <body>
     <header>
@@ -199,13 +202,13 @@ if ($result_murah_joki === false) {
                     <div class="row">
                         <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
                         <div class="col-12">
-    <span id="hargabro" name="hargabro" class="text-warning" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #FFC436;">
+    <span id="hargabro" name="hargabro" class="text-warning" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: RED;">
         <?= number_format($row['hasil'], 0, ',', '.'); ?>
     </span>
 </div>
 <div class="col-12">
     <span class="text-warning">
-        <?= number_format($row['harga'], 0, ',', '.'); ?>
+        <?= number_format($row['hasil'], 0, ',', '.'); ?>
     </span>
 </div>
 
@@ -309,7 +312,7 @@ if ($result_murah_joki === false) {
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Nama Barang</th>
+                    <th scope="col">Nama Paket</th>
                     <th scope="col">Harga</th>
                     <th scope="col">Qty</th>
                     <th scope="col">Subtotal</th>
@@ -321,18 +324,35 @@ if ($result_murah_joki === false) {
             </tbody>
         </table>
         <script>
-            function updateHiddenTableDataInput() {
-    var tableData = getDataFromTable();
-    document.getElementById('hiddenTableData').value = JSON.stringify(tableData);
+
+function getDataFromTable() {
+    var table = document.getElementById('keranjangsementara');
+    var data = [];
+
+    // Loop melalui setiap baris kecuali baris header
+    for (var i = 1; i < table.rows.length; i++) {
+        var row = table.rows[i];
+        var rowData = {
+            id: row.cells[0].innerText,
+            namaPaket: row.cells[1].innerText,
+            harga: row.cells[2].innerText,
+            qty: row.cells[3].innerText,
+            subtotal: row.cells[4].innerText,
+            // Jika Anda membutuhkan data lain, tambahkan di sini
+        };
+
+        data.push(rowData);
+    }
+
+    return data;
 }
 
-// Panggil fungsi ini sebelum mengirimkan formulir
-updateHiddenTableDataInput();
+
 
 
 function getTotalValue() {
     // Ambil elemen input dengan ID 'total'
-    var totalInput = document.getElementById('total');
+    var totalInput = document.getElementById('total_transaksi');
     
     // Ambil nilai dari elemen input
     var totalValue = totalInput.value;
@@ -482,7 +502,7 @@ console.log('Total Order:', totalOrder);
 
 
 
-    function addToCart(id, packageName, price, quantity, subtotal, deleteButton) {
+function addToCart(id, packageName, price, quantity, subtotal, deleteButton) {
     var cartTable = document.getElementById('keranjangsementara').getElementsByTagName('tbody')[0];
     var newRow = cartTable.insertRow();
     var cell1 = newRow.insertCell(0);
@@ -503,20 +523,22 @@ console.log('Total Order:', totalOrder);
 
 
     var deleteButton = document.createElement('button');
-        deleteButton.innerHTML = 'Hapus';
-        deleteButton.className = 'btn btn-danger btn-sm';
-        deleteButton.onclick = function () {
-            deleteRow(this);
-        };
+    deleteButton.innerHTML = 'Hapus';
+    deleteButton.className = 'btn btn-danger btn-sm';
+    deleteButton.onclick = function () {
+        deleteRow(this);
+        hitungTotal(); // Panggil fungsi hitungTotal() setelah menghapus baris
+    };
 
-        // Append the delete button to the cell
-        cell6.appendChild(deleteButton);
-    }
+    // Append the delete button to the cell
+    cell6.appendChild(deleteButton);
+}
 
-    function deleteRow(button) {
-        var row = button.parentNode.parentNode;
-        row.parentNode.removeChild(row);
-    }
+function deleteRow(button) {
+    var row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+}
+
 </script>
 </form>
 
@@ -530,7 +552,7 @@ console.log('Total Order:', totalOrder);
                               <h6 class="ppw">E- Wallet</h6>
 
                               <div class="col-md-3" width = "100px">
-                                <input type="radio" class="btn-check" name="pembayaran" id="dana" autocomplete="off">
+                                <input type="radio" class="btn-check" name="pembayaran" id="dana" value="DANA" autocomplete="off">
                                 <label class="col-12 btn btn-outline-light" for="dana">
                                   <div class="row">
                                     <div class="col"><img src="../image/dana.png" width="100px" height="100px" alt=""></div>
@@ -539,13 +561,14 @@ console.log('Total Order:', totalOrder);
                               </div>
 
                               <div class="col-md-3">
-                                <input type="radio" class="btn-check" name="pembayaran" id="ovo" autocomplete="off">
-                                <label class="col-12 btn btn-outline-light" for="ovo">
-                                  <div class="row">
-                                    <div class="col"><img src="../image/ovo.png" width="100px" height="70px" alt=""></div>
-                                  </div>
-                                </label>
-                              </div>
+    <input type="radio" class="btn-check" name="pembayaran" id="ovo" value="OVO" autocomplete="off">
+    <label class="col-12 btn btn-outline-light" for="ovo">
+        <div class="row">
+            <div class="col"><img src="../image/ovo.png" width="100px" height="70px" alt=""></div>
+        </div>
+    </label>
+</div>
+
                             </div>
                             <label for="qtyid" class="ppq"> Masukan No WhatsApp: </label>
                                 <input type="number" id="noWhatsApp" required>
@@ -553,8 +576,13 @@ console.log('Total Order:', totalOrder);
 
                           <script>
             // Mendapatkan label dan menampilkannya di konsol
-            var labelNoWhatsApp = document.querySelector('label[for="noWhatsApp"]').innerText;
-            console.log("Isi label: " + labelNoWhatsApp);
+            // Mendapatkan elemen input dengan ID "noWhatsApp"
+var noWhatsAppInput = document.getElementById('noWhatsApp');
+
+// Mengambil nilai dari elemen input
+var nilaiNoWhatsApp = noWhatsAppInput.value;
+
+
         </script>
 
                           <div class="buy-or">
@@ -566,41 +594,66 @@ console.log('Total Order:', totalOrder);
     </button>
 </div>
 
-<script>
-    function orderNow() {
-        // Logika untuk meng-handle klik tombol
-        console.log('Tombol Order Now diklik!');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Transaksi</title>
+</head>
+<body>
+<form method="post" action="">
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Periksa koneksi ke database
+    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    if ($koneksi->connect_error) {
+        die("Koneksi ke database gagal: " . $koneksi->connect_error);
     }
-</script>
 
+    $data_akun = $_POST['data_akun'];
+    $qty_order = $_POST['jumlahIsiKeranjang'];
+    $tgl_order = $_POST['tanggalnow'];
+    $total_transaksi = $_POST['total_transaksi'];
+    $payment = $_POST['pembayaran'];
+    $no_wa = $_POST['noWhatsApp'];
 
-<script>
-// ...
-function orderNow() {
-    // ...
+    // Gunakan prepared statements untuk menghindari SQL injection
+    $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats)
+     VALUES ('', '', ?, ?, ?, ?, ?, ?, 'Belum Lunas')");
+    $sql->bind_param("ssssss", $data_akun, $qty_order, $tgl_order, $total_transaksi, $payment, $no_wa);
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'proses.php', true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                // Tampilkan respons dari server jika sukses
-                alert(xhr.responseText);
-            } else if (xhr.status == 500) {
-                // Tangkap dan tampilkan pesan kesalahan dari server
-                alert("Terjadi kesalahan saat memesan: " + xhr.responseText);
-            }
-            // Atau lakukan tindakan lain setelah proses selesai
+    if ($sql->execute()) {
+        echo "Data transaksi berhasil disimpan ke database.";
+    
+        // Dapatkan ID transaksi yang baru saja dimasukkan
+        $id_transaksi = $koneksi->insert_id;
+    
+        // Loop untuk memasukkan data ke dalam tabel detail_transaksi
+        foreach ($tableData as $rowData) {
+            $id_paket = $rowData['id'];
+            $harga = $rowData['harga'];
+            $subtotal = $rowData['subtotal'];
+            
+    
+            // Gunakan prepared statements untuk menghindari SQL injection
+            $sqlDetail = $koneksi->prepare("INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES (?, ?, ?, ?)");
+            $sqlDetail->bind_param("ssss", $id_transaksi, $id_paket,$qty, $subtotal);
+    
+            // Eksekusi query untuk memasukkan data ke dalam tabel detail_transaksi
+            $sqlDetail->execute();
+            $sqlDetail->close(); // Tutup prepared statement
         }
-    };
-
-    // Kumpulkan data form dan kirim sebagai FormData
-    var formData = new FormData(document.getElementById('yourFormId')); // Ganti 'yourFormId' dengan ID formulir Anda
-    xhr.send(formData);
+    } else {
+        echo "Terjadi kesalahan saat menyimpan data transaksi: " . $koneksi->error;
+    }
+    
+    $sql->close(); // Tutup prepared statement
+    $koneksi->close(); // Tutup koneksi database
 }
-</script>
-
-
+?>
+<button type="submit">Simpan Transaksi</button>
+</form>
 
 </div>
 
@@ -618,7 +671,7 @@ function concatenateInputs() {
     var data_akun = input1Value + ' ' + input2Value + ' ' + input3Value + ' ' + input4Value + ' ' + input5Value + ' ' + input6Value;
 
     // Set the concatenated value to a hidden input field
-    document.getElementById('hidden_data_akun').value = data_akun;
+    document.getElementById('data_akun').value = data_akun;
 }
 
 </script>
@@ -626,74 +679,26 @@ function concatenateInputs() {
 
 <script>
 // Fungsi untuk mendapatkan tanggal saat ini
-function getFormattedDate() {
+function getFormattedDateTime() {
     var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
     var yyyy = today.getFullYear();
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var dd = String(today.getDate()).padStart(2, '0');
+    var hh = String(today.getHours()).padStart(2, '0');
+    var min = String(today.getMinutes()).padStart(2, '0');
+    var ss = String(today.getSeconds()).padStart(2, '0');
 
-    return yyyy + '-' + mm + '-' + dd;
+    return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
 }
 
+
 // Set nilai input tanggalnow dengan tanggal saat ini
-document.getElementById('tanggalnow').value = getFormattedDate();
+document.getElementById('tanggalnow').value = getFormattedDateTime();
 // Tampilkan label setelah mengisi nilai
 document.getElementById('labelTanggal').style.display = 'inline-block';
 </script>
 
 
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Periksa koneksi ke database
-    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-    if ($koneksi->connect_error) {
-        die("Koneksi ke database gagal: " . $koneksi->connect_error);
-    }
-
-    $tgl_order = $_POST['tanggalnow'];
-    $data_akun = $_POST['hidden_data_akun'];
-    $qty_order = $_POST['jumlahIsiKeranjang'];
-    $total_transaksi = $_POST['total'];
-    $payment = $_POST['payment'];
-
-    // Gunakan prepared statements untuk menghindari SQL injection
-    $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats)
-     VALUES ('', '', ?, ?, ?, ?, ?, 'no_wa', 'Belum Lunas')");
-    $sql->bind_param("ssssssss", $data_akun, $qty_order, $tgl_order, $total_transaksi, $payment);
-
-    if ($sql->execute()) {
-        echo "Data transaksi berhasil disimpan ke database.";
-
-        // Memasukkan data ke dalam tabel detail_transaksi
-        $tableDataJson = $_POST['hiddenTableData'];
-        $tableData = json_decode($tableDataJson, true);
-
-        foreach ($tableData as $rowData) {
-            $id_barang = $rowData['id'];
-            $nama_barang = $rowData['nama_barang'];
-            $harga = $rowData['harga'];
-            $subtotal = $rowData['subtotal'];
-            $aksi = $rowData['aksi'];
-
-            // Gunakan prepared statements untuk menghindari SQL injection
-            $sqlDetail = $koneksi->prepare("INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES (?, ?, ?, ?)");
-            $sqlDetail->bind_param("ssss", $id_transaksi, $id_barang, $qty_order, $subtotal);
-
-            // Eksekusi query untuk memasukkan data ke dalam tabel detail_transaksi
-            $sqlDetail->execute();
-            $sqlDetail->close(); // Tutup prepared statement
-        }
-
-        $sql->close(); // Tutup prepared statement
-    } else {
-        http_response_code(500); // Set HTTP response code ke Internal Server Error
-        echo "Error: " . $sql->error;
-    }
-
-    // Tutup koneksi ke database
-    $koneksi->close();
-}
-?>
 
 
 
