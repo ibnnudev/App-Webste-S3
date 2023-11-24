@@ -1137,18 +1137,16 @@ input {
 .col-md-4 {
     margin-bottom: -10px;
     padding: 10px;
-    
+
     text-align: center;
     position: relative; /* Menentukan posisi relatif untuk child element */
     
 }
 
 /* Style ketika radio button terpilih */
-.btn-check:checked + .btn-outline-light {
-    background-color: #007bff;
-    color: #fff;
-    
-
+.btn-check:checked + .btn-outline-light{
+    background-color: #0174BE;
+    color: #ffffff;
 }
 
 /* Style untuk tombol outline light */
@@ -1163,25 +1161,31 @@ input {
 }
 
 /* Style untuk teks warning */
-.text-warning {
-    color: #ffc107;
+.text-warning.checked {
+    background-color: #0174BE;
+    color: #ffffff  ;
+        
 }
 
 /* Style untuk background genap */
 .even-background {
+    color: #0174BE;
     border-radius: 10px;
     margin-right: 5px;
     width: 200px;
     height: inherit;
     margin-bottom: -15px;
+   
+
 }
 
 /* Style untuk background ganjil */
 .odd-background {
-    
+    color: #0174BE;
     border-radius: 10px;
     margin-right: 5px;
     width: 200px;
+    
     
 }
 
@@ -1233,6 +1237,7 @@ span.text-warning s {
 .row.g-3 {
     display: flex;
     flex-wrap: wrap;
+    
 }
 
 /* Styling E-Wallet h6 */
@@ -1254,6 +1259,7 @@ span.text-warning s {
     position: absolute;
     clip: rect(0, 0, 0, 0);
     pointer-events: none;
+    
 }
 
 .btn-check {
@@ -1261,13 +1267,13 @@ span.text-warning s {
 }
 /* Styling btn-outline-light label */
 .btn.btn-outline-light {
-    width: 170px;
-    text-align: center;
+    width: 200px;
+    text-align: left 12;
     margin-right: 80px;
     padding: 10px;
     
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #FFF0CE;
     cursor: pointer;
     margin-top: 20px;
     transition: background-color 0.3s, border-color 0.3s;
@@ -1275,8 +1281,8 @@ span.text-warning s {
 
 /* Styling btn-outline-light label hover */
 .btn.btn-outline-light:hover {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #0174BE;
+    color: #ffffff;
 }
 
 /* Styling images inside label */

@@ -167,7 +167,6 @@ if ($koneksi->connect_error) {
 }
 
 $sql = "SELECT 
-<<<<<<< Updated upstream
 transaksi.id_transaksi,
 transaksi.tgl_order,
 transaksi.data_akun,
@@ -179,18 +178,6 @@ FROM
 transaksi
 WHERE 
 transaksi.stats = 'belum lunas '";
-
-=======
-            transaksi.id_transaksi,
-            transaksi.tgl_order,
-            transaksi.data_akun,
-            transaksi.qty_order,
-            transaksi.payment,
-            transaksi.total_transaksi,
-            transaksi.stats
-        FROM 
-            transaksi;";
->>>>>>> Stashed changes
 $result = $koneksi->query($sql);
 
 
@@ -240,11 +227,11 @@ $koneksi->close();
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `id_transaksi=${id_transaksi}`,
+                body: id_transaksi=${id_transaksi},
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`Kesalahan HTTP! Status: ${response.status}`);
+                    throw new Error(Kesalahan HTTP! Status: ${response.status});
                 }
                 return response.json();
             })

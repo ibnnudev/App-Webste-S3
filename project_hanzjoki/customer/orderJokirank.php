@@ -108,7 +108,6 @@
             </div>
         </div>
 
-        
         <div class="right-input">
             <div class="input-container">
                 <input type="text" id="input4" name="input4" placeholder="Masukan Password">
@@ -127,8 +126,7 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="hidden_data_akun" name="hidden_data_akun">
-    <input type="hidden" id="hidden_payment" name="hidden_payment" value="dana">
+
     
 
 
@@ -200,7 +198,19 @@ if ($result_murah_joki === false) {
                 <label class="btn btn-outline-light col-12">
                     <div class="row">
                         <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                        <div class="col-12"><span class="text-warning"><?= number_format($row['hasil'], 0, ',', '.'); ?></span></div>
+                        <div class="col-12">
+    <span id="hargabro" name="hargabro" class="text-warning" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #FFC436;">
+        <?= number_format($row['hasil'], 0, ',', '.'); ?>
+    </span>
+</div>
+<div class="col-12">
+    <span class="text-warning">
+        <?= number_format($row['harga'], 0, ',', '.'); ?>
+    </span>
+</div>
+
+
+
                         <div class="col-12">
                             
                         </div>
@@ -228,7 +238,12 @@ if ($result_murah_joki === false) {
                 <label class="btn btn-outline-light col-12">
                     <div class="row">
                         <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                        <div class="col-12"><span class="text-warning"><?= number_format($row['harga'], 0, ',', '.'); ?></span></div>
+                        <div class="col-12">
+    <span id="hargabro" name="hargabro" class="text-warning">
+        <?= number_format($row['harga'], 0, ',', '.'); ?>
+    </span>
+</div>
+
                         <div class="col-12">
                             <!-- Isi sesuai kebutuhan -->
                         </div>
@@ -256,7 +271,12 @@ if ($result_murah_joki === false) {
                 <label class="btn btn-outline-light col-12">
                     <div class="row">
                         <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                        <div class="col-12"><span class="text-warning"><?= number_format($row['harga'], 0, '', '.'); ?></span></div>
+                        <div class="col-12">
+    <span id="hargabro" name="hargabro" class="text-warning">
+        <?= number_format($row['harga'], 0, ',', '.'); ?>
+    </span>
+</div>
+
 
                         <div class="col-12">
                             <!-- Isi sesuai kebutuhan -->
@@ -355,6 +375,8 @@ console.log('Total Order:', totalOrder);
     <!-- Menghitung Total Harga Yang Ada Di Keranjang -->
     <label for="total" class="ppq"> Total: </label>
     <input type="text" class="bro" id="total" readonly>
+
+    
 </form>
     </div>
     <!-- ... Your HTML code ... -->
@@ -535,15 +557,15 @@ console.log('Total Order:', totalOrder);
             console.log("Isi label: " + labelNoWhatsApp);
         </script>
 
-                          <!-- <div class="buy-or">
+                          <div class="buy-or">
     <button class="payment-button" onclick="processOrder()">
         <img src="../image/cart.png" alt="Payment Image" class="payment-image" id="orderImage">
         <div class="payment-content">
             <h3 class="payment-title">Order Now</h3>
         </div>
     </button>
-</div> -->
-<button type="button" class="payment-button" onclick="orderNow()"><i class="bi bi-cart"></i> order Now</button> 
+</div>
+
 <script>
     function orderNow() {
         // Logika untuk meng-handle klik tombol
@@ -597,57 +619,27 @@ function concatenateInputs() {
 
     // Set the concatenated value to a hidden input field
     document.getElementById('hidden_data_akun').value = data_akun;
-    console.log('Concatenated Data Akun:', data_akun);
-    console.log('Payment:', document.getElementById('hidden_payment').value);
-}
-
-
-function setPayment(paymentMethod) {
-    // Set the selected payment method to hidden input field
-    document.getElementById('hidden_payment').value = paymentMethod;
-}
-
-function orderNow() {
-    concatenateInputs(); // Call the function to concatenate inputs before ordering
-    // Additional logic for order now functionality
-    var selectedPayment = document.getElementById('hidden_payment').value;
-    console.log('Selected Payment Method:', selectedPayment);
-    // Add any additional logic for the order now functionality
-    // For example, show a payment modal, submit the form, etc.
-}
-function autoisitransaksi() {
-  // Mendapatkan angka terakhir dari database atau sumber data lainnya
-  let lastNumber = getLastNumberFromDatabase(); // Gantilah dengan logika sesuai kebutuhan
-
-  // Menambahkan 1 untuk mendapatkan angka berikutnya
-  let nextNumber = lastNumber + 1;
-
-  // Menghasilkan format TRN000000000001
-  let formattedNumber = 'TRN' + String(nextNumber).padStart(12, '0');
-
-  // Tampilkan hasil atau lakukan sesuai kebutuhan (misalnya, simpan ke database)
-  console.log('Generated Sequence:', formattedNumber);
-
-  // Mengembalikan hasil untuk digunakan jika diperlukan
-  return formattedNumber;
 }
 
 </script>
-<?php
-function getTodayDate() {
-    // Set zona waktu sesuai kebutuhan (misalnya, "Asia/Jakarta")
-    date_default_timezone_set('Asia/Jakarta');
-    
-    // Format tanggal sesuai keinginan (contoh: "Y-m-d H:i:s" untuk format tanggal dan waktu)
-    $todayDate = date('Y-m-d'); // Ganti format sesuai kebutuhan
-    
-    return $todayDate;
+
+
+<script>
+// Fungsi untuk mendapatkan tanggal saat ini
+function getFormattedDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = today.getFullYear();
+
+    return yyyy + '-' + mm + '-' + dd;
 }
 
-// Contoh penggunaan
-$todayDate = getTodayDate();
-
-?>
+// Set nilai input tanggalnow dengan tanggal saat ini
+document.getElementById('tanggalnow').value = getFormattedDate();
+// Tampilkan label setelah mengisi nilai
+document.getElementById('labelTanggal').style.display = 'inline-block';
+</script>
 
 
 <?php
@@ -658,16 +650,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Koneksi ke database gagal: " . $koneksi->connect_error);
     }
 
-    $id_transaksi = autoisitransaksi();
+    $tgl_order = $_POST['tanggalnow'];
     $data_akun = $_POST['hidden_data_akun'];
     $qty_order = $_POST['jumlahIsiKeranjang'];
-    $tgl_order = getTodayDate();
     $total_transaksi = $_POST['total'];
     $payment = $_POST['payment'];
 
     // Gunakan prepared statements untuk menghindari SQL injection
-    $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, id_worker, data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats) VALUES (?, '', '', ?, ?, ?, ?, ?, 'no_wa', 'Belum Lunas')");
-    $sql->bind_param("ssssssss", $id_transaksi, $data_akun, $qty_order, $tgl_order, $total_transaksi, $payment);
+    $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats)
+     VALUES ('', '', ?, ?, ?, ?, ?, 'no_wa', 'Belum Lunas')");
+    $sql->bind_param("ssssssss", $data_akun, $qty_order, $tgl_order, $total_transaksi, $payment);
 
     if ($sql->execute()) {
         echo "Data transaksi berhasil disimpan ke database.";
