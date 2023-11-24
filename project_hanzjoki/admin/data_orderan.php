@@ -227,11 +227,11 @@ $koneksi->close();
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `id_transaksi=${id_transaksi}`,
+                body: id_transaksi=${id_transaksi},
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`Kesalahan HTTP! Status: ${response.status}`);
+                    throw new Error(Kesalahan HTTP! Status: ${response.status});
                 }
                 return response.json();
             })

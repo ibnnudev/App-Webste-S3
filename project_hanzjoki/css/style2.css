@@ -1137,18 +1137,17 @@ input {
 .col-md-4 {
     margin-bottom: -10px;
     padding: 10px;
-    
+
     text-align: center;
     position: relative; /* Menentukan posisi relatif untuk child element */
     
 }
 
 /* Style ketika radio button terpilih */
-.btn-check:checked + .btn-outline-light {
-    background-color: #007bff;
-    color: #fff;
+.btn-check:checked + .btn-outline-light{
+    background-color: #0174BE;
+    color: #ffffff;
     
-
 }
 
 /* Style untuk tombol outline light */
@@ -1163,25 +1162,31 @@ input {
 }
 
 /* Style untuk teks warning */
-.text-warning {
-    color: #ffc107;
+.text-warning.checked {
+    background-color: #0174BE;
+    color: #ffffff  ;
+        
 }
 
 /* Style untuk background genap */
 .even-background {
+    color: #0174BE;
     border-radius: 10px;
     margin-right: 5px;
     width: 200px;
     height: inherit;
     margin-bottom: -15px;
+   
+
 }
 
 /* Style untuk background ganjil */
 .odd-background {
-    
+    color: #0174BE;
     border-radius: 10px;
     margin-right: 5px;
     width: 200px;
+    
     
 }
 
@@ -1233,6 +1238,7 @@ span.text-warning s {
 .row.g-3 {
     display: flex;
     flex-wrap: wrap;
+    
 }
 
 /* Styling E-Wallet h6 */
@@ -1254,6 +1260,7 @@ span.text-warning s {
     position: absolute;
     clip: rect(0, 0, 0, 0);
     pointer-events: none;
+    
 }
 
 .btn-check {
@@ -1261,13 +1268,13 @@ span.text-warning s {
 }
 /* Styling btn-outline-light label */
 .btn.btn-outline-light {
-    width: 170px;
-    text-align: center;
+    width: 200px;
+    text-align: left 12;
     margin-right: 80px;
     padding: 10px;
     
     border-radius: 10px;
-    background-color: #fff;
+    background-color: #ffffff;
     cursor: pointer;
     margin-top: 20px;
     transition: background-color 0.3s, border-color 0.3s;
@@ -1275,8 +1282,8 @@ span.text-warning s {
 
 /* Styling btn-outline-light label hover */
 .btn.btn-outline-light:hover {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #0174BE;
+    color: #ffffff;
 }
 
 /* Styling images inside label */
@@ -1322,7 +1329,7 @@ span.text-warning s {
 }
 
 .promo-classic {
-    color: #ffc107;
+    color: #ffffff;
     font-size: 18px;
     font-weight: bold;
     text-decoration: underline;
@@ -1401,12 +1408,17 @@ input, button {
     color: #ffffff;
 }
 .btn-warning {
-    background-color: #06D85F;
+    background-color: #4CAF50;
     border-radius: 10px;
-    height: auto;
+    height: 40px;
     width: 170px;
-    font-size: 17px;
+    font-size: 16px;
+    font-weight: bold; /* Menambahkan bold */
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: white;
 }
+
 #orderForm button:active {
     transform: scale(1.25);
 }
@@ -1466,3 +1478,13 @@ input, button {
     transform: scale(1.1); /* Perbesar tombol saat dihover */
 }
 
+.diskon {
+    font-style: italic; /* Membuat teks miring */
+    text-decoration: line-through; /* Menambah garis tengah */
+    text-decoration-color: white; /* Warna garis tengah putih */
+    cursor: pointer; /* Mengubah kursor menjadi tanda panah saat berada di atasnya */
+}
+
+.diskon:hover {
+    color: blue; /* Warna teks berubah menjadi biru saat kursor di atasnya */
+}
