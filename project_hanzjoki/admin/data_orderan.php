@@ -78,7 +78,7 @@ if (isset($_SESSION['user'])) {
                             </a>
                             <a class="nav-link" href="data_costumer.php">
                                     <img src="../image/CUstomer.png" alt="">
-                       ~             <span class="jdl-konten-2">Customer</span>
+                                   <span class="jdl-konten-2">Customer</span>
                             </a>
                             <a class="nav-link" href="#" style=" background-color: #FF9900; height: 50px;">
                                     <img src="../image/icons8-shopping-cart-64.png" alt="">
@@ -195,7 +195,7 @@ if ($result->num_rows > 0) {
                 <button class='btn btn-danger btn-ready' data-id='{$row['id_transaksi']}'>Ready</button>
                     <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
                     <a href='../crud/transaksi_hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
-                    
+                    <a href='cek_bukti_tf.php?id=" . $row['id_transaksi'] . "' class='btn btn-info'>Cek TF</a>
                     
                 </td>
             </tr>";
