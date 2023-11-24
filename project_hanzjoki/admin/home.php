@@ -118,6 +118,206 @@ if (isset($_SESSION['user'])) {
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                        
+<!-- =============================================================================================================================== -->
+<?php
+
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "hanzjoki";
+
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+
+                        // Periksa koneksi
+                        if ($conn->connect_error) {
+                            die("Koneksi gagal: " . $conn->connect_error);
+                        }
+// Kueri SQL untuk mendapatkan jumlah transaksi hari ini
+$sql = "SELECT COUNT(*) as total_transaksi FROM transaksi WHERE DATE(tgl_order) = CURDATE()";
+$result = $conn->query($sql);
+
+// Ambil hasil kueri
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $totalTransaksiday = $row['total_transaksi'];
+} else {
+    $totalTransaksiday = 0;
+}
+
+// ... Tutup koneksi ke database ...
+?>
+                                
+<div class="row" style="margin-left: 10px; margin-right: 10px;">
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Transaksi
+                                        (Hari Ini)</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalTransaksiday; ?></div>
+                                </div>
+                                <div class="col-auto">
+                                    <img src="../image/transaction.png" alt="" style="width: 60px;">
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+<!-- ========================================================================================================= -->
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hanzjoki";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Periksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// Kueri SQL untuk mendapatkan jumlah total transaksi
+$sql = "SELECT COUNT(*) as transaksi_keseluruhan FROM transaksi";
+$result = $conn->query($sql);
+
+// Ambil hasil kueri
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $totalTransaksi = $row['transaksi_keseluruhan'];
+} else {
+    $totalTransaksi = 0;
+}
+
+// Tutup koneksi ke database
+$conn->close();
+?>
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1"> Total Transaksi 
+                                        </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalTransaksi ?></div>
+                                </div>
+                                <div class="col-auto">
+                                    <img src="../image/mobile-banking.png" alt="" style="width: 60px;">
+                                </div>
+                            </div>
+                        </div> .
+                    </div>
+                </div>
+<!-- =================================================================================================================================================== -->
+                <!-- Earnings (Monthly) Card Example -->
+                <?php
+                        // Buat koneksi ke database (gantilah sesuai dengan konfigurasi Anda)
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "hanzjoki";
+
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+
+                        // Periksa koneksi
+                        if ($conn->connect_error) {
+                            die("Koneksi gagal: " . $conn->connect_error);
+                        }
+
+                        // Eksekusi kueri SQL untuk mendapatkan jumlah pekerja
+                        $sql = "SELECT COUNT(*) as total_customer FROM data_customer";
+                        $result = $conn->query($sql);
+
+                        // Ambil hasil kueri
+                        if ($result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+                            $totalcustomer = $row['total_customer'];
+                        } else {
+                            $totalcustomer = 0;
+                        }
+
+                        // Tutup koneksi ke database
+                        $conn->close();
+                        ?>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Custemer </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalcustomer; ?></div>
+                                </div>
+                                <div class="col-auto">
+                                    <img src="../image/customer_3585921.png" alt="" style="width: 60px;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+<!-- ============================================================================================================================================= -->
+<!-- -----------------------total worker------------------------- -->
+                <!-- Pending Requests Card Example -->
+                <?php
+                        // Buat koneksi ke database (gantilah sesuai dengan konfigurasi Anda)
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "";
+                        $dbname = "hanzjoki";
+
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+
+                        // Periksa koneksi
+                        if ($conn->connect_error) {
+                            die("Koneksi gagal: " . $conn->connect_error);
+                        }
+
+                        // Eksekusi kueri SQL untuk mendapatkan jumlah pekerja
+                        $sql = "SELECT COUNT(*) as total_worker FROM data_worker";
+                        $result = $conn->query($sql);
+
+                        // Ambil hasil kueri
+                        if ($result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+                            $totalWorker = $row['total_worker'];
+                        } else {
+                            $totalWorker = 0;
+                        }
+
+                        // Tutup koneksi ke database
+                        $conn->close();
+                        ?>
+
+                        <!-- Tampilkan jumlah pekerja dalam elemen HTML -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Worker Saat ini</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalWorker; ?></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <!-- <i class="fas fa-users fa-2x text-gray-300"></i> -->
+                                            <img src="../image/worker.png" alt="" style="width: 60px;">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            <div class="row" style="margin-left: 10px; margin-right: 10px; margin-top:40px;">
+
+
+
+
+
+
+
 
                         
                     </div>
