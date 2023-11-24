@@ -1145,8 +1145,10 @@ input {
 
 /* Style ketika radio button terpilih */
 .btn-check:checked + .btn-outline-light {
-    background-color: #1a3553;
+    background-color: #007bff;
     color: #fff;
+    
+
 }
 
 /* Style untuk tombol outline light */
@@ -1320,8 +1322,8 @@ span.text-warning s {
 }
 
 .promo-classic {
-    color: #fff;
-    font-size: 20px;
+    color: #ffc107;
+    font-size: 18px;
     font-weight: bold;
     text-decoration: underline;
     margin-top: 20px;
@@ -1424,8 +1426,42 @@ input, button {
     background-color: #0C356A; /* Warna latar belakang */
     color: white; /* Warna teks */
     border: none; /* Menghapus border (jika ada) */
-    font-size: 18px; /* Mengatur ukuran teks */
+    font-size: 24px; /* Mengatur ukuran teks */
     font-weight: bold; /* Membuat teks menjadi tebal */
     padding: 8px; /* Menambahkan padding agar tampilan lebih baik */
     outline: none; 
+
+}
+
+.buy-or {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.payment-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 11px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex; /* Membuat kontennya mengikuti flexbox */
+    align-items: center; /* Pusatkan konten secara vertikal */
+    justify-content: center; /* Pusatkan konten secara horizontal */
+}
+
+.payment-image {
+    width: 30px; /* Sesuaikan lebar gambar */
+    height: auto; /* Biarkan tinggi gambar menyesuaikan */
+    margin-right: 10px; /* Beri jarak antara gambar dan teks */
+}
+
+.payment-title {
+    margin: 0; /* Hapus margin default */
+    font-size: 15px;
+}
+
+.payment-button:hover {
+    transform: scale(1.1); /* Perbesar tombol saat dihover */
 }

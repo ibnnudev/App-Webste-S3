@@ -127,6 +127,10 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="hidden_data_akun" name="hidden_data_akun">
+    <input type="hidden" id="hidden_payment" name="hidden_payment" value="dana">
+    
+
 
     <?php
 // Koneksi ke database
@@ -181,6 +185,7 @@ if ($result_murah_joki === false) {
     <div class="card-header" id="judulPromoRank" style="display: none;">JOKI RANK</div>
 
     <!-- Promo Joki Rank -->
+    <div class="card-header">Pilih Paket Joki</div>
     <div class="promo-classic">Promo Joki Rank</div>
     <div class="container-1">
         <?php
@@ -269,6 +274,7 @@ if ($result_murah_joki === false) {
         <label for="qtyid" class="ppq"> Jumlah: </label>
         <input type="number" id="qtyid" required>
         <button type="button" class="btn btn-warning mt-3" onclick="order()"><i class="bi bi-cart"></i> Masukan Keranjang</button> 
+        
         <div class="text_keranjang">
             Keranjang
         </div>
@@ -294,16 +300,86 @@ if ($result_murah_joki === false) {
                 <!-- Data tabel keranjang akan ditampilkan di sini -->
             </tbody>
         </table>
-    </div>
-    <form id="totalForm">
-        <label for="total" class="ppq"> Total: </label>
-        <input type="text" class="bro" id="total" readonly>
+        <script>
+            function updateHiddenTableDataInput() {
+    var tableData = getDataFromTable();
+    document.getElementById('hiddenTableData').value = JSON.stringify(tableData);
+}
+
+// Panggil fungsi ini sebelum mengirimkan formulir
+updateHiddenTableDataInput();
+
+
+function getTotalValue() {
+    // Ambil elemen input dengan ID 'total'
+    var totalInput = document.getElementById('total');
+    
+    // Ambil nilai dari elemen input
+    var totalValue = totalInput.value;
+    
+    return totalValue;
+}
+
+// Contoh penggunaan
+var totalOrder = getTotalValue();
+console.log('Total Order:', totalOrder);
+</script>
+
+        <script>
+                    function getQtyFromKeranjang() {
+                        // Sama seperti sebelumnya
+
+                        // ...
+
+                        return totalQty;
+                    }
+
+                    function updateHiddenQtyInput() {
+                        var qtyOrder = getQtyFromKeranjang();
+                        document.getElementById('hiddenQty').value = qtyOrder;
+                    }
+
+                    // Panggil fungsi ini sebelum mengirimkan formulir
+                    updateHiddenQtyInput();
+                            </script>
+
         
-    </form>
+</div>
+    <form id="totalForm">
+    <!-- Tambahkan elemen input untuk menampilkan jumlah isi keranjang -->
+    
+    <!-- Di dalam formulir -->
+    <input type="hidden" name="jumlahIsiKeranjang" id="hiddenQty" value="">
+
+    
+    <!-- Menghitung Total Harga Yang Ada Di Keranjang -->
+    <label for="total" class="ppq"> Total: </label>
+    <input type="text" class="bro" id="total" readonly>
+</form>
     </div>
     <!-- ... Your HTML code ... -->
+    <script>
+    function hitungIsiKeranjang() {
+        var tabel = document.getElementById('keranjangsementara');
+        var tbody = tabel.getElementsByTagName('tbody')[0];
+        var baris = tbody.getElementsByTagName('tr');
+        var total = 0;
 
-<script>
+        for (var i = 0; i < baris.length; i++) {
+            var subtotal = parseFloat(baris[i].getElementsByTagName('td')[4].innerText);
+            total += subtotal;
+        }
+
+        // Mengisi nilai input pada formulir
+        document.getElementById('total').value = total;
+        document.getElementById('jumlahIsiKeranjang').value = baris.length;
+    }
+
+    // Jalankan fungsi saat halaman dimuat
+    window.onload = function() {
+        hitungIsiKeranjang();
+    };
+        
     function hitungTotal() {
         var tabelKeranjang = document.getElementById('keranjangsementara');
         var baris = tabelKeranjang.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
@@ -336,7 +412,12 @@ if ($result_murah_joki === false) {
         selectedRadio.closest('.col-md-4').classList.toggle('selected-background');
     }
 
+
+    
+
+
     function order() {
+        
     // Get the selected radio button
     var selectedRadio = document.querySelector('input[name="nominal"]:checked');
 
@@ -365,13 +446,18 @@ if ($result_murah_joki === false) {
 
             // Menghitung total setelah menambah item
             hitungTotal();
+            hitungIsiKeranjang();
+            
         } else {
             alert('Please enter a valid quantity.');
         }
     } else {
         alert('Please select a package.');
     }
+    
 }
+
+
 
 
     function addToCart(id, packageName, price, quantity, subtotal, deleteButton) {
@@ -391,8 +477,8 @@ if ($result_murah_joki === false) {
 
     // Calculate subtotal as an integer
     var calculatedSubtotal = price * quantity;
-    hasilakhir = calculatedSubtotal + '000';
-     cell5.innerHTML = hasilakhir;
+    cell5.innerHTML = calculatedSubtotal + '000';
+
 
     var deleteButton = document.createElement('button');
         deleteButton.innerHTML = 'Hapus';
@@ -410,35 +496,7 @@ if ($result_murah_joki === false) {
         row.parentNode.removeChild(row);
     }
 </script>
-</body>
 </form>
-</html>
-
-
-
-<!-- =========================================================================================================================== -->
-<!-- ----------------------promo---------------------- -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<script src="asset/node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-
-<script>
-  function order() {
-    Swal.fire({
-      title: 'Simpan perubahan?',
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Save',
-      denyButtonText: Don't save,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire('Pembelian sedang di proses, tunggu!', '', 'success')
-      } else if (result.isDenied) {
-        Swal.fire('Terjadi Kesalahan pada proses pembelian', '', 'info')
-      }
-    });
-  }
-</script>
 
 
 <div class="pembayan-metode">
@@ -468,10 +526,185 @@ if ($result_murah_joki === false) {
                               </div>
                             </div>
                             <label for="qtyid" class="ppq"> Masukan No WhatsApp: </label>
-                                <input type="number" id="qtyid" required>
+                                <input type="number" id="noWhatsApp" required>
                           </div>
 
+                          <script>
+            // Mendapatkan label dan menampilkannya di konsol
+            var labelNoWhatsApp = document.querySelector('label[for="noWhatsApp"]').innerText;
+            console.log("Isi label: " + labelNoWhatsApp);
+        </script>
+
+                          <!-- <div class="buy-or">
+    <button class="payment-button" onclick="processOrder()">
+        <img src="../image/cart.png" alt="Payment Image" class="payment-image" id="orderImage">
+        <div class="payment-content">
+            <h3 class="payment-title">Order Now</h3>
+        </div>
+    </button>
+</div> -->
+<button type="button" class="payment-button" onclick="orderNow()"><i class="bi bi-cart"></i> order Now</button> 
+<script>
+    function orderNow() {
+        // Logika untuk meng-handle klik tombol
+        console.log('Tombol Order Now diklik!');
+    }
+</script>
+
+
+<script>
+// ...
+function orderNow() {
+    // ...
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'proses.php', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                // Tampilkan respons dari server jika sukses
+                alert(xhr.responseText);
+            } else if (xhr.status == 500) {
+                // Tangkap dan tampilkan pesan kesalahan dari server
+                alert("Terjadi kesalahan saat memesan: " + xhr.responseText);
+            }
+            // Atau lakukan tindakan lain setelah proses selesai
+        }
+    };
+
+    // Kumpulkan data form dan kirim sebagai FormData
+    var formData = new FormData(document.getElementById('yourFormId')); // Ganti 'yourFormId' dengan ID formulir Anda
+    xhr.send(formData);
+}
+</script>
+
+
+
 </div>
+
+<!-- =============================================================================== -->
+<script>
+function concatenateInputs() {
+    var input1Value = document.getElementById('input1').value;
+    var input2Value = document.getElementById('input2').value;
+    var input3Value = document.getElementById('input3').value;
+    var input4Value = document.getElementById('input4').value;
+    var input5Value = document.getElementById('input5').value;
+    var input6Value = document.getElementById('input6').value;
+
+    // Combine the values into one variable
+    var data_akun = input1Value + ' ' + input2Value + ' ' + input3Value + ' ' + input4Value + ' ' + input5Value + ' ' + input6Value;
+
+    // Set the concatenated value to a hidden input field
+    document.getElementById('hidden_data_akun').value = data_akun;
+    console.log('Concatenated Data Akun:', data_akun);
+    console.log('Payment:', document.getElementById('hidden_payment').value);
+}
+
+
+function setPayment(paymentMethod) {
+    // Set the selected payment method to hidden input field
+    document.getElementById('hidden_payment').value = paymentMethod;
+}
+
+function orderNow() {
+    concatenateInputs(); // Call the function to concatenate inputs before ordering
+    // Additional logic for order now functionality
+    var selectedPayment = document.getElementById('hidden_payment').value;
+    console.log('Selected Payment Method:', selectedPayment);
+    // Add any additional logic for the order now functionality
+    // For example, show a payment modal, submit the form, etc.
+}
+function autoisitransaksi() {
+  // Mendapatkan angka terakhir dari database atau sumber data lainnya
+  let lastNumber = getLastNumberFromDatabase(); // Gantilah dengan logika sesuai kebutuhan
+
+  // Menambahkan 1 untuk mendapatkan angka berikutnya
+  let nextNumber = lastNumber + 1;
+
+  // Menghasilkan format TRN000000000001
+  let formattedNumber = 'TRN' + String(nextNumber).padStart(12, '0');
+
+  // Tampilkan hasil atau lakukan sesuai kebutuhan (misalnya, simpan ke database)
+  console.log('Generated Sequence:', formattedNumber);
+
+  // Mengembalikan hasil untuk digunakan jika diperlukan
+  return formattedNumber;
+}
+
+</script>
+<?php
+function getTodayDate() {
+    // Set zona waktu sesuai kebutuhan (misalnya, "Asia/Jakarta")
+    date_default_timezone_set('Asia/Jakarta');
+    
+    // Format tanggal sesuai keinginan (contoh: "Y-m-d H:i:s" untuk format tanggal dan waktu)
+    $todayDate = date('Y-m-d'); // Ganti format sesuai kebutuhan
+    
+    return $todayDate;
+}
+
+// Contoh penggunaan
+$todayDate = getTodayDate();
+
+?>
+
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Periksa koneksi ke database
+    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    if ($koneksi->connect_error) {
+        die("Koneksi ke database gagal: " . $koneksi->connect_error);
+    }
+
+    $id_transaksi = autoisitransaksi();
+    $data_akun = $_POST['hidden_data_akun'];
+    $qty_order = $_POST['jumlahIsiKeranjang'];
+    $tgl_order = getTodayDate();
+    $total_transaksi = $_POST['total'];
+    $payment = $_POST['payment'];
+
+    // Gunakan prepared statements untuk menghindari SQL injection
+    $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, id_worker, data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats) VALUES (?, '', '', ?, ?, ?, ?, ?, 'no_wa', 'Belum Lunas')");
+    $sql->bind_param("ssssssss", $id_transaksi, $data_akun, $qty_order, $tgl_order, $total_transaksi, $payment);
+
+    if ($sql->execute()) {
+        echo "Data transaksi berhasil disimpan ke database.";
+
+        // Memasukkan data ke dalam tabel detail_transaksi
+        $tableDataJson = $_POST['hiddenTableData'];
+        $tableData = json_decode($tableDataJson, true);
+
+        foreach ($tableData as $rowData) {
+            $id_barang = $rowData['id'];
+            $nama_barang = $rowData['nama_barang'];
+            $harga = $rowData['harga'];
+            $subtotal = $rowData['subtotal'];
+            $aksi = $rowData['aksi'];
+
+            // Gunakan prepared statements untuk menghindari SQL injection
+            $sqlDetail = $koneksi->prepare("INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES (?, ?, ?, ?)");
+            $sqlDetail->bind_param("ssss", $id_transaksi, $id_barang, $qty_order, $subtotal);
+
+            // Eksekusi query untuk memasukkan data ke dalam tabel detail_transaksi
+            $sqlDetail->execute();
+            $sqlDetail->close(); // Tutup prepared statement
+        }
+
+        $sql->close(); // Tutup prepared statement
+    } else {
+        http_response_code(500); // Set HTTP response code ke Internal Server Error
+        echo "Error: " . $sql->error;
+    }
+
+    // Tutup koneksi ke database
+    $koneksi->close();
+}
+?>
+
+
+
 
 
 
