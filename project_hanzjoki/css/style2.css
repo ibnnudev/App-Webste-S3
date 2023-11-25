@@ -768,13 +768,21 @@ h3 {
     margin-top: -120px;
     
 }
-.button-orderan{
-    width: 140px;
-    height: 40px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+.button-orderan {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s; /* Efek scaling akan memakan waktu 0.3 detik */
+    margin-left: 10px;
 }
 
+.button-orderan:hover {
+    transform: scale(1.1); /* Saat tombol dihover, akan melakukan scaling sebesar 1.1 kali dari ukuran aslinya */
+}
 .textbg-4 {
     position: relative; /* Mengatur elemen dalam posisi relatif */
     top: 30px; 
@@ -1390,10 +1398,6 @@ th, td {
     text-align: left;
 }
 
-th {
-    
-}
-
 form {
     margin-top: 20px;
 }
@@ -1417,6 +1421,7 @@ input, button {
     font-family: 'Roboto', sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     color: white;
+    
 }
 
 #orderForm button:active {
@@ -1426,6 +1431,11 @@ input, button {
 .ppq{
     color: #fff;
     margin-left: 5px;
+}
+.ppqmu {
+    color: #fff;
+    margin-left: 5px;
+    font-size: 20px;
 }
 .text_keranjang {
     font-size: 24px;
@@ -1488,3 +1498,101 @@ input, button {
 .diskon:hover {
     color: blue; /* Warna teks berubah menjadi biru saat kursor di atasnya */
 }
+.menghilang {
+    display: none;
+}
+
+.body-struk {
+    width: 1500px;
+    background-color: #014684;
+    height: auto;
+    margin-top: 90px;
+    margin-left: 190px;
+    border-radius: 10px;
+    padding: 20px;
+}
+.thank {
+    font-size: 17px;
+    color: #fff;
+}
+
+.thank2 {
+    font-size: 30px;
+    color: #fff;
+    margin-top: 15px;
+}
+
+.id_pesanan1 {
+    color: #fff;
+}
+
+.tgl-pemesanan1 {
+    color: #fff;
+    margin-top: 60px;
+}
+
+.horizontal-line {
+    border: 1px solid #000; /* Warna dan ketebalan garis dapat disesuaikan */
+    margin-top: 10px; /* Jarak atas garis */
+    margin-bottom: 10px; /* Jarak bawah garis */
+}
+.body-rt {
+    display: flex;
+    justify-content: space-between;
+}
+.rt-1 {
+    color: #fff;
+}
+.rt-2{
+    margin-top: 20px;
+    color: #fff;
+    min-width: 50%;
+}
+
+.horizontal-line1 {
+width: 100%;
+border: 1px solid #000; /* Warna dan ketebalan garis dapat disesuaikan */
+margin-top: 20px; /* Jarak atas garis */
+margin-bottom: 10px; /* Jarak bawah garis */
+}
+
+.nomor-invoice1 {
+    margin-top: 40px;
+}
+
+.beli_lgi {
+    padding: 10px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+    .nomor-invoice1,
+    .stats-transaksi,
+    .pembayaran-status,
+    .stats-pesan {
+        margin-top: 15px; /* Atur margin sesuai kebutuhan */
+    }
+
+
+    .pesan-button {
+        width: 100%;
+        height: 40px;
+        font-size: 17px;
+        margin-top: 20px;
+        border-radius: 10px;
+        color: #fff;
+        background-color: #ffc107;
+        display: inline-block; /* Menambahkan display: inline-block agar width dapat diterapkan */
+        text-align: center; /* Memastikan teks di tengah */
+        text-decoration: none;
+        line-height: 40px; /* Sesuaikan tinggi baris agar teks berada di tengah */
+        box-sizing: border-box; /* Menghindari penambahan padding dan border memperlebar elemen */
+    }
+.pesan-button:hover {
+    background-color: #0056b3;
+}
+    /*  */
+    /* .pesan-button:hover {
+        background-color: #0056b3; /* Warna latar belakang saat dihover */
+    /* } */

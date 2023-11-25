@@ -18,4 +18,4 @@ if($query){
     ));
 }else {
     echo "gagal";
-}
+}               

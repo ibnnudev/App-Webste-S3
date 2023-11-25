@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -110,7 +111,7 @@
                 <input type="text" id="input3" name="input3" placeholder="User ID & Nickname">
             </div>
         </div>
-
+        
         <div class="right-input">
             <div class="input-container">
                 <input type="text" id="input4" name="input4" placeholder="Masukan Password">
@@ -129,10 +130,9 @@
             </div>
         </div>
     </div>
-
     
-
-
+    
+    
     <?php
 // Koneksi ke database
 $servername = "localhost";
@@ -295,11 +295,12 @@ if ($result_murah_joki === false) {
     </div>
     <form id="orderForm">
         <label for="qtyid" class="ppq"> Jumlah: </label>
-        <input type="number" id="qtyid" required>
+        <input type="number" name= "jumlahid" id="qtyid" required>
         <button type="button" class="btn btn-warning mt-3" onclick="order()"><i class="bi bi-cart"></i> Masukan Keranjang</button> 
         
         <div class="text_keranjang">
             Keranjang
+            
         </div>
     </form>
 
@@ -323,226 +324,248 @@ if ($result_murah_joki === false) {
                 <!-- Data tabel keranjang akan ditampilkan di sini -->
             </tbody>
         </table>
-        <script>
-
-function getDataFromTable() {
-    var table = document.getElementById('keranjangsementara');
-    var data = [];
-
-    // Loop melalui setiap baris kecuali baris header
-    for (var i = 1; i < table.rows.length; i++) {
-        var row = table.rows[i];
-        var rowData = {
-            id: row.cells[0].innerText,
-            namaPaket: row.cells[1].innerText,
-            harga: row.cells[2].innerText,
-            qty: row.cells[3].innerText,
-            subtotal: row.cells[4].innerText,
-            // Jika Anda membutuhkan data lain, tambahkan di sini
-        };
-
-        data.push(rowData);
-    }
-
-    return data;
-}
-
-
-
-
-function getTotalValue() {
-    // Ambil elemen input dengan ID 'total'
-    var totalInput = document.getElementById('total_transaksi');
-    
-    // Ambil nilai dari elemen input
-    var totalValue = totalInput.value;
-    
-    return totalValue;
-}
-
-// Contoh penggunaan
-var totalOrder = getTotalValue();
-console.log('Total Order:', totalOrder);
-</script>
-
-        <script>
-                    function getQtyFromKeranjang() {
-                        // Sama seperti sebelumnya
-
-                        // ...
-
-                        return totalQty;
-                    }
-
-                    function updateHiddenQtyInput() {
-                        var qtyOrder = getQtyFromKeranjang();
-                        document.getElementById('hiddenQty').value = qtyOrder;
-                    }
-
-                    // Panggil fungsi ini sebelum mengirimkan formulir
-                    updateHiddenQtyInput();
-                            </script>
-
-        
 </div>
     <form id="totalForm">
     <!-- Tambahkan elemen input untuk menampilkan jumlah isi keranjang -->
     
     <!-- Di dalam formulir -->
-    <input type="hidden" name="jumlahIsiKeranjang" id="hiddenQty" value="">
+    
 
     
     <!-- Menghitung Total Harga Yang Ada Di Keranjang -->
-    <label for="total" class="ppq"> Total: </label>
-    <input type="text" class="bro" id="total" readonly>
-
+    <label for="total" class="ppqmu"> Total: </label>
+    <input type="text" class="bro" name= "totaltrans" id="total" readonly>
+    
+    <input type="text" class="menghilan" name="jumlahIsiKeranjang" id="hiddenQty" value="">
+    <input type="text" class="menghilan" name= "DataAkun" id="DataAkun" readonly>
+    <input type="text" class="menghilan" name= "tanggalnow" id="setdatetime" readonly>
+    <input type="text" class="menghilan" name= "pembayaran" id="pembayaranText" readonly>
     
 </form>
     </div>
     <!-- ... Your HTML code ... -->
-    <script>
-    function hitungIsiKeranjang() {
-        var tabel = document.getElementById('keranjangsementara');
-        var tbody = tabel.getElementsByTagName('tbody')[0];
-        var baris = tbody.getElementsByTagName('tr');
-        var total = 0;
+                                            <script>
+                                            function setDateTime() {
+                                                            // Ambil elemen dengan id "setdatetime"
+                                                            var setDatetimeElement = document.getElementById('setdatetime');
 
-        for (var i = 0; i < baris.length; i++) {
-            var subtotal = parseFloat(baris[i].getElementsByTagName('td')[4].innerText);
-            total += subtotal;
-        }
+                                                            // Dapatkan tanggal dan waktu saat ini
+                                                            var currentDateTime = new Date();
+                                                            
+                                                            // Format tanggal dan waktu menjadi string (YYYY-MM-DD HH:mm:ss)
+                                                            var formattedDateTime = currentDateTime.toISOString().slice(0, 19).replace("T", " ");
 
-        // Mengisi nilai input pada formulir
-        document.getElementById('total').value = total;
-        document.getElementById('jumlahIsiKeranjang').value = baris.length;
-    }
+                                                            // Set nilai elemen input dengan tanggal dan waktu saat ini
+                                                            setDatetimeElement.value = formattedDateTime;
+                                                            }
 
-    // Jalankan fungsi saat halaman dimuat
-    window.onload = function() {
-        hitungIsiKeranjang();
-    };
-        
-    function hitungTotal() {
-        var tabelKeranjang = document.getElementById('keranjangsementara');
-        var baris = tabelKeranjang.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-        var total = 0;
+                                                            // Panggil fungsi setDateTime saat halaman dimuat
+                                                            document.addEventListener("DOMContentLoaded", function() {
+                                                                setDateTime();
+                                                            });
+                                            function getCombinedInputs() {
+                                                        var input1Value = document.getElementById('input1').value;
+                                                        var input2Value = document.getElementById('input2').value;
+                                                        var input3Value = document.getElementById('input3').value;
+                                                        var input4Value = document.getElementById('input4').value;
+                                                        var input5Value = document.getElementById('input5').value;
+                                                        var input6Value = document.getElementById('input6').value;
 
-        for (var i = 0; i < baris.length; i++) {
-            var hasilakhir = baris[i].getElementsByTagName('td')[4];
-            if (hasilakhir) {
-                total += parseInt(hasilakhir.innerText);
-            }
-        }
+                                                        var dataAkun = input6Value + ' , ' + input1Value + ' ( ' + input4Value + ' ) ' + input2Value + ' , ' + input3Value + ' ' + input5Value;
+                                                        document.getElementById('DataAkun').value = dataAkun;
+                                                        // document.querySelector('.ppq').innerText = 'Data Akun: ' + dataAkun;
+                                                        
+                                                        }
+                                            function getDataFromTable() {
+                                                        var table = document.getElementById('keranjangsementara');
+                                                        var data = [];
 
-        // Memasukkan total ke dalam input total
-        document.getElementById('total').value = total;
-    }
-    function selectRadio(optionId) {
-        // Unselect all radio buttons
-        var radioButtons = document.getElementsByName('nominal');
-        radioButtons.forEach(function (radioButton) {
-            radioButton.closest('.col-md-4').classList.remove('selected-background');
-            radioButton.checked = false;
-        });
+                                                        // Loop melalui setiap baris kecuali baris header
+                                                        for (var i = 1; i < table.rows.length; i++) {
+                                                        var row = table.rows[i];
+                                                        var rowData = {
+                                                        id: row.cells[0].innerText,
+                                                        namaPaket: row.cells[1].innerText,
+                                                        harga: row.cells[2].innerText,
+                                                        qty: row.cells[3].innerText,
+                                                        subtotal: row.cells[4].innerText,
+                                                        // Jika Anda membutuhkan data lain, tambahkan di sini
+                                                        };
 
-        // Remove the "option" prefix from the ID
-        var idWithoutOption = optionId.replace('option', '');
+                                                        data.push(rowData);
+                                                        }
 
-        // Select the clicked radio button
-        var selectedRadio = document.getElementById(optionId);
-        selectedRadio.checked = true;
-        selectedRadio.closest('.col-md-4').classList.toggle('selected-background');
-    }
+                                                        return data;
+                                                        }
+                                            function getTotalValue() {
+                                                        // Ambil elemen input dengan ID 'total'
+                                                        var totalInput = document.getElementById('totaltrans');
+                                                        
+                                                        // Ambil nilai dari elemen input
+                                                        var totalValue = totalInput.value;
+                                                        
+                                                        return totalValue;
+                                                        }
+
+                                                        // Contoh penggunaan
+                                                        var totalOrder = getTotalValue();
+                                                        console.log('Total Order:', totalOrder);
+                                            function getQtyFromKeranjang() {
+                                                        // Sama seperti sebelumnya
+
+                                                        // ...
+
+                                                            return totalQty;
+                                                        }
+
+                                                        function updateHiddenQtyInput() {
+                                                            var qtyOrder = getQtyFromKeranjang();
+                                                            document.getElementById('hiddenQty').value = qtyOrder;
+                                                        }
+
+                                                        // Panggil fungsi ini sebelum mengirimkan formulir
+                                                        updateHiddenQtyInput();
+                                    
+                                                        // Fungsi untuk menghitung total baris yang diisi dalam tabel dan memperbarui input jumlahIsiKeranjang
+                                                        function updateTotalKeranjang() {
+                                                            var table = document.getElementById('keranjangsementara');
+                                                            var totalRows = table.rows.length - 1; // Kurangi 1 untuk mengabaikan baris header
+                                                            document.getElementById('hiddenQty').value = totalRows;
+                                                        }
+
+                                                        // Panggil fungsi saat halaman dimuat atau ketika ada perubahan dalam tabel keranjang
+                                                        document.addEventListener('DOMContentLoaded', updateTotalRows);
+                                                        document.getElementById('keranjangsementara').addEventListener('input', updateTotalRows);
+                                            function hitungTotal() {
+                                                        var tabelKeranjang = document.getElementById('keranjangsementara');
+                                                        var baris = tabelKeranjang.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+                                                        var total = 0;
+
+                                                        for (var i = 0; i < baris.length; i++) {
+                                                            var hasilakhir = baris[i].getElementsByTagName('td')[4];
+                                                            if (hasilakhir) {
+                                                                total += parseInt(hasilakhir.innerText);
+                                                            }
+                                                        }
+
+                                                        // Memasukkan total ke dalam input total
+                                                        document.getElementById('total').value = total;
+                                                        }
+                                                        function selectRadio(optionId) {
+                                                        // Unselect all radio buttons
+                                                        var radioButtons = document.getElementsByName('nominal');
+                                                        radioButtons.forEach(function (radioButton) {
+                                                            radioButton.closest('.col-md-4').classList.remove('selected-background');
+                                                            radioButton.checked = false;
+                                                        });
+
+                                                        // Remove the "option" prefix from the ID
+                                                        var idWithoutOption = optionId.replace('option', '');
+
+                                                        // Select the clicked radio button
+                                                        var selectedRadio = document.getElementById(optionId);
+                                                        selectedRadio.checked = true;
+                                                        selectedRadio.closest('.col-md-4').classList.toggle('selected-background');
+                                                        }
+                                            function order() {
+                                                
+                                                        // Get the selected radio button
+                                                        var selectedRadio = document.querySelector('input[name="nominal"]:checked');
+
+                                                        // Check if a radio button is selected
+                                                        if (selectedRadio) {
+                                                        // Get the quantity value
+                                                        var quantity = document.getElementById('qtyid').value;
+
+                                                        // Check if the quantity is valid
+                                                        if (quantity > 0) {
+                                                        // Get the data from the selected radio button
+                                                        var packageName = selectedRadio.parentNode.querySelector('.column-font').innerText;
+                                                        var price = selectedRadio.parentNode.querySelector('.text-warning').innerText;
+
+                                                        // Remove the "option" prefix from the ID
+                                                        var idWithoutOption = selectedRadio.id.replace('option', '');
+
+                                                        // Add the order to the cart table
+                                                        addToCart(idWithoutOption, packageName, price, quantity);
+
+                                                        // Clear the selected radio button
+                                                        selectedRadio.checked = false;
+
+                                                        // Clear the quantity input
+                                                        document.getElementById('qtyid').value = '';
+
+                                                        // Menghitung total setelah menambah item
+                                                        hitungTotal();
+                                                        updateTotalKeranjang();
+                                                        getCombinedInputs();
+                                                        
+                                                        
+                                                        
+                                                        } else {
+                                                        alert('Please enter a valid quantity.');
+                                                        }
+                                                        } else {
+                                                            alert('Please select a package.');
+                                                        }
+                                                        
+                                                        }
+                                            function addToCart(id, packageName, price, quantity, subtotal, deleteButton) {
+                                                        var cartTable = document.getElementById('keranjangsementara').getElementsByTagName('tbody')[0];
+                                                        var newRow = cartTable.insertRow();
+                                                        var cell1 = newRow.insertCell(0);
+                                                        var cell2 = newRow.insertCell(1);
+                                                        var cell3 = newRow.insertCell(2);
+                                                        var cell4 = newRow.insertCell(3);
+                                                        var cell5 = newRow.insertCell(4);
+                                                        var cell6 = newRow.insertCell(5);
+
+                                                        cell1.innerHTML = id;
+                                                        cell2.innerHTML = packageName;
+                                                        cell3.innerHTML = price; // Format price as currency
+                                                        cell4.innerHTML = quantity;
+
+                                                        // Calculate subtotal as an integer
+                                                        var calculatedSubtotal = price * quantity;
+                                                        cell5.innerHTML = calculatedSubtotal + '000';
 
 
-    
+                                                        var deleteButton = document.createElement('button');
+                                                        deleteButton.innerHTML = 'Hapus';
+                                                        deleteButton.className = 'btn btn-danger btn-sm';
+                                                        deleteButton.onclick = function () {
+                                                            deleteRow(this);
+                                                            hitungTotal(); // Panggil fungsi hitungTotal() setelah menghapus baris
+                                                            updateTotalKeranjang();
+                                                        };
 
+                                                        // Append the delete button to the cell
+                                                        cell6.appendChild(deleteButton);
+                                                        }
 
-    function order() {
-        
-    // Get the selected radio button
-    var selectedRadio = document.querySelector('input[name="nominal"]:checked');
+                                                        function deleteRow(button) {
+                                                            var row = button.parentNode.parentNode;
+                                                            row.parentNode.removeChild(row);
+                                                        }
+                                            function tampilkanTulisan() {
+                                                        var pembayaranText = document.getElementById("pembayaranText");
+                                                        var danaRadioButton = document.getElementById("dana");
+                                                        var ovoRadioButton = document.getElementById("ovo");
 
-    // Check if a radio button is selected
-    if (selectedRadio) {
-        // Get the quantity value
-        var quantity = document.getElementById('qtyid').value;
+                                                        if (danaRadioButton.checked) {
+                                                            pembayaranText.value = "DANA";
+                                                        } else if (ovoRadioButton.checked) {
+                                                            pembayaranText.value = "OVO";
+                                                        } else {
+                                                            pembayaranText.value = tampilkanTulisan();
+                                                        }
+                                                        }
+                                                        
 
-        // Check if the quantity is valid
-        if (quantity > 0) {
-            // Get the data from the selected radio button
-            var packageName = selectedRadio.parentNode.querySelector('.column-font').innerText;
-            var price = selectedRadio.parentNode.querySelector('.text-warning').innerText;
-
-            // Remove the "option" prefix from the ID
-            var idWithoutOption = selectedRadio.id.replace('option', '');
-
-            // Add the order to the cart table
-            addToCart(idWithoutOption, packageName, price, quantity);
-
-            // Clear the selected radio button
-            selectedRadio.checked = false;
-
-            // Clear the quantity input
-            document.getElementById('qtyid').value = '';
-
-            // Menghitung total setelah menambah item
-            hitungTotal();
-            hitungIsiKeranjang();
-            
-        } else {
-            alert('Please enter a valid quantity.');
-        }
-    } else {
-        alert('Please select a package.');
-    }
-    
-}
-
-
-
-
-function addToCart(id, packageName, price, quantity, subtotal, deleteButton) {
-    var cartTable = document.getElementById('keranjangsementara').getElementsByTagName('tbody')[0];
-    var newRow = cartTable.insertRow();
-    var cell1 = newRow.insertCell(0);
-    var cell2 = newRow.insertCell(1);
-    var cell3 = newRow.insertCell(2);
-    var cell4 = newRow.insertCell(3);
-    var cell5 = newRow.insertCell(4);
-    var cell6 = newRow.insertCell(5);
-
-    cell1.innerHTML = id;
-    cell2.innerHTML = packageName;
-    cell3.innerHTML = price; // Format price as currency
-    cell4.innerHTML = quantity;
-
-    // Calculate subtotal as an integer
-    var calculatedSubtotal = price * quantity;
-    cell5.innerHTML = calculatedSubtotal + '000';
-
-
-    var deleteButton = document.createElement('button');
-    deleteButton.innerHTML = 'Hapus';
-    deleteButton.className = 'btn btn-danger btn-sm';
-    deleteButton.onclick = function () {
-        deleteRow(this);
-        hitungTotal(); // Panggil fungsi hitungTotal() setelah menghapus baris
-    };
-
-    // Append the delete button to the cell
-    cell6.appendChild(deleteButton);
-}
-
-function deleteRow(button) {
-    var row = button.parentNode.parentNode;
-    row.parentNode.removeChild(row);
-}
-
-</script>
+                                            </script>
 </form>
 
-
+<!-- ============================================================================================================================================================================== -->
 <div class="pembayan-metode">
                 <div class="card-header">
                           Pilih Metode Pembayaran
@@ -552,7 +575,7 @@ function deleteRow(button) {
                               <h6 class="ppw">E- Wallet</h6>
 
                               <div class="col-md-3" width = "100px">
-                                <input type="radio" class="btn-check" name="pembayaran" id="dana" value="DANA" autocomplete="off">
+                              <input type="radio" id="dana" name="metode_pembayaran" onclick="tampilkanTulisan()">
                                 <label class="col-12 btn btn-outline-light" for="dana">
                                   <div class="row">
                                     <div class="col"><img src="../image/dana.png" width="100px" height="100px" alt=""></div>
@@ -561,7 +584,7 @@ function deleteRow(button) {
                               </div>
 
                               <div class="col-md-3">
-    <input type="radio" class="btn-check" name="pembayaran" id="ovo" value="OVO" autocomplete="off">
+                              <input type="radio" id="ovo" name="metode_pembayaran" onclick="tampilkanTulisan()">
     <label class="col-12 btn btn-outline-light" for="ovo">
         <div class="row">
             <div class="col"><img src="../image/ovo.png" width="100px" height="70px" alt=""></div>
@@ -571,132 +594,126 @@ function deleteRow(button) {
 
                             </div>
                             <label for="qtyid" class="ppq"> Masukan No WhatsApp: </label>
-                                <input type="number" id="noWhatsApp" required>
+                                <input type="number" name= "whatsappBro" id="noWhatsApp" required>
                           </div>
 
-                          <script>
-            // Mendapatkan label dan menampilkannya di konsol
-            // Mendapatkan elemen input dengan ID "noWhatsApp"
-var noWhatsAppInput = document.getElementById('noWhatsApp');
+                          
 
-// Mengambil nilai dari elemen input
-var nilaiNoWhatsApp = noWhatsAppInput.value;
-
-
-        </script>
-
-                          <div class="buy-or">
-    <button class="payment-button" onclick="processOrder()">
+<div class="buy-or">
+    <button class="payment-button" id="orderButton">
         <img src="../image/cart.png" alt="Payment Image" class="payment-image" id="orderImage">
         <div class="payment-content">
             <h3 class="payment-title">Order Now</h3>
+            
         </div>
     </button>
 </div>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Transaksi</title>
-</head>
-<body>
-<form method="post" action="">
+<script>
+document.getElementById("orderButton").addEventListener("click", function() {
+    // Lakukan pengambilan data dari formulir atau elemen lainnya yang diperlukan
+    
+
+
+    // Buat objek XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // Atur metode dan endpoint URL untuk permintaan
+    xhr.open("POST", "orderjokirank.php", true);
+    
+    // Atur header Content-Type
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    // Atur callback untuk menangani respons dari server
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Tindakan yang diambil setelah mendapatkan respons
+            console.log(xhr.responseText);
+        }
+    };
+
+    // Kirim permintaan dengan formData
+    xhr.send(formData);
+});
+
+</script>
+
+
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Periksa koneksi ke database
-    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-    if ($koneksi->connect_error) {
-        die("Koneksi ke database gagal: " . $koneksi->connect_error);
-    }
 
-    $data_akun = $_POST['data_akun'];
-    $qty_order = $_POST['jumlahIsiKeranjang'];
-    $tgl_order = $_POST['tanggalnow'];
-    $total_transaksi = $_POST['total_transaksi'];
-    $payment = $_POST['pembayaran'];
-    $no_wa = $_POST['noWhatsApp'];
 
-    // Gunakan prepared statements untuk menghindari SQL injection
-    $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats)
-     VALUES ('', '', ?, ?, ?, ?, ?, ?, 'Belum Lunas')");
-    $sql->bind_param("ssssss", $data_akun, $qty_order, $tgl_order, $total_transaksi, $payment, $no_wa);
 
-    if ($sql->execute()) {
-        echo "Data transaksi berhasil disimpan ke database.";
+
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     // Periksa koneksi ke database
+//     $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+//     if ($koneksi->connect_error) {
+//         die("Koneksi ke database gagal: " . $koneksi->connect_error);
+//     }
+
+//     $data_akun = $_POST['DataAkun'];
+//     $qty_order = $_POST['jumlahIsiKeranjang'];
+//     $tgl_order = $_POST['tanggalnow'];
+//     $total_transaksi = $_POST['totaltrans'];
+//     $payment = $_POST['pembayaran'];
+//     $no_wa = $_POST['whatsappBro'];
+
+//     // Gunakan prepared statements untuk menghindari SQL injection
+//     $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats, butki_tf)
+//      VALUES ('', '', ?, ?, ?, ?, ?, ?, 'Belum Lunas', '')");
+//     $sql->bind_param("ssssss", $data_akun, $qty_order, $tgl_order, $total_transaksi, $payment, $no_wa);
+
+//     if ($sql->execute()) {
+//         echo "Data transaksi berhasil disimpan ke database.";
     
-        // Dapatkan ID transaksi yang baru saja dimasukkan
-        $id_transaksi = $koneksi->insert_id;
+//         // Dapatkan ID transaksi yang baru saja dimasukkan
+//         $id_transaksi = $koneksi->insert_id;
     
-        // Loop untuk memasukkan data ke dalam tabel detail_transaksi
-        foreach ($tableData as $rowData) {
-            $id_paket = $rowData['id'];
-            $harga = $rowData['harga'];
-            $subtotal = $rowData['subtotal'];
+//         // Loop untuk memasukkan data ke dalam tabel detail_transaksi
+//         foreach ($tableData as $rowData) {
+//             $id_paket = $rowData['id'];
+//             $harga = $rowData['harga'];
+//             $subtotal = $rowData['subtotal'];
             
     
-            // Gunakan prepared statements untuk menghindari SQL injection
-            $sqlDetail = $koneksi->prepare("INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES (?, ?, ?, ?)");
-            $sqlDetail->bind_param("ssss", $id_transaksi, $id_paket,$qty, $subtotal);
+//             // Gunakan prepared statements untuk menghindari SQL injection
+//             $sqlDetail = $koneksi->prepare("INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES (?, ?, ?, ?)");
+//             $sqlDetail->bind_param("ssss", $id_transaksi, $id_paket, $qty, $subtotal);
     
-            // Eksekusi query untuk memasukkan data ke dalam tabel detail_transaksi
-            $sqlDetail->execute();
-            $sqlDetail->close(); // Tutup prepared statement
-        }
-    } else {
-        echo "Terjadi kesalahan saat menyimpan data transaksi: " . $koneksi->error;
-    }
+//             // Eksekusi query untuk memasukkan data ke dalam tabel detail_transaksi
+//             $sqlDetail->execute();
+//             $sqlDetail->close(); // Tutup prepared statement
+//         }
+//     } else {
+//         echo "Terjadi kesalahan saat menyimpan data transaksi: " . $koneksi->error;
+//     }
     
-    $sql->close(); // Tutup prepared statement
-    $koneksi->close(); // Tutup koneksi database
-}
+//     $sql->close(); // Tutup prepared statement
+//     $koneksi->close(); // Tutup koneksi database
+// }
 ?>
-<button type="submit">Simpan Transaksi</button>
-</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </div>
 
-<!-- =============================================================================== -->
-<script>
-function concatenateInputs() {
-    var input1Value = document.getElementById('input1').value;
-    var input2Value = document.getElementById('input2').value;
-    var input3Value = document.getElementById('input3').value;
-    var input4Value = document.getElementById('input4').value;
-    var input5Value = document.getElementById('input5').value;
-    var input6Value = document.getElementById('input6').value;
-
-    // Combine the values into one variable
-    var data_akun = input1Value + ' ' + input2Value + ' ' + input3Value + ' ' + input4Value + ' ' + input5Value + ' ' + input6Value;
-
-    // Set the concatenated value to a hidden input field
-    document.getElementById('data_akun').value = data_akun;
-}
-
-</script>
-
-
-<script>
-// Fungsi untuk mendapatkan tanggal saat ini
-function getFormattedDateTime() {
-    var today = new Date();
-    var yyyy = today.getFullYear();
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    var dd = String(today.getDate()).padStart(2, '0');
-    var hh = String(today.getHours()).padStart(2, '0');
-    var min = String(today.getMinutes()).padStart(2, '0');
-    var ss = String(today.getSeconds()).padStart(2, '0');
-
-    return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
-}
-
-
-// Set nilai input tanggalnow dengan tanggal saat ini
-document.getElementById('tanggalnow').value = getFormattedDateTime();
-// Tampilkan label setelah mengisi nilai
-document.getElementById('labelTanggal').style.display = 'inline-block';
-</script>
 
 
 
@@ -715,6 +732,35 @@ document.getElementById('labelTanggal').style.display = 'inline-block';
 
 
 
-    
+
+
+
+
+
+<style>
+        /* Menghilangkan tanda bulatan pada radio button */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Menampilkan gambar sebagai pengganti tanda bulatan (opsional) */
+        input[type="radio"] + label::before {
+            content: url('unchecked.png'); /* Ganti dengan path ke gambar yang diinginkan untuk status unchecked */
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        input[type="radio"]:checked + label::before {
+            content: url('checked.png'); /* Ganti dengan path ke gambar yang diinginkan untuk status checked */
+        }
+
+        /* Menampilkan teks pada input yang di-read-only */
+        input[type="text"].menghilang {
+            border: none;
+            background-color: transparent;
+            outline: none;
+            width: auto;
+        }
+    </style>
 </body>
 </html>

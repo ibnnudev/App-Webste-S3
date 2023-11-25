@@ -23,11 +23,11 @@ if (isset($_POST['update'])) {
 }
 
 $id = $_GET['id'];
-$query = "SELECT * FROM take_job WHERE id='$id'";
+$query = "SELECT * FROM take_job WHERE id_transaksi='$id'";
 $result = mysqli_query($koneksi, $query) or die(mysqli_error($koneksi));
 
 while ($row = mysqli_fetch_array($result)) {
-    $id = $row['id'];
+    
     $id_transaksi = $row['id_transaksi'];
     $id_worker = $row['id_worker'];
     $data_akun = $row['data_akun'];

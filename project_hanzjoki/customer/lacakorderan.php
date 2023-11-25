@@ -40,19 +40,39 @@
             </nav> -->
             
     </header>   
-
     <div class="background-3">
         <p class="textbg-3">Lacak Orderan</p>
-        <label class="label-order1">Lacak Orderan kamu hanya dengan email atau nomoe invoice</label>
+        <label class="label-order1">Lacak Orderan kamu hanya dengan email atau nomor invoice</label>
         <input type="text" id="orderTrackingInput" class="input-orderan" placeholder="   email/invoice" required>
         
         <!-- Tombol untuk melakukan pelacakan -->
-        <button id="trackOrderButton" class="button-orderan">Lacak Orderan </button>
+        <button id="trackOrderButton" class="button-orderan" onclick="trackOrder()">Lacak Orderan </button>
+        
         <p class="textbg-4">Pesanan kamu tidak terdaftar meskipun kamu yakin sudah memesan? Harap tunggu 1-2 jam </p>
-        <p class="textbg-5">Namun jika pesanan masih tidak muncul maka kamu dapat menghubungi kami<a href="https://www.instagram.com/hanzjoki.id/?igshid=NzZlODBkYWE4Ng%3D%3D&utm_source=qr" target="_blank">disini</a></p>
-
+        <p class="textbg-5">Namun jika pesanan masih tidak muncul maka kamu dapat menghubungi kami <a href="https://www.instagram.com/hanzjoki.id/?igshid=NzZlODBkYWE4Ng%3D%3D&utm_source=qr" target="_blank">disini</a></p>
     </div>
 
+    <!-- Tempat untuk menampilkan struk -->
+    <!-- <div id="receipt" style="display: none; margin-top: 20px;">
+        <h2>Struk Pembayaran</h2>
+        <p id="receiptContent"></p>
+    </div>
+
+    <script>
+        function trackOrder() {
+            // Dapatkan nilai input
+            var orderInput = document.getElementById("orderTrackingInput").value;
+
+            // Lakukan logika pelacakan order di sini (gunakan AJAX untuk mengirim permintaan ke server)
+
+            // Contoh struk (gantilah dengan data sebenarnya dari pelacakan order)
+            var receiptContent = "ID Transaksi: 123456<br>Customer: John Doe<br>Total Transaksi: $50.00";
+
+            // Tampilkan struk setelah melacak order
+            document.getElementById("receiptContent").innerHTML = receiptContent;
+            document.getElementById("receipt").style.display = "block";
+        }
+    </script> -->
 
 
         
