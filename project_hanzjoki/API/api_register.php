@@ -1,6 +1,6 @@
 <?php
 
-include ('D:\xampp\htdocs\PHP\App-Webste-S3\project_hanzjoki\koneksi.php');
+include ('C:\xampp\htdocs\website\App-Webste-S3\project_hanzjoki\koneksi.php');
 
 $userMail = $_POST['email'];
 $usernama_depan = $_POST['nama_depan'];

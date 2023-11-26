@@ -2,6 +2,44 @@
 <html lang="en">
 
 <head>
+<script>
+        function submitAllForms() {
+            // Combine data from the three forms
+            var formData = new FormData();
+            
+            // Form 1
+            var form1 = document.getElementById("form1");
+            for (var pair of new FormData(form1)) {
+                formData.append(pair[0], pair[1]);
+            }
+
+            // Form 2
+            var form2 = document.getElementById("form2");
+            for (var pair of new FormData(form2)) {
+                formData.append(pair[0], pair[1]);
+            }
+
+            // Form 3
+            var form3 = document.getElementById("form3");
+            for (var pair of new FormData(form3)) {
+                formData.append(pair[0], pair[1]);
+            }
+
+            // Submit the combined data
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "orderJokirank.php", true);
+            xhr.send(formData);
+
+            // You can handle the response or perform other actions as needed
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Handle the response here
+                    console.log(xhr.responseText);
+                }
+            };
+        }
+    </script>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,32 +134,31 @@
                 </div>
         </section>
     </div>
-
+    <form id="form1" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
     <div class="box-id-input">
-    <div class="card-header">Lengkapi Data</div>
+        <div class="card-header">Lengkapi Data</div>
         <div class="left-input">
             <div class="input-container">
-    
-                <input type="text" id="input1" name="input1" placeholder="masukan Email/No Hp">
+                <input type="text" id="input1" name="email_nohp" placeholder="Masukkan Email/No Hp">
             </div>
             <div class="input-container">
-                <input type="text" id="input2" name="input2" placeholder="Minimal Request 3 Hero">
+                <input type="text" id="input2" name="req_hero" placeholder="Minimal Request 3 Hero">
             </div>
             <div class="input-container">
-                <input type="text" id="input3" name="input3" placeholder="User ID & Nickname">
+                <input type="text" id="input3" name="nickname" placeholder="User ID & Nickname">
             </div>
         </div>
-        
+
         <div class="right-input">
             <div class="input-container">
-                <input type="text" id="input4" name="input4" placeholder="Masukan Password">
-            </div>
-            <div class="input-container">    
-                <input type="text" id="input5" name="input5" placeholder="Catatan untuk Pejoki">
+                <input type="password" id="input4" name="pass" placeholder="Masukkan Password">
             </div>
             <div class="input-container">
-                <select id="input6" name="input6" >
-                    <option value="loginvia">Login Via</option>
+                <input type="text" id="input5" name="catatan" placeholder="Catatan untuk Pejoki">
+            </div>
+            <div class="input-container">
+                <select id="input6" name="login_via">
+                    <option value="loginvia" disabled selected>Login Via</option>
                     <option value="montoon">Moonton (Rekomendasi)</option>
                     <option value="facebook">Facebook</option>
                     <option value="vk">Vk</option>
@@ -130,8 +167,9 @@
             </div>
         </div>
     </div>
-    
-    
+    <button type="submit" name="submit">Submit</button>
+</form>
+
     
     <?php
 // Koneksi ke database
@@ -169,8 +207,9 @@ $result_murah_joki = $koneksi->query($sql_murah_joki);
 if ($result_murah_joki === false) {
     die("Error saat mengeksekusi query paket murah joki: " . $koneksi->error);
 }
-?>
 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -293,7 +332,7 @@ if ($result_murah_joki === false) {
         ?>
     
     </div>
-    <form id="orderForm">
+    <form id="form2" name="orderForm">
         <label for="qtyid" class="ppq"> Jumlah: </label>
         <input type="number" name= "jumlahid" id="qtyid" required>
         <button type="button" class="btn btn-warning mt-3" onclick="order()"><i class="bi bi-cart"></i> Masukan Keranjang</button> 
@@ -325,19 +364,11 @@ if ($result_murah_joki === false) {
             </tbody>
         </table>
 </div>
-    <form id="totalForm">
-    <!-- Tambahkan elemen input untuk menampilkan jumlah isi keranjang -->
-    
-    <!-- Di dalam formulir -->
-    
 
-    
-    <!-- Menghitung Total Harga Yang Ada Di Keranjang -->
+    <form id="form3" name="totalForm" method:>
     <label for="total" class="ppqmu"> Total: </label>
-    <input type="text" class="bro" name= "totaltrans" id="total" readonly>
-    
+    <input type="text" class="bro" name= "totaltrans" id="total" readonly>   
     <input type="text" class="menghilan" name="jumlahIsiKeranjang" id="hiddenQty" value="">
-    <input type="text" class="menghilan" name= "DataAkun" id="DataAkun" readonly>
     <input type="text" class="menghilan" name= "tanggalnow" id="setdatetime" readonly>
     <input type="text" class="menghilan" name= "pembayaran" id="pembayaranText" readonly>
     
@@ -346,36 +377,24 @@ if ($result_murah_joki === false) {
     <!-- ... Your HTML code ... -->
                                             <script>
                                             function setDateTime() {
-                                                            // Ambil elemen dengan id "setdatetime"
-                                                            var setDatetimeElement = document.getElementById('setdatetime');
+                                                        // Ambil elemen dengan id "setdatetime"
+                                                        var setDatetimeElement = document.getElementById('setdatetime');
 
-                                                            // Dapatkan tanggal dan waktu saat ini
-                                                            var currentDateTime = new Date();
-                                                            
-                                                            // Format tanggal dan waktu menjadi string (YYYY-MM-DD HH:mm:ss)
-                                                            var formattedDateTime = currentDateTime.toISOString().slice(0, 19).replace("T", " ");
-
-                                                            // Set nilai elemen input dengan tanggal dan waktu saat ini
-                                                            setDatetimeElement.value = formattedDateTime;
-                                                            }
-
-                                                            // Panggil fungsi setDateTime saat halaman dimuat
-                                                            document.addEventListener("DOMContentLoaded", function() {
-                                                                setDateTime();
-                                                            });
-                                            function getCombinedInputs() {
-                                                        var input1Value = document.getElementById('input1').value;
-                                                        var input2Value = document.getElementById('input2').value;
-                                                        var input3Value = document.getElementById('input3').value;
-                                                        var input4Value = document.getElementById('input4').value;
-                                                        var input5Value = document.getElementById('input5').value;
-                                                        var input6Value = document.getElementById('input6').value;
-
-                                                        var dataAkun = input6Value + ' , ' + input1Value + ' ( ' + input4Value + ' ) ' + input2Value + ' , ' + input3Value + ' ' + input5Value;
-                                                        document.getElementById('DataAkun').value = dataAkun;
-                                                        // document.querySelector('.ppq').innerText = 'Data Akun: ' + dataAkun;
+                                                        // Dapatkan tanggal dan waktu saat ini
+                                                        var currentDateTime = new Date();
                                                         
+                                                        // Format tanggal dan waktu menjadi string (YYYY-MM-DD HH:mm:ss)
+                                                        var formattedDateTime = currentDateTime.toISOString().slice(0, 19).replace("T", " ");
+
+                                                        // Set nilai elemen input dengan tanggal dan waktu saat ini
+                                                        setDatetimeElement.value = formattedDateTime;
                                                         }
+
+                                                        // Panggil fungsi setDateTime saat halaman dimuat
+                                                        document.addEventListener("DOMContentLoaded", function() {
+                                                            setDateTime();
+                                                        });
+                                            
                                             function getDataFromTable() {
                                                         var table = document.getElementById('keranjangsementara');
                                                         var data = [];
@@ -498,7 +517,7 @@ if ($result_murah_joki === false) {
                                                         // Menghitung total setelah menambah item
                                                         hitungTotal();
                                                         updateTotalKeranjang();
-                                                        getCombinedInputs();
+                                                        
                                                         
                                                         
                                                         
@@ -599,21 +618,22 @@ if ($result_murah_joki === false) {
 
                           
 
-<div class="buy-or">
-    <button class="payment-button" id="orderButton">
-        <img src="../image/cart.png" alt="Payment Image" class="payment-image" id="orderImage">
-        <div class="payment-content">
-            <h3 class="payment-title">Order Now</h3>
-            
-        </div>
-    </button>
+                          <div class="buy-or">
+  
+        <!-- ... (elemen formulir lainnya) ... -->
+        <button class="payment-button"  type="button" onclick="submitAllForms()" name="orderButton">
+            <img src="../image/cart.png" alt="Payment Image" class="payment-image" id="orderImage">
+            <div class="payment-content">
+                <h3 class="payment-title">Order Now</h3>
+            </div>
+        </button>
+ 
 </div>
 
 <script>
 document.getElementById("orderButton").addEventListener("click", function() {
-    // Lakukan pengambilan data dari formulir atau elemen lainnya yang diperlukan
-    
-
+    // Lakukan pengambilan data dari tabel
+    var tableData = getDataFromTable();
 
     // Buat objek XMLHttpRequest
     var xhr = new XMLHttpRequest();
@@ -622,7 +642,7 @@ document.getElementById("orderButton").addEventListener("click", function() {
     xhr.open("POST", "orderjokirank.php", true);
     
     // Atur header Content-Type
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Content-Type", "application/json");
 
     // Atur callback untuk menangani respons dari server
     xhr.onreadystatechange = function() {
@@ -632,66 +652,87 @@ document.getElementById("orderButton").addEventListener("click", function() {
         }
     };
 
-    // Kirim permintaan dengan formData
-    xhr.send(formData);
+    // Kirim permintaan dengan JSON
+    xhr.send(JSON.stringify({ tableData: tableData }));
 });
+
 
 </script>
 
 
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    var_dump($_POST);
+    $login_via = $_POST['login_via'];
+    $req_hero = isset($_POST['req_hero']) ? $_POST['req_hero'] : null;
+    $email_nohp = $_POST['email_nohp'];
+    $nickname = $_POST['nickname'];
+    $pass = $_POST['pass'];
+    $catatan = $_POST['catatan'];
 
-
-
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//     // Periksa koneksi ke database
-//     $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-//     if ($koneksi->connect_error) {
-//         die("Koneksi ke database gagal: " . $koneksi->connect_error);
-//     }
-
-//     $data_akun = $_POST['DataAkun'];
-//     $qty_order = $_POST['jumlahIsiKeranjang'];
-//     $tgl_order = $_POST['tanggalnow'];
-//     $total_transaksi = $_POST['totaltrans'];
-//     $payment = $_POST['pembayaran'];
-//     $no_wa = $_POST['whatsappBro'];
-
-//     // Gunakan prepared statements untuk menghindari SQL injection
-//     $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats, butki_tf)
-//      VALUES ('', '', ?, ?, ?, ?, ?, ?, 'Belum Lunas', '')");
-//     $sql->bind_param("ssssss", $data_akun, $qty_order, $tgl_order, $total_transaksi, $payment, $no_wa);
-
-//     if ($sql->execute()) {
-//         echo "Data transaksi berhasil disimpan ke database.";
+    $sqldata = $koneksi->prepare("INSERT INTO data_akun (login_via, email_nohp, req_hero, nick_id, pw, catatan) VALUES (?, ?, ?, ?, ?, ?)");
+    $sqldata->bind_param("ssssss", $login_via, $email_nohp, $req_hero, $nickname, $pass, $catatan);
     
-//         // Dapatkan ID transaksi yang baru saja dimasukkan
-//         $id_transaksi = $koneksi->insert_id;
-    
-//         // Loop untuk memasukkan data ke dalam tabel detail_transaksi
-//         foreach ($tableData as $rowData) {
-//             $id_paket = $rowData['id'];
-//             $harga = $rowData['harga'];
-//             $subtotal = $rowData['subtotal'];
-            
-    
-//             // Gunakan prepared statements untuk menghindari SQL injection
-//             $sqlDetail = $koneksi->prepare("INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES (?, ?, ?, ?)");
-//             $sqlDetail->bind_param("ssss", $id_transaksi, $id_paket, $qty, $subtotal);
-    
-//             // Eksekusi query untuk memasukkan data ke dalam tabel detail_transaksi
-//             $sqlDetail->execute();
-//             $sqlDetail->close(); // Tutup prepared statement
-//         }
-//     } else {
-//         echo "Terjadi kesalahan saat menyimpan data transaksi: " . $koneksi->error;
-//     }
-    
-//     $sql->close(); // Tutup prepared statement
-//     $koneksi->close(); // Tutup koneksi database
-// }
+    if (!$sqldata->execute()) {
+        die("Error in SQL query: " . $sqldata->error);
+    }
+
+    $sqldata->close();
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    var_dump($_POST);
+
+    $login_via = $_POST['login_via'];
+    $qty_order = $_POST['jumlahIsiKeranjang'];
+    $tgl_order = $_POST['tanggalnow'];
+    $total_transaksi = $_POST['totaltrans'];
+    $payment = $_POST['pembayaran'];
+    $no_wa = $_POST['whatsappBro'];
+
+    $sql = $koneksi->prepare("INSERT INTO transaksi (id_transaksi, id_customer, login_via, qty_order, tgl_order, total_transaksi, payment, no_wa, stats, butki_tf) VALUES (NULL, '', ?, ?, ?, ?, ?, ?, 'Belum Lunas','')");
+    $sql->bind_param("sssssss", $login_via, $qty_order, $tgl_order, $total_transaksi, $payment, $no_wa);
+
+    if (!$sql->execute()) {
+        die("Error in SQL query: " . $sql->error);
+    }
+
+    $id_transaksi = $koneksi->insert_id;
+
+    $json_data = file_get_contents("php://input");
+    $data = json_decode($json_data, true);
+
+    foreach ($data['tableData'] as $rowData) {
+        $id_paket = $rowData['id'];
+        $qty = $rowData['qty'];
+        $harga = $rowData['harga'];
+        $subtotal = $rowData['subtotal'];
+
+        $sqlDetail = $koneksi->prepare("INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES (?, ?, ?, ?)");
+        $sqlDetail->bind_param("ssss", $id_transaksi, $id_paket, $qty, $subtotal);
+
+        if (!$sqlDetail->execute()) {
+            die("Error in SQL query: " . $sqlDetail->error);
+        }
+
+        $sqlDetail->close();
+    }
+
+    echo "Data transaksi berhasil disimpan ke database.";
+
+    $sql->close();
+    $koneksi->close();
+}
 ?>
+
+
+
 
 
 
@@ -743,24 +784,7 @@ document.getElementById("orderButton").addEventListener("click", function() {
             display: none;
         }
 
-        /* Menampilkan gambar sebagai pengganti tanda bulatan (opsional) */
-        input[type="radio"] + label::before {
-            content: url('unchecked.png'); /* Ganti dengan path ke gambar yang diinginkan untuk status unchecked */
-            margin-right: 5px;
-            display: inline-block;
-        }
-
-        input[type="radio"]:checked + label::before {
-            content: url('checked.png'); /* Ganti dengan path ke gambar yang diinginkan untuk status checked */
-        }
-
-        /* Menampilkan teks pada input yang di-read-only */
-        input[type="text"].menghilang {
-            border: none;
-            background-color: transparent;
-            outline: none;
-            width: auto;
-        }
+        
     </style>
 </body>
 </html>

@@ -1,7 +1,6 @@
 <!-- <?php
 
-include ('D:\xampp\htdocs\PHP\App-Webste-S3\project_hanzjoki\koneksi.php');
-
+include ('C:\xampp\htdocs\website\App-Webste-S3\project_hanzjoki\koneksi.php');
 $response = array();
 
 if (isset($_POST['email']) && isset($_POST['pw'])) {

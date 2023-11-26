@@ -90,13 +90,24 @@ if (isset($_SESSION['user'])) {
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small"> <?php
-                                        if ($user['sebagai'] === 'admin') {
-                                            echo '' . $user['username'];
-                                        } elseif ($user['sebagai'] === 'worker') {
-                                            echo 'Hallo, Penjoki ' . $user['nama_lengkap'];
-                                        }
-                                        ?></div>
+                    <div class="small"> 
+                    <?php
+if ($user['sebagai'] === 'admin') {
+    echo 'Admin: ' . $user['username'];
+} elseif ($user['sebagai'] === 'worker') {
+    echo 'Hallo, Penjoki ' . $user['nama_lengkap'];
+    
+    // Ganti nilai $nik dengan id_worker
+    $nik = $user['id_worker'];
+    
+    // Tampilkan ID Worker di bawah nama worker
+    echo '<br>ID Worker: ' . $nik;
+}
+?>
+
+
+
+                                        </div>
                     <!-- <p></p> -->
                     <h1> <br></h1>
                     <img src="../image/LOGO HANZJOKI.png" alt="" class="imge-23">
@@ -134,10 +145,10 @@ if (isset($_SESSION['user'])) {
                                         
                                         <th>Id Transaksi</th>
                                         <th>Id Worker</th>
-                                        <th>Data Akun</th>
+                                        <th>Login Via</th>
                                         <th>Qty Order</th>
                                         <th>Tanggal</th>
-                                        <th>Gaji</th>
+                                        <th>Harga</th>
                                         <th>Laporan</th>
                                         <th>Pengerjaan</th>
                                         <th>Status</th>
@@ -152,16 +163,15 @@ if (isset($_SESSION['user'])) {
         die("Connection failed: " . $koneksi->connect_error);
     }
 
-    $sql = "SELECT id_transaksi, id_worker, data_akun, qty_order, tgl_order, gaji, laporan, statsdone, stats FROM take_job";
+    $sql = "SELECT id_transaksi, id_worker, login_via, qty_order, tgl_order, gaji, laporan, statsdone, stats FROM take_job";
     $result = $koneksi->query($sql);
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<tr>
-                    <td>" . $row["id"] . "</td>
                     <td>" . $row["id_transaksi"] . "</td>
                     <td>" . $row["id_worker"] . "</td>
-                    <td>" . $row["data_akun"] . "</td>
+                    <td>" . $row["login_via"] . "</td>
                     <td>" . $row["qty_order"] . "</td>
                     <td>" . $row["tgl_order"] . "</td>
                     <td>" . $row["gaji"] . "</td>
@@ -169,17 +179,78 @@ if (isset($_SESSION['user'])) {
                     <td>" . $row["statsdone"] . "</td>      
                     <td>" . $row["stats"] . "</td>                         
                     <td>
-                        <a href='form_edit.php?id=" . $row['id'] . "' class='btn btn-info'>Edit</a>
-                        <a href='../crud/job_hapus.php?id=" . $row['id'] . "' class='btn btn-danger'>hapus</a>
+                        <button onclick='takejob(" . $row["id_transaksi"] . ")'>Take</button>
                     </td>
                 </tr>";
         }
-    } else {
+    }
+    
+    else {
         echo "<tr><td colspan='10'>0 result</td></tr>";
     }
 
     $koneksi->close();
     ?>
+    <script>
+    function takejob(id_transaksi) {
+        // Tampilkan notifikasi konfirmasi
+        var confirmation = confirm("Apakah Anda yakin ingin mengedit worker untuk transaksi dengan ID " + id_transaksi + "id_transaksi");
+
+        // Jika pengguna menekan "OK", lakukan pembaruan pada id_worker
+        if (confirmation) {
+            // Lakukan pembaruan pada id_worker sesuai dengan NIK yang terdaftar
+            // Implementasikan sesuai dengan kebutuhan dan cara penyimpanan data pada database Anda
+            // Contoh menggunakan AJAX untuk mengirim permintaan pembaruan
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "takejobw.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Tindakan yang diambil setelah mendapatkan respons dari server
+                    console.log(xhr.responseText);
+                    // Mungkin Anda ingin melakukan sesuatu setelah pembaruan selesai
+                }
+            };
+            // Kirim permintaan pembaruan dengan ID transaksi
+            xhr.send("id_transaksi=" + id_transaksi);
+        }
+    }
+</script>
+<?php
+
+// Lakukan koneksi ke database
+$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+
+// Periksa koneksi ke database
+if ($koneksi->connect_error) {
+    die("Koneksi ke database gagal: " . $koneksi->connect_error);
+}
+
+// Ambil id_transaksi dari data POST
+
+
+// Ambil id_worker dari data user
+$nik = $user['id_worker'];
+
+// Lakukan query update untuk mengubah id_worker sesuai kebutuhan Anda
+$sqlUpdate = $koneksi->prepare("UPDATE take_job SET id_worker = ? WHERE id_transaksi = ?");
+$sqlUpdate->bind_param("ss", $nik, $id_transaksi);
+
+// Eksekusi query update
+if ($sqlUpdate->execute()) {
+    echo "Pembaruan data berhasil.";
+} else {
+    echo "Terjadi kesalahan saat melakukan pembaruan: " . $koneksi->error;
+}
+
+// Tutup koneksi database
+$koneksi->close();
+
+?>
+
+
+
+
 </tbody>
 
 
@@ -236,5 +307,48 @@ if (isset($_SESSION['user'])) {
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Ambil elemen dengan kelas 'id-transaksi' saat diklik
+        var idTransaksiElements = document.querySelectorAll('.id-transaksi');
+
+        // Tambahkan event listener untuk setiap elemen
+        idTransaksiElements.forEach(function (element) {
+            element.addEventListener('click', function () {
+                // Ambil nilai data-idtransaksi
+                var idTransaksi = element.getAttribute('data-idtransaksi');
+
+                // Kirim nilai id_transaksi ke server melalui metode POST
+                sendIdTransaksiToServer(idTransaksi);
+            });
+        });
+
+        // Fungsi untuk mengirim id_transaksi ke server melalui metode POST
+        function sendIdTransaksiToServer(idTransaksi) {
+            // Buat objek XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+
+            // Atur metode dan endpoint URL untuk permintaan
+            xhr.open('POST', 'proses.php', true);
+
+            // Atur header Content-Type
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Atur data yang akan dikirim ke server
+            var data = 'id_transaksi=' + idTransaksi;
+
+            // Atur callback untuk menangani respons dari server
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Tindakan yang diambil setelah mendapatkan respons
+                    console.log(xhr.responseText);
+                }
+            };
+
+            // Kirim permintaan dengan data id_transaksi
+            xhr.send(data);
+        }
+    });
+</script>
 
 </html>
