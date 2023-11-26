@@ -136,6 +136,7 @@ if ($user['sebagai'] === 'admin') {
                                     <input type="text" id="searchInput" class="form-control" placeholder="Search...">
                                 </div>
                             </div>
+                            
 
 
                             <table id="datatablesSimple" class="custom-table" border="2">
@@ -157,7 +158,7 @@ if ($user['sebagai'] === 'admin') {
                                 </thead>
 
                                 <tbody>
-    <?php
+                                <?php
     $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
     if ($koneksi->connect_error) {
         die("Connection failed: " . $koneksi->connect_error);
@@ -179,84 +180,57 @@ if ($user['sebagai'] === 'admin') {
                     <td>" . $row["statsdone"] . "</td>      
                     <td>" . $row["stats"] . "</td>                         
                     <td>
-                        <button onclick='takejob(" . $row["id_transaksi"] . ")'>Take</button>
+                    <button onclick='showTakeJobModal(" . $row["id_transaksi"] . ")'>Take</button>
                     </td>
                 </tr>";
         }
-    }
-    
-    else {
+    } else {
         echo "<tr><td colspan='10'>0 result</td></tr>";
     }
 
     $koneksi->close();
     ?>
-    <script>
-    function takejob(id_transaksi) {
-        // Tampilkan notifikasi konfirmasi
-        var confirmation = confirm("Apakah Anda yakin ingin mengedit worker untuk transaksi dengan ID " + id_transaksi + "id_transaksi");
+    <div class="modal fade" id="takeJobModal" tabindex="-1" aria-labelledby="takeJobModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Isi modal -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="takeJobModalLabel">Konfirmasi Ambil Pekerjaan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulir Take Job -->
+                <form action="take_job_process.php" method="post" id="takeJobForm">
+                    <!-- Isian formulir sesuai kebutuhan -->
+                    <label for="keterangan">Keterangan:</label>
+                    <textarea name="keterangan" rows="4" required></textarea>
 
-        // Jika pengguna menekan "OK", lakukan pembaruan pada id_worker
-        if (confirmation) {
-            // Lakukan pembaruan pada id_worker sesuai dengan NIK yang terdaftar
-            // Implementasikan sesuai dengan kebutuhan dan cara penyimpanan data pada database Anda
-            // Contoh menggunakan AJAX untuk mengirim permintaan pembaruan
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "takejobw.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Tindakan yang diambil setelah mendapatkan respons dari server
-                    console.log(xhr.responseText);
-                    // Mungkin Anda ingin melakukan sesuatu setelah pembaruan selesai
-                }
-            };
-            // Kirim permintaan pembaruan dengan ID transaksi
-            xhr.send("id_transaksi=" + id_transaksi);
-        }
+                    <!-- Input tersembunyi untuk menyimpan ID transaksi -->
+                    <input type="hidden" name="id_transaksi" id="id_transaksi_input">
+
+                    <!-- Tombol submit -->
+                    <button type="submit">Ambil Pekerjaan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Fungsi untuk menampilkan modal Take Job
+    function showTakeJobModal(id_transaksi) {
+        // Mengatur nilai input tersembunyi dengan ID transaksi yang dipilih
+        document.getElementById('id_transaksi_input').value = id_transaksi;
+
+        // Menampilkan modal Take Job
+        var takeJobModal = new bootstrap.Modal(document.getElementById('takeJobModal'));
+        takeJobModal.show();
     }
 </script>
-<?php
-
-// Lakukan koneksi ke database
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-
-// Periksa koneksi ke database
-if ($koneksi->connect_error) {
-    die("Koneksi ke database gagal: " . $koneksi->connect_error);
-}
-
-// Ambil id_transaksi dari data POST
-
-
-// Ambil id_worker dari data user
-$nik = $user['id_worker'];
-
-// Lakukan query update untuk mengubah id_worker sesuai kebutuhan Anda
-$sqlUpdate = $koneksi->prepare("UPDATE take_job SET id_worker = ? WHERE id_transaksi = ?");
-$sqlUpdate->bind_param("ss", $nik, $id_transaksi);
-
-// Eksekusi query update
-if ($sqlUpdate->execute()) {
-    echo "Pembaruan data berhasil.";
-} else {
-    echo "Terjadi kesalahan saat melakukan pembaruan: " . $koneksi->error;
-}
-
-// Tutup koneksi database
-$koneksi->close();
-
-?>
 
 
 
-
-</tbody>
-
-
-                            </table>
-
-
+                    </tbody>
+                        </table>
                             <script>
                                 function searchTable() {
                                     var input, filter, table, tr, td, i, txtValue;

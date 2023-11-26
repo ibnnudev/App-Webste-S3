@@ -213,11 +213,9 @@ if (isset($_SESSION['user'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="promo_joki.php" method="post" id="promoForm">
-                    <!-- Isian formulir -->
-                    
                 
-
+            <form action="promo_joki.php" method="post" id="promoForm">
+                    <!-- Isian formulir -->
                     <label for="nama_paket">Nama Paket:</label>
                     <input type="text" name="nama_paket" required>
 
@@ -225,7 +223,8 @@ if (isset($_SESSION['user'])) {
                     <input type="text" name="harga" required>
 
                     <label for="nama_discount">Discount:</label>
-<select name="nama_discount" required>
+                    <select name="nama_discount" required>
+
     <?php
     // Koneksi ke database
     $servername = "localhost";
