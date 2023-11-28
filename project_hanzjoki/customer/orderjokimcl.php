@@ -46,8 +46,8 @@
     </header> 
 
     <div class="content-jokirank">
-        <h1 class="nama-joki">Joki Rank</h1>
-        <img src="../image/rankpler.png" >
+        <h1 class="nama-joki">Joki MCL</h1>
+        <img src="../image/MCL.png" >
         <h1 class="time">orderan joki di chek<br>pukul 09:00-21:00</h1>
         <h1 class="ket-1">Jika Orderan melewati<br>batas pengecekan <br>orderan, maka orderan<br>dicek di hari berikutnya</h1>
 
@@ -73,27 +73,29 @@
         <section id="joki" class="list-jokian-order">
                
                 <div class="img-jokian">
-                    <a href="orderjokimcl.php">
-                            <img src="../image/MCL.png" alt="">
-                            <div class="pil-jokirank">Joki MCL <br>(Jasa joki MCL)</div>
+                    <a href="orderjokirank.php">
+                            <img src="../image/rankpler.png" alt="">
+                            <div class="pil-jokirank">Joki Rank <br>(Jasa joki Rank)</div>
+                    </a>
+                </div>
+                
+
+                <div class="img-jokian">
+                    <a href="orderjokiclassic.php">
+                            <img src="../image/JOKICLASIK.png" alt="">
+                            <div class="pil-jokirank">Joki Classic <br>(Jasa Up Winrate)</div>
                     </a>
                 </div>
                 <div class="img-jokian">
                     <a href="orderjokimontage.php">
                             <img src="../image/MONTAGE.png" alt="">
-                            <div class="pil-jokirank">Joki Vidio Montage <br>(Jasa joki Vidio)</div>
-                    </a>
-                </div>
-                <div class="img-jokian">
-                    <a href="orderjokimabar.php">
-                            <img src="../image/JASA MABAR.png" alt="">
-                            <div class="pil-jokirank">Jasa Mabar <br>(Jasa Mabar Penjoki)</div>
+                            <div class="pil-jokirank">Jasa  Montage <br>(Jasa Vidio Montage)</div>
                     </a>
                 </div>
                 <div class="img-jokian">
                     <a href="orderjokiclassic.php">
-                            <img src="../image/JOKICLASIK.png" alt="">
-                            <div class="pil-jokirank">Joki clasic <br>(Jasa joki Up WinRate)</div>
+                    <img src="../image/JASA MABAR.png" alt="">
+                            <div class="pil-jokirank">Jasa Mabar <br>(Jasa Mabar Penjoki)</div>
                     </a>
                 </div>
         </section>
@@ -149,28 +151,15 @@ if ($koneksi->connect_error) {
 }
 
 // Query untuk mengambil data promo
-$sql_promo = "SELECT paket_joki_rank.*, discount.potongan, (paket_joki_rank.harga - discount.potongan) AS hasil
-              FROM paket_joki_rank
-              LEFT JOIN discount ON paket_joki_rank.nama_discount = discount.nama_discount
-              WHERE paket_joki_rank.judul_paket = 'PROMO';";
+$sql_promo = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'Paket MCL'";
 $result_promo = $koneksi->query($sql_promo);
 if ($result_promo === false) {
     die("Error saat mengeksekusi query promo: " . $koneksi->error);
 }
 
-// Query untuk mengambil data joki star
-$sql_joki_star = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'JOKI/Star'";
-$result_joki_star = $koneksi->query($sql_joki_star);
-if ($result_joki_star === false) {
-    die("Error saat mengeksekusi query joki star: " . $koneksi->error);
-}
 
-// Query untuk mengambil data paket murah joki
-$sql_murah_joki = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'Paket murah joki'";
-$result_murah_joki = $koneksi->query($sql_murah_joki);
-if ($result_murah_joki === false) {
-    die("Error saat mengeksekusi query paket murah joki: " . $koneksi->error);
-}
+
+
 
 
 ?>
@@ -190,7 +179,7 @@ if ($result_murah_joki === false) {
 
     <!-- Promo Joki Rank -->
     <div class="card-header">Pilih Paket Joki</div>
-    <div class="promo-classic">Promo Joki Rank</div>
+    <div class="promo-classic">Joki MCL Wekly & Gold</div>
     <div class="container-1">
     <?php
 // Menampilkan data promo
@@ -201,18 +190,15 @@ foreach ($data_promo as $row) {
 
     $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
     ?>
-    <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['hasil'], 0, ',', '.'); ?>')">
+    <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['harga'], 0, ',', '.'); ?>')">
         <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="off">
         <label class="btn btn-outline-light col-12">
             <div class="row">
                 <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
                 <div class="col-12">
-                    <span id="harga<?= $row['id_paket']; ?>" class="text-warning" >
-                        <?= number_format($row['hasil'], 0, ',', '.'); ?>
-                    </span>
                 </div>
                 <div class="col-12">
-                    <span class="text-warning" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: RED;" >
+                    <span class="text-warning" >
                         <?= number_format($row['harga'], 0, ',', '.'); ?>
                     </span>
                 </div>
@@ -226,84 +212,20 @@ foreach ($data_promo as $row) {
     $counter++;
 }
 ?>
-
-
     </div>
-
-   <!-- Joki Rank / Star -->
-<div class="promo-classic">Joki Rank / Star</div>
 <div class="container-1">
-    <?php
-    // Menampilkan data joki star
-    $counter = 0;
-    $data_joki_star = $result_joki_star->fetch_all(MYSQLI_ASSOC);
-    foreach ($data_joki_star as $row) {
-        $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
-        ?>
-        <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['harga'], 0, ',', '.'); ?>')">
-            <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="on">
-            <label class="btn btn-outline-light col-12">
-                <div class="row">
-                    <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                    <div class="col-12">
-                        <span id="harga<?= $row['id_paket']; ?>" class="text-warning">
-                            <?= number_format($row['harga'], 0, ',', '.'); ?>
-                        </span>
-                    </div>
-                    <div class="col-12">
-                        <!-- Additional content as needed -->
-                    </div>
-                </div>
-            </label>
-        </div>
-        <?php
-        $counter++;
-    }
-    ?>
     </div>
 
     <!-- Paket Joki Murah -->
-    <div class="promo-classic">Paket Joki Murah</div>
+
     <div class="container-1">
-    <?php
-// Menampilkan data paket murah joki
-$counter = 0;
-$data_murah_joki = $result_murah_joki->fetch_all(MYSQLI_ASSOC);
-foreach ($data_murah_joki as $row) {
-    $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
-    ?>
-    <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['harga'], 0, ',', '.'); ?>')">
-        <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="on">
-        <label class="btn btn-outline-light col-12">
-            <div class="row">
-                <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                <div class="col-12">
-                    <span id="harga<?= $row['id_paket']; ?>" class="text-warning">
-                        <?= number_format($row['harga'], 0, ',', '.'); ?>
-                    </span>
-                </div>
-                <div class="col-12">
-                    <!-- Additional content as needed -->
-                </div>
-            </div>
-        </label>
-    </div>
-    <?php
-    $counter++;
-}
-?>
 
     
     </div>
     
         <label for="qtyid" class="ppq"> Jumlah: </label>
         <input type="number" name= "jumlahorder" id="qtyid" oninput="calculateTotal()">
-    <!-- Tabel Keranjang -->
-    
-
-
-
-
+        
     <label for="total" class="ppqmu"> Total: </label>
     <input type="text" class="bro" name= "totaltrans" id="total" readonly>   
     <input type="text" class="menghilang" name= "tanggalnow" id="setdatetime" readonly>

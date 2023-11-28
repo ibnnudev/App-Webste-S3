@@ -46,8 +46,8 @@
     </header> 
 
     <div class="content-jokirank">
-        <h1 class="nama-joki">Joki Rank</h1>
-        <img src="../image/rankpler.png" >
+        <h1 class="nama-joki">Joki Mabar</h1>
+        <img src="../image/JASA MABAR.png" >
         <h1 class="time">orderan joki di chek<br>pukul 09:00-21:00</h1>
         <h1 class="ket-1">Jika Orderan melewati<br>batas pengecekan <br>orderan, maka orderan<br>dicek di hari berikutnya</h1>
 
@@ -73,21 +73,23 @@
         <section id="joki" class="list-jokian-order">
                
                 <div class="img-jokian">
+                    <a href="orderjokirank.php">
+                            <img src="../image/rankpler.png" alt="">
+                            <div class="pil-jokirank">Joki Rank <br>(Jasa joki Rank)</div>
+                    </a>
+                </div>
+                
+
+                <div class="img-jokian">
                     <a href="orderjokimcl.php">
                             <img src="../image/MCL.png" alt="">
-                            <div class="pil-jokirank">Joki MCL <br>(Jasa joki MCL)</div>
+                            <div class="pil-jokirank">Joki MCL <br>(Jasa joki Mcl)</div>
                     </a>
                 </div>
                 <div class="img-jokian">
                     <a href="orderjokimontage.php">
                             <img src="../image/MONTAGE.png" alt="">
-                            <div class="pil-jokirank">Joki Vidio Montage <br>(Jasa joki Vidio)</div>
-                    </a>
-                </div>
-                <div class="img-jokian">
-                    <a href="orderjokimabar.php">
-                            <img src="../image/JASA MABAR.png" alt="">
-                            <div class="pil-jokirank">Jasa Mabar <br>(Jasa Mabar Penjoki)</div>
+                            <div class="pil-jokirank">Jasa  Montage <br>(Jasa Vidio Montage)</div>
                     </a>
                 </div>
                 <div class="img-jokian">
@@ -298,8 +300,34 @@ foreach ($data_murah_joki as $row) {
     
         <label for="qtyid" class="ppq"> Jumlah: </label>
         <input type="number" name= "jumlahorder" id="qtyid" oninput="calculateTotal()">
+        <div class="text_keranjang">
+            Keranjang
+            
+        </div>
     <!-- Tabel Keranjang -->
-    
+    <div class="tabelok">
+        <table class="table-keranjang" id="keranjangsementara">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nama Paket</th>
+            <th scope="col">Harga</th>
+            <th scope="col">Qty</th>
+            <th scope="col">Subtotal</th>
+            <th scope="col">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Data tabel keranjang akan ditampilkan di sini -->
+    </tbody>
+</table>
+<!-- Tombol untuk memicu pengambilan nilai dan pengiriman ke server -->
+
+
+
+
+
+</div>
 
 
 

@@ -191,62 +191,72 @@ if ($user['sebagai'] === 'admin') {
 
     $koneksi->close();
     ?>
-    <script>
-    function takejob(id_transaksi) {
-        // Tampilkan notifikasi konfirmasi
-        var confirmation = confirm("Apakah Anda yakin ingin mengedit worker untuk transaksi dengan ID " + id_transaksi + "id_transaksi");
+   <?php
+    // Lakukan koneksi ke database
+    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    
+    // Periksa koneksi ke database
+    if ($koneksi->connect_error) {
+        die("Koneksi ke database gagal: " . $koneksi->connect_error);
+    }
 
-        // Jika pengguna menekan "OK", lakukan pembaruan pada id_worker
+    // Validasi id_transaksi, pastikan itu adalah integer
+    $id_transaksi = isset($_POST['id_transaksi']) ? intval($_POST['id_transaksi']) : 0;
+
+    // Periksa apakah $id_transaksi valid sebelum melanjutkan
+    if ($id_transaksi <= 0) {
+        die("Invalid input");
+    }
+
+    // Ambil id_worker dari data user
+    $nik = $user['id_worker'];
+
+    // Selanjutnya, lakukan update dengan prepared statement
+    $sqlUpdate = $koneksi->prepare("UPDATE take_job SET id_worker = ? WHERE id_transaksi = ?");
+    $sqlUpdate->bind_param("ss", $nik, $id_transaksi);
+
+    // Eksekusi query update
+    if ($sqlUpdate->execute()) {
+        echo "Pembaruan data berhasil.";
+    } else {
+        echo "Terjadi kesalahan saat melakukan pembaruan: " . $koneksi->error;
+    }
+
+    // Tutup prepared statement
+    $sqlUpdate->close();
+
+    // Tutup koneksi database
+    $koneksi->close();
+?>
+
+<!-- Script JavaScript -->
+<script>
+    function takejob(id_transaksi) {
+        // Tampilkan dialog konfirmasi
+        var confirmation = confirm("Apakah Anda yakin ingin mengambil pekerjaan?");
+
+        // Jika pengguna menekan "Yes", lakukan pembaruan pada id_worker
         if (confirmation) {
-            // Lakukan pembaruan pada id_worker sesuai dengan NIK yang terdaftar
-            // Implementasikan sesuai dengan kebutuhan dan cara penyimpanan data pada database Anda
-            // Contoh menggunakan AJAX untuk mengirim permintaan pembaruan
+            // Lakukan pembaruan pada id_worker sesuai dengan id_worker yang telah login
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "takejobw.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
+                // Setelah mendapatkan respons dari server
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Tindakan yang diambil setelah mendapatkan respons dari server
+                    // Tindakan setelah mendapatkan respons dari server
                     console.log(xhr.responseText);
-                    // Mungkin Anda ingin melakukan sesuatu setelah pembaruan selesai
+                    alert(xhr.responseText); // Tampilkan pesan ke pengguna
+                    // Misalnya, perbarui elemen HTML dengan hasil yang baru
+                    document.getElementById("hasilUpdate").innerHTML = xhr.responseText;
                 }
             };
-            // Kirim permintaan pembaruan dengan ID transaksi
-            xhr.send("id_transaksi=" + id_transaksi);
+            // Kirim permintaan pembaruan dengan ID transaksi dan ID worker yang telah login
+            xhr.send("id_transaksi=" + id_transaksi + "&id_worker=<?php echo $nik; ?>");
         }
     }
 </script>
-<?php
 
-// Lakukan koneksi ke database
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-
-// Periksa koneksi ke database
-if ($koneksi->connect_error) {
-    die("Koneksi ke database gagal: " . $koneksi->connect_error);
-}
-
-// Ambil id_transaksi dari data POST
-
-
-// Ambil id_worker dari data user
-$nik = $user['id_worker'];
-
-// Lakukan query update untuk mengubah id_worker sesuai kebutuhan Anda
-$sqlUpdate = $koneksi->prepare("UPDATE take_job SET id_worker = ? WHERE id_transaksi = ?");
-$sqlUpdate->bind_param("ss", $nik, $id_transaksi);
-
-// Eksekusi query update
-if ($sqlUpdate->execute()) {
-    echo "Pembaruan data berhasil.";
-} else {
-    echo "Terjadi kesalahan saat melakukan pembaruan: " . $koneksi->error;
-}
-
-// Tutup koneksi database
-$koneksi->close();
-
-?>
 
 
 

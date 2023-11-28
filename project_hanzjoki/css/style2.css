@@ -1429,6 +1429,7 @@ input, button {
 }
 
 .ppq{
+    margin-top: 28px;
     color: #fff;
     margin-left: 5px;
 }
@@ -1592,7 +1593,4 @@ margin-bottom: 10px; /* Jarak bawah garis */
 .pesan-button:hover {
     background-color: #0056b3;
 }
-    /*  */
-    /* .pesan-button:hover {
-        background-color: #0056b3; /* Warna latar belakang saat dihover */
-    /* } */
+   
