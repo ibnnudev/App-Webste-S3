@@ -1,3 +1,41 @@
+
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ambil ID transaksi dari permintaan POST
+    $idTransaksi = $_POST['id_transaksi'];
+
+    // Lakukan koneksi ke database
+    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    if ($koneksi->connect_error) {
+        die("Connection failed: " . $koneksi->connect_error);
+    }
+
+    // Lakukan pembaruan status di database
+    $updateSql = "UPDATE transaksi SET stats = 'bermasalah' WHERE id_transaksi = ?";
+    $stmt = $koneksi->prepare($updateSql);
+
+    if ($stmt) {
+        $stmt->bind_param("s", $idTransaksi);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            echo "Status berhasil diperbarui menjadi bermasalah";
+        } else {
+            echo "Gagal memperbarui status";
+        }
+
+        $stmt->close();
+    } else {
+        echo "Kesalahan dalam persiapan pernyataan SQL";
+    }
+
+    $koneksi->close();
+} else {
+    echo "Metode permintaan tidak valid";
+}
+?>
+
 <?php
 // Pastikan sesi sudah dimulai
 session_start();
@@ -128,6 +166,9 @@ if (isset($_SESSION['user'])) {
                                     <a href="data_orderan_done.php">
                                         <span>Done</span>
                                     </a>
+                                    <a href="data_orderan_problem.php">
+                                        <span>Problem</span>
+                                    </a>
                                     
                                     
                                 </div>
@@ -169,7 +210,7 @@ if ($koneksi->connect_error) {
 $sql = "SELECT 
 transaksi.id_transaksi,
 transaksi.tgl_order,
-transaksi.data_akun,
+transaksi.id_data_akun,
 transaksi.qty_order,
 transaksi.payment,
 transaksi.total_transaksi,
@@ -177,7 +218,7 @@ transaksi.stats
 FROM 
 transaksi
 WHERE 
-transaksi.stats = 'belum lunas '";
+transaksi.stats = 'belum lunas'";
 $result = $koneksi->query($sql);
 
 
@@ -186,17 +227,18 @@ if ($result->num_rows > 0) {
         echo "<tr>
                 <td>{$row['id_transaksi']}</td>
                 <td>{$row['tgl_order']}</td>
-                <td>{$row['data_akun']}</td>
+                <td>{$row['id_data_akun']}</td>
                 <td>{$row['qty_order']}</td> 
                 <td>{$row['payment']}</td>
                 <td>{$row['total_transaksi']}</td>
                 <td>{$row['stats']}</td>
                 <td>
-                <button class='btn btn-danger btn-ready' data-id='{$row['id_transaksi']}'>Ready</button>
+                     <a href='#' class='btn btn-success btn-ready' data-id='{$row['id_transaksi']}'>Ready</a>
                     <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
                     <a href='../crud/transaksi_hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
                     <a href='cek_bukti_tf.php?id=" . $row['id_transaksi'] . "' class='btn btn-info'>Cek TF</a>
-                    
+                    <a href='#' class='btn btn-danger btn-problem' data-id='{$row['id_transaksi']}'>Problem</a>
+
                 </td>
             </tr>";
     }
@@ -246,28 +288,62 @@ $koneksi->close();
     });
 </script>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script>
-$(document).ready(function() {
-    $(".btn-ready").click(function() {
-        var id_transaksi = $(this).data('id');
-        
-        // Kirim permintaan AJAX ke server
-        $.ajax({
-            type: 'POST',
-            url: 'data_orderan_lunas.php', // Gantilah dengan file yang sebenarnya menangani permintaan
-            data: { id_transaksi: id_transaksi },
-            success: function(response) {
-                // Tangani respons dari server jika diperlukan
-                console.log(response);
-            },
-            error: function(error) {
-                // Tangani kesalahan jika diperlukan
-                console.log(error);
-            }
+    $(document).ready(function() {
+        $(".btn-problem").click(function(e) {
+            e.preventDefault();
+
+            // Ambil ID transaksi dari data-id pada tombol
+            var idTransaksi = $(this).data('id');
+
+            // Kirim permintaan AJAX ke endpoint PHP
+            $.ajax({
+                type: 'POST',
+                url: 'data_orderan.php', // Ganti dengan nama file PHP yang sesuai
+                data: { id_transaksi: idTransaksi },
+                success: function(response) {
+                    // Tidak perlu alert(response);
+                    location.reload();  
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         });
     });
-});
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        // Tindakan ketika tombol "Done" ditekan
+        $('.btn-ready').on('click', function (e) {
+            e.preventDefault();
+
+            // Ambil id_transaksi dari atribut data-id
+            var id_transaksi = $(this).data('id');
+
+            // Kirim data ke update_done.php menggunakan AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'update_lunas.php',
+                data: {
+                    id_transaksi: id_transaksi
+                },
+                success: function (response) {
+                    // Tampilkan pesan sukses atau lakukan tindakan lain sesuai kebutuhan
+                    alert(response);
+                    // Refresh halaman
+                    location.reload();
+                },
+                error: function (error) {
+                    // Tampilkan pesan error atau lakukan tindakan lain sesuai kebutuhan
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
 </script>
 
 
@@ -278,11 +354,6 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-<!-- Modal -->
 <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

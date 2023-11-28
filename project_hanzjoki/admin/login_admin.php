@@ -101,13 +101,11 @@ if (isset($_POST['login'])) {
                 <input type="password" id="password" name="password" required>
 
                 <button type="submit" name="login">Login</button>
-            </form>
 
-
-            
-
-
-
+                <div class="lp-pw">
+                    <a href="lupa_pw_admin.php">Lupa Password</a>
+                </div>
+            </form> 
         </div>
     </div>
 </body>

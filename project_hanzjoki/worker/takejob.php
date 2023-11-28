@@ -11,7 +11,7 @@ if (isset($_SESSION['user'])) {
     if ($user['sebagai'] === 'admin') {
         $keterangan = '' . $user['username'];
     } elseif ($user['sebagai'] === 'worker') {
-        $keterangan = 'Halo, Worker ' . $user['nama_worker'];
+        $keterangan = 'Halo, Worker ' . $user['username'];
     }
 
     // Output keterangan
@@ -123,6 +123,17 @@ if ($user['sebagai'] === 'admin') {
                         <li class="breadcrumb-item active">Data Worker</li>
                     </ol>
 
+                    <div class="atas-bgn">
+                                    <a href="job_worker.php" class="jobdesk">
+                                        <span>Progres</span>
+                                    </a>
+                                    
+                                </div>
+
+
+
+
+
 
                     <div class="card mb-4">
                         <div class="card-header">
@@ -145,87 +156,157 @@ if ($user['sebagai'] === 'admin') {
                                     <tr>
                                         
                                         <th>Id Transaksi</th>
+                                        <th>Id Customer</th>
                                         <th>Id Worker</th>
-                                        <th>Login Via</th>
+                                        <th>Data Akun</th>
                                         <th>Qty Order</th>
                                         <th>Tanggal</th>
-                                        <th>Harga</th>
-                                        <th>Laporan</th>
-                                        <th>Pengerjaan</th>
-                                        <th>Status</th>
+                                        <th>Total Transaksi</th>
+                                        <th>Payment</th>
+                                        <th>no_wa</th>
+                                        <th>Status pembayatan</th>
+                                       
+                                        
+                                        <th>status</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                <?php
-    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-    if ($koneksi->connect_error) {
-        die("Connection failed: " . $koneksi->connect_error);
+                                <?php    
+$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+if ($koneksi->connect_error) {
+    die("Connection failed: " . $koneksi->connect_error);
+}
+
+$sql = "SELECT id_transaksi, id_customer, id_worker, id_data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats, bukti_tf, laporan_ss, statsdone FROM transaksi WHERE stats = 'Lunas' AND statsdone = 'Undertake'";
+
+$result = $koneksi->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>" . $row["id_transaksi"] . "</td>
+                <td>" . $row["id_customer"] . "</td>
+                <td>" . $row["id_worker"] . "</td>
+                <td>" . $row["id_data_akun"] . "</td>
+                <td>" . $row["qty_order"] . "</td>
+                <td>" . $row["tgl_order"] . "</td>
+                <td>" . $row["total_transaksi"] . "</td> 
+                <td>" . $row["payment"] . "</td> 
+                <td>" . $row["no_wa"] . "</td> 
+                <td>" . $row["stats"] . "</td>                          
+                <td>" . $row["statsdone"] . "</td>      
+                                       
+                <td>
+                <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
+                <a href='update_job.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger' onclick='takeJob({$row['id_transaksi']})'>Take</a>
+
+                </td>
+            </tr>";
     }
+} else {
+    echo "<tr><td colspan='10'>0 result</td></tr>";
+}
 
-    $sql = "SELECT id_transaksi, id_worker, login_via, qty_order, tgl_order, gaji, laporan, statsdone, stats FROM take_job";
-    $result = $koneksi->query($sql);
+$koneksi->close();
+?>
+<!-- bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>
-                    <td>" . $row["id_transaksi"] . "</td>
-                    <td>" . $row["id_worker"] . "</td>
-                    <td>" . $row["login_via"] . "</td>
-                    <td>" . $row["qty_order"] . "</td>
-                    <td>" . $row["tgl_order"] . "</td>
-                    <td>" . $row["gaji"] . "</td>
-                    <td>" . $row["laporan"] . "</td>                             
-                    <td>" . $row["statsdone"] . "</td>      
-                    <td>" . $row["stats"] . "</td>                         
-                    <td>
-                    <button onclick='showTakeJobModal(" . $row["id_transaksi"] . ")'>Take</button>
-                    </td>
-                </tr>";
-        }
-    } else {
-        echo "<tr><td colspan='10'>0 result</td></tr>";
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function takeJob(id_transaksi) {
+        // Mendapatkan user yang login (gantilah dengan cara yang sesuai dengan sistem Anda)
+        var id_worker = getUserId();  // Gantilah ini dengan cara mendapatkan ID user yang login
+        
+        // Mengirim data melalui AJAX untuk diupdate
+        $.ajax({
+            type: 'POST',
+            url: 'takejob.php',  // Gantilah dengan nama file PHP yang sesuai
+            data: {
+                id_transaksi: id_transaksi,
+                id_worker: id_worker
+            },
+            success: function(response) {
+                // Jika update berhasil, ubah statsdone menjadi "Progres"
+                $.ajax({
+                    type: 'POST',
+                    url: 'update_statsdone.php',  // Gantilah dengan nama file PHP yang sesuai
+                    data: {
+                        id_transaksi: id_transaksi,
+                        statsdone: 'Progres'
+                    },
+                    success: function(response) {
+                        // Tidak ada pesan yang ditampilkan
+                        // Refresh halaman
+                        location.reload();
+                    }
+                });
+            }
+        });
     }
+</script>
 
-    $koneksi->close();
-    ?>
-    <div class="modal fade" id="takeJobModal" tabindex="-1" aria-labelledby="takeJobModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+
+<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <!-- Isi modal -->
             <div class="modal-header">
-                <h5 class="modal-title" id="takeJobModalLabel">Konfirmasi Ambil Pekerjaan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="popupTitle">Detail Orderan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                <!-- Formulir Take Job -->
-                <form action="take_job_process.php" method="post" id="takeJobForm">
-                    <!-- Isian formulir sesuai kebutuhan -->
-                    <label for="keterangan">Keterangan:</label>
-                    <textarea name="keterangan" rows="4" required></textarea>
-
-                    <!-- Input tersembunyi untuk menyimpan ID transaksi -->
-                    <input type="hidden" name="id_transaksi" id="id_transaksi_input">
-
-                    <!-- Tombol submit -->
-                    <button type="submit">Ambil Pekerjaan</button>
-                </form>
+            <div class="modal-body" id="popupContent">
+                <!-- Konten popup akan dimuat di sini -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Tutup</button>
             </div>
         </div>
     </div>
 </div>
-<script>
-    // Fungsi untuk menampilkan modal Take Job
-    function showTakeJobModal(id_transaksi) {
-        // Mengatur nilai input tersembunyi dengan ID transaksi yang dipilih
-        document.getElementById('id_transaksi_input').value = id_transaksi;
 
-        // Menampilkan modal Take Job
-        var takeJobModal = new bootstrap.Modal(document.getElementById('takeJobModal'));
-        takeJobModal.show();
+<!-- jQuery and Bootstrap JS scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+<!-- Script untuk menampilkan popup -->
+<script>
+$(document).ready(function () {
+    // Fungsi untuk menampilkan popup
+    function showPopup(id_transaksi) {
+        // Ganti 'popup_detail_order.php' dengan file yang berisi detail popup Anda
+        $.post('../admin/popup_detail_order.php', { id_transaksi: id_transaksi }, function (data) {
+            $('#popupContent').html(data);
+            $('#popup').modal('show');
+        });
     }
+
+    // Event handler untuk tombol Detail
+    $('.btn-detail').click(function () {
+        // Ambil nilai id_transaksi dari atribut data-id
+        var id_transaksi = $(this).data('id');
+        
+        // Output debug untuk memastikan nilai id_transaksi diambil dengan benar
+        console.log("ID Transaksi yang diklik: " + id_transaksi);
+        
+        // Panggil fungsi untuk menampilkan popup
+        showPopup(id_transaksi);
+    });
+});
+
+function closeModal() {
+    $('#popup').modal('hide');
+}
 </script>
+
+
+
+
+
 
 
 
@@ -280,49 +361,7 @@ if ($user['sebagai'] === 'admin') {
     <script src="assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
+
 </body>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Ambil elemen dengan kelas 'id-transaksi' saat diklik
-        var idTransaksiElements = document.querySelectorAll('.id-transaksi');
-
-        // Tambahkan event listener untuk setiap elemen
-        idTransaksiElements.forEach(function (element) {
-            element.addEventListener('click', function () {
-                // Ambil nilai data-idtransaksi
-                var idTransaksi = element.getAttribute('data-idtransaksi');
-
-                // Kirim nilai id_transaksi ke server melalui metode POST
-                sendIdTransaksiToServer(idTransaksi);
-            });
-        });
-
-        // Fungsi untuk mengirim id_transaksi ke server melalui metode POST
-        function sendIdTransaksiToServer(idTransaksi) {
-            // Buat objek XMLHttpRequest
-            var xhr = new XMLHttpRequest();
-
-            // Atur metode dan endpoint URL untuk permintaan
-            xhr.open('POST', 'proses.php', true);
-
-            // Atur header Content-Type
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            // Atur data yang akan dikirim ke server
-            var data = 'id_transaksi=' + idTransaksi;
-
-            // Atur callback untuk menangani respons dari server
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Tindakan yang diambil setelah mendapatkan respons
-                    console.log(xhr.responseText);
-                }
-            };
-
-            // Kirim permintaan dengan data id_transaksi
-            xhr.send(data);
-        }
-    });
-</script>
 
 </html>

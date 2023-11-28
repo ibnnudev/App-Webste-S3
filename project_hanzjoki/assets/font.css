@@ -1,0 +1,17 @@
+.column-font{
+    font-size: x-small;
+    font-style: italic;
+}
+
+.accordion-item{
+    background-color: #292b2c;
+}
+
+.transaction-text{
+    color: greenyellow;
+}
+
+.transaction-text a{
+    color: gold;
+}
+

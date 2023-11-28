@@ -1,5 +1,4 @@
 
-
 <?php
 
 require_once('../koneksi.php');
@@ -14,39 +13,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jenis_kelamin = $_POST['jenis_kelamin'];
     $pangkat = $_POST['pangkat'];
     $no_wa = $_POST['no_wa'];
+    $pertanyaan = $_POST['pertanyaan'];
+    $jawaban = $_POST['jawaban'];
     $Role_utama = $_POST['Role_utama'];
     $img_ktp = !empty($_FILES["img_ktp"]["name"]) ? $_FILES["img_ktp"]["name"] : '';
-    // Check if the img_ktp key exists and handle the case when no image is uploaded
- 
-    // Proses upload gambar KTP
+    
+    // Periksa apakah kunci img_ktp ada dan tangani kasus ketika tidak ada gambar yang diunggah
     if (!empty($img_ktp)) {
         $lokasi_sementara = $_FILES["img_ktp"]["tmp_name"];
         $lokasi_tujuan = '../upload/' . $img_ktp;
         move_uploaded_file($lokasi_sementara, $lokasi_tujuan);
     }
 
-    // Query to insert data into the database
-    $query = "INSERT INTO data_worker (id_worker, email, username, pw, nama_lengkap,  alamat, jenis_kelamin, pangkat, no_wa,
-                rolee, img_ktp, sebagai) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'worker')";
+    // Query untuk memasukkan data ke dalam database
+   // Query untuk memasukkan data ke dalam database
+$query = "INSERT INTO data_worker (id_worker, email, username, pw, nama_lengkap, alamat, jenis_kelamin, pangkat, no_wa, pertanyaan, jawaban, rolee, img_ktp, sebagai) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'worker')";
 
-    // Use prepared statement
-    $stmt = mysqli_prepare($koneksi, $query);
+// Gunakan prepared statement
+$stmt = mysqli_prepare($koneksi, $query);
 
-    // Bind parameters
-    mysqli_stmt_bind_param($stmt, "sssssssssss", $NIK, $email, $username, $pw, $nama_lengkap, $alamat, $jenis_kelamin, $pangkat, $no_wa, $Role_utama, $img_ktp);
+// I// Ikat parameter
+mysqli_stmt_bind_param($stmt, "sssssssssssss", $NIK, $email, $username, $pw, $nama_lengkap, $alamat, $jenis_kelamin, $pangkat, $no_wa, $pertanyaan, $jawaban, $Role_utama, $img_ktp);
 
-    // Execute the statement
+// Jalankan statement
+
+        // Jalankan statement
     if (mysqli_stmt_execute($stmt)) {
         echo "Data berhasil ditambahkan.";
     } else {
         echo "Terjadi kesalahan saat menambahkan data: " . mysqli_error($koneksi);
     }
 
-    // Close the statement and connection
+    // Tutup statement dan koneksi
     mysqli_stmt_close($stmt);
     mysqli_close($koneksi);
 }
+
 
 
 
@@ -234,6 +237,14 @@ if (isset($_SESSION['user'])) {
 
                                         <label for="Role_utama">Role Utama:</label>
                                         <input type="text" name="Role_utama" required>
+                                        
+                                        <label for="pertanyaan">Pertanyaan:</label>
+                                        <input type="text" name="pertanyaan" required>
+
+                                        
+                                        <label for="jawaban">Jawaban:</label>
+                                        <input type="text" name="jawaban" required>
+
 
                                         <label for="img_ktp">Unggah Gambar KTP:</label>
                                         <input type="file" name="img_ktp" accept="image/*">
@@ -264,6 +275,8 @@ if (isset($_SESSION['user'])) {
                                         <th>Role HERO</th>
                                         <th>sebagai</th>
                                         <th>username</th>
+                                        <th>pertanyaan</th>
+                                        <th>jawaban</th>
                                         <!-- <th>Foto Ktp</th> -->
                                         <th>Aksi</th>
                                         </tr>
@@ -276,7 +289,7 @@ if (isset($_SESSION['user'])) {
                                             die("Connection failed: " . $koneksi->connect_error);   
                                         }
 
-                                        $sql = "SELECT id_worker, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa ,username FROM data_worker";
+                                        $sql = "SELECT id_worker, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa ,username,pertanyaan, jawaban FROM data_worker";
                                         $result = $koneksi->query($sql);
 
                                         if ($result->num_rows > 0) {
@@ -291,7 +304,9 @@ if (isset($_SESSION['user'])) {
                                                         <td>" . $row["pangkat"] . "</td>
                                                         <td>" . $row["rolee"] . "</td>
                                                         <td>" . $row["sebagai"] . "</td>
-                                                        <td>" . $row["username"] . "</td>                             
+                                                        <td>" . $row["username"] . "</td>      
+                                                        <td>" . $row["pertanyaan"] . "</td>  
+                                                        <td>" . $row["jawaban"] . "</td>                         
                                                         <td>
                                                         <a href='form_edit.php?id=" . $row['id_worker'] . "' class='btn btn-info'>Edit</a>
                                                         <a href='../crud/worker_hapus.php?id_worker=" . $row['id_worker'] . "' class='btn btn-danger'>Hapus</a>

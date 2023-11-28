@@ -120,15 +120,17 @@ if (isset($_SESSION['user'])) {
 
                         <div class="box-lainya">
                                 <div class="bwh-bgn" >
-                                    <a href="data_orderan.php" >
+                                <a href="data_orderan.php" >
                                         <span>Belum Lunas</span>
                                     </a>
-
-                                    <a href="data_orderan_lunas.php" style="background-color: #FF9900; height: 40px; color: #FFf;">
+                                    <a href="#" style="background-color: #FF9900; height: 40px; color: #FFf;">
                                         <span>Lunas</span>
                                     </a>
                                     <a href="data_orderan_done.php">
                                         <span>Done</span>
+                                    </a>
+                                    <a href="data_orderan_problem.php">
+                                        <span>Problem</span>
                                     </a>
                                     
                                 </div>
@@ -156,7 +158,9 @@ if (isset($_SESSION['user'])) {
             <th>data akun</th>
             <th>qty orderan</th>
             <th>Tanggal</th>
-            <th>Gaji</th>
+            <th>Total_transaksi</th>
+            
+            <th>No Hp</th>
             <th>laporan</th>
             <th>Status lunas </th>
             <th>Status progres</th>
@@ -171,19 +175,21 @@ if ($koneksi->connect_error) {
 }
 
 $sql = "SELECT 
-
-take_job.id_transaksi,
-take_job.id_worker,
-take_job.id_customer,
-take_job.data_akun,
-take_job.qty_order,
-take_job.gaji,
-take_job.laporan,
-take_job.statsdone,
-take_job.stats,
-take_job.tgl_order
+id_transaksi,
+id_customer,
+id_worker,
+id_data_akun,
+qty_order,
+laporan_ss,
+statsdone,
+total_transaksi,
+payment,
+no_wa,
+stats,
+tgl_order
 FROM 
-take_job";
+transaksi
+where stats = 'Lunas'";
 $result = $koneksi->query($sql);
 
 if ($result->num_rows > 0) {
@@ -192,17 +198,18 @@ if ($result->num_rows > 0) {
                 <td>{$row['id_transaksi']}</td>
                 <td>{$row['id_worker']}</td>
                 <td>{$row['id_customer']}</td>
-                <td>{$row['data_akun']}</td>
+                <td>{$row['id_data_akun']}</td>
                 <td>{$row['qty_order']}</td> 
                 <td>{$row['tgl_order']}</td>
-                <td>{$row['gaji']}</td>
-                <td>{$row['laporan']}</td>
+                <td>{$row['total_transaksi']}</td>
+                <td>{$row['payment']}</td>
+                <td>{$row['no_wa']}</td>
                 <td>{$row['stats']}</td>
                 <td>{$row['statsdone']}</td>
                 <td>
                     <a href='../crud/transaksi_hapus.php?id_transaksi={$row['id_transaksi']}' class='btn btn-danger'>Hapus</a>
                     <button class='btn btn-info btn-detail' data-id='{$row['id_transaksi']}'>Detail</button>
-                    
+                    <a href='cek_bukti_tf.php?id=" . $row['id_transaksi'] . "' class='btn btn-info'>Cek TF</a>
                 </td>
             </tr>";
     }

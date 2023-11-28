@@ -930,3 +930,19 @@ button {
   background-color: #286BC2; /* Warna latar belakang untuk box data ganjil */
   margin-left: 30px;
 }
+
+
+.lp-pw{
+  margin-top: 15px;
+  text-decoration: none;
+
+}
+
+.lp-pw a {
+  text-decoration: none;
+}
+
+
+.lp-pw a:hover {
+ color: #55e34d;
+}
