@@ -249,6 +249,7 @@ $koneksi->close();
     }
 </script>
 
+<<<<<<< HEAD
 
 <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="popupTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -283,6 +284,33 @@ $(document).ready(function () {
             $('#popupContent').html(data);
             $('#popup').modal('show');
         });
+=======
+    $koneksi->close();
+    ?>
+    <script>
+    function takejob(id_transaksi) {
+        // Tampilkan notifikasi konfirmasi
+        var confirmation = confirm("Apakah Anda yakin ingin mengedit worker untuk transaksi dengan ID " + id_transaksi + "id_transaksi");
+
+        // Jika pengguna menekan "OK", lakukan pembaruan pada id_worker
+        if (confirmation) {
+            // Lakukan pembaruan pada id_worker sesuai dengan NIK yang terdaftar
+            // Implementasikan sesuai dengan kebutuhan dan cara penyimpanan data pada database Anda
+            // Contoh menggunakan AJAX untuk mengirim permintaan pembaruan
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "takejobw.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Tindakan yang diambil setelah mendapatkan respons dari server
+                    console.log(xhr.responseText);
+                    // Mungkin Anda ingin melakukan sesuatu setelah pembaruan selesai
+                }
+            };
+            // Kirim permintaan pembaruan dengan ID transaksi
+            xhr.send("id_transaksi=" + id_transaksi);
+        }
+>>>>>>> f2507198c230f50d75bf884ea42898d05a7d7acb
     }
 
     // Event handler untuk tombol Detail
@@ -302,6 +330,38 @@ function closeModal() {
     $('#popup').modal('hide');
 }
 </script>
+<?php
+
+// Lakukan koneksi ke database
+$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+
+// Periksa koneksi ke database
+if ($koneksi->connect_error) {
+    die("Koneksi ke database gagal: " . $koneksi->connect_error);
+}
+
+// Ambil id_transaksi dari data POST
+
+
+// Ambil id_worker dari data user
+$nik = $user['id_worker'];
+
+// Lakukan query update untuk mengubah id_worker sesuai kebutuhan Anda
+$sqlUpdate = $koneksi->prepare("UPDATE take_job SET id_worker = ? WHERE id_transaksi = ?");
+$sqlUpdate->bind_param("ss", $nik, $id_transaksi);
+
+// Eksekusi query update
+if ($sqlUpdate->execute()) {
+    echo "Pembaruan data berhasil.";
+} else {
+    echo "Terjadi kesalahan saat melakukan pembaruan: " . $koneksi->error;
+}
+
+// Tutup koneksi database
+$koneksi->close();
+
+?>
+
 
 
 

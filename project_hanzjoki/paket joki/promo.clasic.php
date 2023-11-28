@@ -6,13 +6,13 @@ session_start();
 require_once('../koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+    $judul_paket = $_POST['jenis_paket'];
     $nama_paket = $_POST['nama_paket'];
     $harga = $_POST['harga'];
 
     // Query to insert data into the database
     $query = "INSERT INTO paket_joki_rank (id_paket, judul_paket, nama_paket, harga, nama_discount) 
-    VALUES ('', 'Joki Classic', ?, ?, 'no discount')";
+    VALUES ('', ?, ?, ?, 'no discount')";
 
 
 
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = mysqli_prepare($koneksi, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, "ss", $nama_paket, $harga);
+    mysqli_stmt_bind_param($stmt, "sss",$judul_paket,  $nama_paket, $harga);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
@@ -213,6 +213,15 @@ if (isset($_SESSION['user'])) {
                 <form action="promo_joki.php" method="post" id="promoForm">
                     <!-- Isian formulir -->
 
+
+                    <label for="jenis_paket">Jenis Paket:</label>
+                    <select name="jenis_paket" id="jenis_paket" required>
+                    <option value="" disabled selected>Select Jenis Paket</option>
+                    <option value="Promo Classic">Promo Classic</option>
+                    <option value="joki/Win">Joki/Win</option>
+                    </select>
+         
+
                     <label for="nama_paket">Nama Paket:</label>
                     <input type="text" name="nama_paket" required>
 
@@ -253,7 +262,8 @@ if ($koneksi->connect_error) {
 // Query untuk menampilkan data
 $sql = "SELECT id_paket, judul_paket, nama_paket, harga
         FROM paket_joki_rank
-        WHERE judul_paket = 'Joki Classic'";
+        WHERE judul_paket IN ('Promo Classic','Joki/Win')";
+
 $result = $koneksi->query($sql);
 
 // Validasi form submission dan update data jika ada request POST
