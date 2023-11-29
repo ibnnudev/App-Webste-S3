@@ -296,21 +296,15 @@ foreach ($data_murah_joki as $row) {
     
     </div>
     
-        <label for="qtyid" class="ppq"> Jumlah: </label>
+    <label for="qtyid" class="ppq"> Jumlah: </label>
         <input type="number" name= "jumlahorder" id="qtyid" oninput="calculateTotal()">
-    <!-- Tabel Keranjang -->
-    
-
-
-
-
+        
     <label for="total" class="ppqmu"> Total: </label>
-    <input type="text" class="bro" name= "totaltrans" id="total" readonly>   
-    <input type="text" class="menghilang" name= "tanggalnow" id="setdatetime" readonly>
-    <input type="text" class="menghilang" name= "pembayaran" id="pembayaranText" readonly>
-    <input type="text" class="menghilang" name= "id_paket" id="id_paket" readonly>
-    <input type="text" class="menghilang" name= "harga" id="harga" readonly>
-    <input type="text" class="menghilang" name="totaltransbro" id="totaltransbro" readonly>
+    <input type="text" class="bro" name= "totaltransbro" id="totaltransbro" readonly>   
+    <input type="text" class="menghilan" name= "tanggalnow" id="setdatetime" readonly>
+    <input type="text" class="menghilan" name= "pembayaran" id="pembayaranText" readonly>
+    <input type="text" class="menghilan" name= "id_paket" id="id_paket" readonly>
+    <input type="text" class="menghilan" name= "harga" id="harga" readonly>
 
 
 
@@ -484,7 +478,7 @@ if (isset($_POST["ORDERNOWWW"])) {
         echo "
             <script>
             alert('DATA BERHASIL DI TAMBAHKAN');
-            document.location.href = 'orderJokirank.php';
+            document.location.href = 'struk_customer_done.php';
             </script>
         ";
     } else {

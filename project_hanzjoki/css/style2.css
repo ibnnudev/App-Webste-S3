@@ -1600,4 +1600,8 @@ margin-bottom: 10px; /* Jarak bawah garis */
 .pesan-button:hover {
     background-color: #0056b3;
 }
-   
+   .transparant{
+    background-color: transparent;
+    border: 1px solid #ccc; /* Jangan lupa atur garis tepi atau batas input agar terlihat */
+    padding: 5px; /* Sesuaikan dengan gaya desain Anda */
+   }
