@@ -541,7 +541,7 @@ function transaksi($data) {
         if (!mysqli_query($koneksi, $sqltran)) {
             die("Error in SQL query: " . mysqli_error($koneksi));
         }
-
+        session_start(); // Mulai sesi jika belum dimulai
         // Get id_transaksi
         $result = mysqli_query($koneksi, "SELECT id_transaksi FROM transaksi WHERE payment = '$payment'");
         if (!$result) {

@@ -1,3 +1,55 @@
+<?php
+session_start(); // Pastikan untuk memulai sesi jika belum dimulai
+
+// Ambil nilai id_transaksi dari $_SESSION
+$id_transaksi = isset($_SESSION['id_transaksi']) ? $_SESSION['id_transaksi'] : "N/A";
+// Koneksi ke database (gantilah dengan informasi koneksi yang sesuai)
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hanzjoki";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Periksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// Query untuk mengambil ID transaksi dari database
+$sql = "SELECT
+transaksi.id_transaksi,
+transaksi.payment,
+data_akun.login_via,
+data_akun.email_nohp,
+data_akun.req_hero,
+data_akun.nick_id,
+data_akun.pw,
+data_akun.catatan
+FROM
+transaksi
+JOIN
+data_akun ON transaksi.id_data_akun = data_akun.id_data_akun
+WHERE
+transaksi.id_transaksi = '$id_transaksi' ";
+$result = $conn->query($sql);
+
+// Periksa apakah query berhasil dijalankan
+if ($result->num_rows > 0) {
+    // Ambil hasil query
+    $row = $result->fetch_assoc();
+    $id_transaksi = $row["id_transaksi"];
+    $payment = $row ["payment"];
+} else {
+    // Jika tidak ada hasil, berikan nilai default
+    $id_transaksi = "N/A";
+}
+
+// Tutup koneksi ke database
+$conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,10 +100,11 @@
 <!-- ====================================================================================================================== -->
                 
 
-        <div class="body-struk">
+<div class="body-struk">
             <h1 class="thank">Terima Kasih!</h1>
             <h1 class="thank2"> Transaksi Sudah Selesai. </h1>
-            <div class="id_pesanan1">Pesanan kamu <php echo $id_transaksi;  ?> Telah dikirim dan akan segera tiba. </div>
+            <div class="id_pesanan1">Pesanan kamu <?php echo $id_transaksi; ?> Telah dikirim dan akan segera tiba. </div>
+
             <div class="tgl-pemesanan1">
                 Transaksi dibuat pada 
                 <br> <?php      echo " "?>
@@ -66,18 +119,19 @@
                     <div class="data-paket"></div>
                     <div class="data-akuncst"> 
                     <div class="login-via">Login Via <?php echo "pler" ?></div>
-                     </div>
+            </div>
                    
                 </div>
 
 
                             <div class="rt-2">
-                                    <div class="metod-pembayaran">Metode Pembayaran 
-                                        <br> <?php echo "DANA"?>
-                                    </div> 
+                            <div class="metod-pembayaran">Metode Pembayaran 
+                                <br> <?php echo $payment; ?>
+                            </div>
+
                                     <hr class="horizontal-line1">  
 
-                                    <div class="nomor-invoice1">Nomor Invoice </div>
+                                    <div class="nomor-invoice1" >Nomor Invoice <?php echo $id_transaksi; ?></div>
                                     <div class="stats-transaksi">Status Transaksi </div>
                                     <div class="pembayaran-status">Status Pembayaran</div>
                                     <div class="stats-pesan">Pesan</div>

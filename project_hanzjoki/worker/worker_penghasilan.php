@@ -11,7 +11,7 @@ if (isset($_SESSION['user'])) {
     if ($user['sebagai'] === 'admin') {
         $keterangan = '' . $user['username'];
     } elseif ($user['sebagai'] === 'worker') {
-        $keterangan = 'Halo, Worker ' . $user['nama_worker'];
+        $keterangan = 'Halo, Worker ' . $user['nama_lengkap'];
     }
 
     // Output keterangan
@@ -87,12 +87,18 @@ if (isset($_SESSION['user'])) {
                     </div>
                     <div class="sb-sidenav-footer">
                     <div class="small"> <?php
-                                if ($user['sebagai'] === 'admin') {
-                                    echo '' . $user['username'];
-                                } elseif ($user['sebagai'] === 'worker') {
-                                    echo 'Hallo, Penjoki ' . $user['nama_lengkap'];
-                                }
-                                ?></div>
+if ($user['sebagai'] === 'admin') {
+    echo 'Admin: ' . $user['username'];
+} elseif ($user['sebagai'] === 'worker') {
+    echo 'Hallo, Penjoki ' . $user['nama_lengkap'];
+    
+    // Ganti nilai $nik dengan id_worker
+    $nik = $user['id_worker'];
+    
+    // Tampilkan ID Worker di bawah nama worker
+    echo '<br>ID Worker: ' . $nik;
+}
+?></div>
                         <!-- <p></p> --> <h1> <br></h1>
                         <img src="../image/LOGO HANZJOKI.png" alt="" class="imge-23">
                     </div>
