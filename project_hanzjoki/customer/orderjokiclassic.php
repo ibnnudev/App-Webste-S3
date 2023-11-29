@@ -263,12 +263,12 @@ foreach ($data_promo as $row) {
         <input type="number" name= "jumlahorder" id="qtyid" oninput="calculateTotal()">
     
     <label for="total" class="ppqmu"> Total: </label>
-    <input type="text" class="bro" name= "totaltrans" id="total" readonly>   
-    <input type="text" class="menghilang" name= "tanggalnow" id="setdatetime" readonly>
-    <input type="text" class="menghilang" name= "pembayaran" id="pembayaranText" readonly>
-    <input type="text" class="menghilang" name= "id_paket" id="id_paket" readonly>
-    <input type="text" class="menghilang" name= "harga" id="harga" readonly>
-    <input type="text" class="menghilang" name="totaltransbro" id="totaltransbro" readonly>
+    <input type="text" class="bro" name= "totaltransbro" id="totaltransbro" readonly>   
+    <input type="text" class="menghilangg" name= "tanggalnow" id="setdatetime" readonly>
+    <input type="text" class="menghilangg" name= "pembayaran" id="pembayaranText" readonly>
+    <input type="text" class="menghilangg" name= "id_paket" id="id_paket" readonly>
+    <input type="text" class="menghilangg" name= "harga" id="harga" readonly>
+
 
 
 
@@ -333,32 +333,14 @@ function calculateTotal() {
         document.getElementById('totaltransbro').value = isNaN(total) ? '' : total.toFixed(2);
         }
   
-function selectRadio(optionId, hargaId) {
-        // Unselect all radio buttons
-        var radioButtons = document.getElementsByName('nominal');
-        radioButtons.forEach(function (radioButton) {
-            radioButton.closest('.col-md-4').classList.remove('selected-background');
-            radioButton.checked = false;
-        });
+function selectRadio(idOption, idHarga, idPaket, harga) {
+        // Mengatur nilai id_paket dan harga pada elemen input
+        document.getElementById('id_paket').value = idPaket;
+        document.getElementById('harga').value = harga;
 
-        // Extract id_paket from the optionId
-        var id_paket = optionId.replace('option', '');
-
-        // Select the clicked radio button
-        var selectedRadio = document.getElementById(optionId);
-        selectedRadio.checked = true;
-        selectedRadio.closest('.col-md-4').classList.toggle('selected-background');
-
-        // Extract the harga from the hargaId
-        var harga = parseFloat(document.getElementById(hargaId).textContent.replace(/\./g, '').replace(',', '.'));
-
-        // Log the extracted id_paket and harga to the console (you can modify this as needed)
-        console.log('Extracted id_paket:', id_paket);
-        console.log('Extracted harga:', harga);
-
-        // Update the text inputs with the extracted values
-        document.getElementById('id_paket').value = id_paket;
-        document.getElementById('harga').value = harga.toLocaleString();
+        // Menandai radio button sebagai terpilih
+        var radio = document.getElementById(idOption);
+        radio.checked = true;
     }
                                             
 function tampilkanTulisan() {
@@ -442,7 +424,7 @@ if (isset($_POST["ORDERNOWWW"])) {
         echo "
             <script>
             alert('DATA BERHASIL DI TAMBAHKAN');
-            document.location.href = 'orderJokirank.php';
+            document.location.href = 'struk_customer_done.php';
             </script>
         ";
     } else {
@@ -487,7 +469,7 @@ function transaksi($data) {
     if (!$result) {
         die("Error in SQL query: " . mysqli_error($koneksi));
     }
-
+    
     // Pemeriksaan hasil query
     if ($row = mysqli_fetch_assoc($result)) {
         $id_akun = $row['id_data_akun'];
@@ -505,7 +487,7 @@ function transaksi($data) {
         if (!$result) {
             die("Error in SQL query: " . mysqli_error($koneksi));
         }
-
+        
         // Pemeriksaan hasil query
         if ($row = mysqli_fetch_assoc($result)) {
             $id_transaksi = $row['id_transaksi']; // Assign the value of id_transaksi
