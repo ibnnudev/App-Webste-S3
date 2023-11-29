@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['id_customer'])) {
+    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
+    header('Location: logindulu.php');
+    exit;
+}
+
+// Mengakses informasi pengguna yang login
+$id_customer = $_SESSION['id_customer'];
+$username = $_SESSION['username'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -232,6 +247,9 @@ foreach ($data_promo as $row) {
     <input type="text" class="menghilang" name= "pembayaran" id="pembayaranText" readonly>
     <input type="text" class="menghilang" name= "id_paket" id="id_paket" readonly>
     <input type="text" class="menghilang" name= "harga" id="harga" readonly>
+    <input type="text" class="menghilang" id="id_customer" name="id_customer" value="<?php echo $id_customer; ?>" readonly>
+
+
     
 
 
@@ -420,6 +438,7 @@ function transaksi($data) {
     $id_paket = $data['id_paket'];
     $qty = $data['jumlahorder'];
     $harga = $data['harga']; // Corrected variable name
+    $id_customer = $data['id_customer'];
 
     // Insert data_akun
     $sqldata = "INSERT INTO data_akun (id_data_akun, login_via, email_nohp, req_hero, nick_id, pw, catatan)
@@ -441,7 +460,7 @@ function transaksi($data) {
         // Insert transaksi
         $sqltran = "INSERT INTO transaksi (id_transaksi, id_customer, id_worker, id_data_akun, qty_order, tgl_order,
             total_transaksi, payment, no_wa, stats, bukti_tf, laporan_ss, statsdone)
-            VALUES ('', NULL, NULL, '$id_akun', '$qty_order', '$tgl_order', '$total_transaksi', '$payment', '$no_wa', 'Belum Lunas', NULL, NULL, 'Undertake')";
+            VALUES ('', '$id_customer', NULL, '$id_akun', '$qty_order', '$tgl_order', '$total_transaksi', '$payment', '$no_wa', 'Belum Lunas', NULL, NULL, 'Undertake')";
         if (!mysqli_query($koneksi, $sqltran)) {
             die("Error in SQL query: " . mysqli_error($koneksi));
         }

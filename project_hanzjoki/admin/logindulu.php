@@ -36,6 +36,10 @@ if (isset($_POST['submit'])) {
     $num = mysqli_num_rows($result);
 
     if ($num == 1) {
+        // Informasi pengguna yang login disimpan dalam session
+        $_SESSION['id_customer'] = $row['id_customer'];
+        $_SESSION['username'] = $row['username'];
+
         // Header langsung ke dashboard tanpa memeriksa peran
         header('Location: ../customer/dashboardcust.php');
         exit;
@@ -46,6 +50,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 
 
 
