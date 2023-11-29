@@ -98,6 +98,7 @@ if ($user['sebagai'] === 'admin') {
     // Tampilkan ID Worker di bawah nama worker
     echo '<br>ID Worker: ' . $nik;
 }
+
 ?></div>
                         <!-- <p></p> --> <h1> <br></h1>
                         <img src="../image/LOGO HANZJOKI.png" alt="" class="imge-23">
@@ -117,22 +118,120 @@ if ($user['sebagai'] === 'admin') {
                 <!-- Area Chart -->
             <div class="col-xl-8 col-lg-6" style="margin-left: 200px;">
               <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Pendapatan</h6>
-                  <div class="dropdown no-arrow">
-                   
+               <!-- Card Header - Dropdown -->
+               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+  <h6 class="m-0 font-weight-bold text-primary">
+    Pendapatan
+    <form method="post" action="">
+      <select name="tahun" onchange="this.form.submit()">
+        <?php
+        $tahunSekarang = date("Y");
+        for ($tahun = $tahunSekarang; $tahun >= $tahunSekarang - 5; $tahun--) {
+          $selected = ($tahun == $_POST['tahun']) ? 'selected' : '';
+          echo "<option value='$tahun' $selected>$tahun</option>";
+        }
+        ?>
+      </select>
+    </form>
+  </h6>
+  <div class="dropdown no-arrow">
+  </div>
+</div>
 
-                  
-                    
-                  </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
-                  </div>
-                </div>
+
+<?php
+// Fungsi koneksi ke database
+function connectToDatabase() {
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $database = "hanzjoki";
+
+  // Buat koneksi
+  $conn = new mysqli($servername, $username, $password, $database);
+
+  // Periksa koneksi
+  if ($conn->connect_error) {
+    die("Koneksi ke database gagal: " . $conn->connect_error);
+  }
+
+  return $conn;
+}
+
+// Memanggil fungsi koneksi
+$conn = connectToDatabase();
+
+?>
+
+<!-- Card Body -->
+<div class="card-body">
+  <div class="chart-area">
+    <!-- Tempatkan grafik atau elemen lainnya di sini -->
+  </div>
+  
+  <!-- Tabel Bulan -->
+  <div class="table-responsive">
+  <div class="kiri">
+    <table class="table table-bordered" id="tabel1" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Nomor</th>
+          <th>Bulan</th>
+          <th>Total Take</th>
+          <th>Penghasilan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $tahun = isset($_POST['tahun']) ? $_POST['tahun'] : date("Y");
+        $statsdone = 'DONE';
+        $id_worker = 'WORK00001';
+
+        $sql = "SELECT
+                  YEAR(tgl_order) AS tahun,
+                  MONTHNAME(tgl_order) AS bulan,
+                  COUNT(id_transaksi) AS total_done,
+                  SUM(total_transaksi) AS total_pendapatan
+                FROM transaksi
+                WHERE YEAR(tgl_order) = $tahun
+                  AND statsdone = '$statsdone'
+                  AND id_worker = '$id_worker'
+                GROUP BY YEAR(tgl_order), MONTH(tgl_order)
+                ORDER BY tahun, MONTH(tgl_order)";
+
+        // Eksekusi query
+        $result = $conn->query($sql);
+
+        // Cek apakah query berhasil dieksekusi
+        if ($result) {
+          $nomor = 1;
+          while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $nomor++ . "</td>";
+            echo "<td>" . $row['bulan'] . "</td>";
+            echo "<td>" . $row['total_done'] . "</td>";
+            echo "<td>" . $row['total_pendapatan'] . "</td>";
+            echo "</tr>";
+          }
+        } else {
+          echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        // Tutup koneksi setelah digunakan
+        $conn->close();
+        ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+
               </div>
             </div>
                 <footer class="py-4 bg-light mt-auto">
