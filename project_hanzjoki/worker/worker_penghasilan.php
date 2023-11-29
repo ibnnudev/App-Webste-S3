@@ -124,13 +124,13 @@ if ($user['sebagai'] === 'admin') {
     Pendapatan
     <form method="post" action="">
       <select name="tahun" onchange="this.form.submit()">
-        <?php
-        $tahunSekarang = date("Y");
-        for ($tahun = $tahunSekarang; $tahun >= $tahunSekarang - 5; $tahun--) {
-          $selected = ($tahun == $_POST['tahun']) ? 'selected' : '';
-          echo "<option value='$tahun' $selected>$tahun</option>";
-        }
-        ?>
+      <?php
+$tahunSekarang = date("Y");
+for ($tahun = $tahunSekarang; $tahun >= 2020; $tahun--) {
+    $selected = ($tahun == $_POST['tahun']) ? 'selected' : '';
+    echo "<option value='$tahun' $selected>$tahun</option>";
+}
+?>
       </select>
     </form>
   </h6>

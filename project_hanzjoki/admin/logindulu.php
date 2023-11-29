@@ -83,7 +83,12 @@ if (isset($_POST['submit'])) {
                     <input type="password" id="password" class="pw-login-admin" name="password" placeholder="Masukkan Password Anda">
                     <input type="submit" name="submit" class="login-button">
                 </div>
+
+                .
             </form>
+            <div class="tanpa-login">
+                <a href="../customer-non-lgn/nonlgnberanda.php"> Tanpa Login </a>
+            </div>
 
 
             

@@ -1,22 +1,4 @@
 
-<?php
-session_start();
-
-// Cek apakah pengguna sudah login
-if (!isset($_SESSION['id_customer'])) {
-    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: ../admin/logindulu.php');
-    exit;
-}
-
-// Mengakses informasi pengguna yang login
-$id_customer = $_SESSION['id_customer'];
-$username = $_SESSION['username'];
-
-
-?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,26 +26,24 @@ $username = $_SESSION['username'];
               
              <nav class="navigation3">
         
-                <a href="dashboardcust.php"  style="text-decoration: none; color: #06D85F;">
-                    <span class="link-text">Beranda</span>
-                </a>
+             <a href="nonlgnberanda.php" style="text-decoration: none; color: #06D85F;">
+                <span class="link-text">Beranda</span>
+                        </a>
 
-                <a href="lacakorderan.php">
-                    <span class="link-text">Lacak Orderan</span>
-                </a>
-                <a href="hubungikami.php">
-                    <span class="link-text">Hubungi Kami</span>
-                </a>
-                <a href="calculator.php">
-                    <span class="link-text">Calculator Ml</span>
-                </a>
+            <a href="nonlgn_lacakorderan.php">
+                <span class="link-text">Lacak Orderan</span>
+            </a>
+            <a href="nonlgn_hubungikami.php">
+                <span class="link-text">Hubungi Kami</span>
+            </a>
+            <a href="nonlgn_calculator.php">
+                <span class="link-text">Calculator Ml</span>
+            </a>
+
             </nav>
             
         </div>
-        <div class="user-info">
-            <p>Selamat datang, <?php echo $username; ?>! 
-            <br> id anda ,  <?php echo $id_customer; ?> (<a href="logout.php">Logout</a>)</p>
-        </div>
+       
         <!-- <nav class="navigation2">
             <a href="../register.php">Daftar Sekarang</a>
             <a href="../login.php">Masuk</a>
@@ -99,7 +79,7 @@ $username = $_SESSION['username'];
         <section id="joki" class="list-jokian-order">
                
                 <div class="img-jokian">
-                    <a href="orderjokimcl.php">
+                    <a href="non_orderjokimcl.php">
                             <img src="../image/MCL.png" alt="">
                             <div class="pil-jokirank">Joki MCL <br>(Jasa joki MCL)</div>
                     </a>
@@ -117,7 +97,7 @@ $username = $_SESSION['username'];
                     </a>
                 </div>
                 <div class="img-jokian">
-                    <a href="orderjokiclassic.php">
+                    <a href="non_orderjokiclassic.php">
                             <img src="../image/JOKICLASIK.png" alt="">
                             <div class="pil-jokirank">Joki clasic <br>(Jasa joki Up WinRate)</div>
                     </a>
@@ -216,42 +196,9 @@ if ($result_murah_joki === false) {
 
     <!-- Promo Joki Rank -->
     <div class="card-header">Pilih Paket Joki</div>
-    <div class="promo-classic">Promo Joki Rank</div>
+    
     <div class="container-1">
-    <?php
-// Menampilkan data promo
-$counter = 0;
-$data_promo = $result_promo->fetch_all(MYSQLI_ASSOC);
-foreach ($data_promo as $row) {
-
-
-    $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
-    ?>
-    <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['hasil'], 0, ',', '.'); ?>')">
-        <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="off">
-        <label class="btn btn-outline-light col-12">
-            <div class="row">
-                <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                <div class="col-12">
-                    <span id="harga<?= $row['id_paket']; ?>" class="text-warning" >
-                        <?= number_format($row['hasil'], 0, ',', '.'); ?>
-                    </span>
-                </div>
-                <div class="col-12">
-                    <span class="text-warning" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: RED;" >
-                        <?= number_format($row['harga'], 0, ',', '.'); ?>
-                    </span>
-                </div>
-                <div class="col-12">
-                    <!-- Additional content as needed -->
-                </div>
-            </div>
-        </label>
-    </div>
-    <?php
-    $counter++;
-}
-?>
+   
 
 
     </div>
@@ -332,7 +279,7 @@ foreach ($data_murah_joki as $row) {
     <input type="text" class="menghilang" name= "id_paket" id="id_paket" readonly>
     <input type="text" class="menghilang" name= "harga" id="harga" readonly>
 
-    <input type="text" class="menghilang" id="id_customer" name="id_customer" value="<?php echo $id_customer; ?>" readonly>
+  
 
 
 
@@ -507,7 +454,7 @@ if (isset($_POST["ORDERNOWWW"])) {
         echo "
             <script>
             alert('DATA BERHASIL DI TAMBAHKAN');
-            document.location.href = 'struk_customer_done.php';
+            document.location.href = '../customer/struk_customer_done.php';
             </script>
         ";
     } else {
@@ -539,8 +486,8 @@ function transaksi($data) {
     $id_paket = $data['id_paket'];
     $qty = $data['jumlahorder'];
     $harga = $data['harga']; // Corrected variable name
-    $id_customer = $data ['id_customer'];
-    // Insert data_akun
+
+
     $sqldata = "INSERT INTO data_akun (id_data_akun, login_via, email_nohp, req_hero, nick_id, pw, catatan)
             VALUES ('', '$login_via', '$email_nohp', '$req_hero', '$nickname', '$pass', '$catatan')";
     if (!mysqli_query($koneksi, $sqldata)) {
@@ -560,7 +507,7 @@ function transaksi($data) {
         // Insert transaksi
         $sqltran = "INSERT INTO transaksi (id_transaksi, id_customer, id_worker, id_data_akun, qty_order, tgl_order,
             total_transaksi, payment, no_wa, stats, bukti_tf, laporan_ss, statsdone)
-            VALUES ('','$id_customer' , NULL, '$id_akun', '$qty_order', '$tgl_order', '$total_transaksi', '$payment', '$no_wa', 'Belum Lunas', NULL, NULL, 'Undertake')";
+            VALUES ('',Null , NULL, '$id_akun', '$qty_order', '$tgl_order', '$total_transaksi', '$payment', '$no_wa', 'Belum Lunas', NULL, NULL, 'Undertake')";
         if (!mysqli_query($koneksi, $sqltran)) {
             die("Error in SQL query: " . mysqli_error($koneksi));
         }

@@ -1,21 +1,4 @@
 
-<?php
-session_start();
-
-// Cek apakah pengguna sudah login
-if (!isset($_SESSION['id_customer'])) {
-    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: ../admin/logindulu.php');
-    exit;
-}
-
-// Mengakses informasi pengguna yang login
-$id_customer = $_SESSION['id_customer'];
-$username = $_SESSION['username'];
-
-
-?>
-
 
 
 <!DOCTYPE html>
@@ -44,36 +27,31 @@ $username = $_SESSION['username'];
               
              <nav class="navigation3">
         
-                <a href="dashboardcust.php"  style="text-decoration: none; color: #06D85F;">
-                    <span class="link-text">Beranda</span>
-                </a>
+             <a href="nonlgnberanda.php" style="text-decoration: none; color: #06D85F;">
+                <span class="link-text">Beranda</span>
+                        </a>
 
-                <a href="lacakorderan.php">
-                    <span class="link-text">Lacak Orderan</span>
-                </a>
-                <a href="hubungikami.php">
-                    <span class="link-text">Hubungi Kami</span>
-                </a>
-                <a href="calculator.php">
-                    <span class="link-text">Calculator Ml</span>
-                </a>
+            <a href="nonlgn_lacakorderan.php">
+                <span class="link-text">Lacak Orderan</span>
+            </a>
+            <a href="nonlgn_hubungikami.php">
+                <span class="link-text">Hubungi Kami</span>
+            </a>
+            <a href="nonlgn_calculator.php">
+                <span class="link-text">Calculator Ml</span>
+            </a>
+
             </nav>
-            
-        </div>
-        <div class="user-info">
-            <p>Selamat datang, <?php echo $username; ?>! 
-            <br> id anda ,  <?php echo $id_customer; ?> (<a href="logout.php">Logout</a>)</p>
         </div>
         <!-- <nav class="navigation2">
             <a href="../register.php">Daftar Sekarang</a>
             <a href="../login.php">Masuk</a>
         </nav> -->
-        
     </header> 
 
     <div class="content-jokirank">
-        <h1 class="nama-joki">Joki Rank</h1>
-        <img src="../image/rankpler.png" >
+        <h1 class="nama-joki">Joki MCL</h1>
+        <img src="../image/MCL.png" >
         <h1 class="time">orderan joki di chek<br>pukul 09:00-21:00</h1>
         <h1 class="ket-1">Jika Orderan melewati<br>batas pengecekan <br>orderan, maka orderan<br>dicek di hari berikutnya</h1>
 
@@ -99,27 +77,29 @@ $username = $_SESSION['username'];
         <section id="joki" class="list-jokian-order">
                
                 <div class="img-jokian">
-                    <a href="orderjokimcl.php">
-                            <img src="../image/MCL.png" alt="">
-                            <div class="pil-jokirank">Joki MCL <br>(Jasa joki MCL)</div>
+                    <a href="non_orderjokirank.php">
+                            <img src="../image/rankpler.png" alt="">
+                            <div class="pil-jokirank">Joki Rank <br>(Jasa joki Rank)</div>
+                    </a>
+                </div>
+                
+
+                <div class="img-jokian">
+                    <a href="non_orderjokiclassic.php">
+                            <img src="../image/JOKICLASIK.png" alt="">
+                            <div class="pil-jokirank">Joki Classic <br>(Jasa Up Winrate)</div>
                     </a>
                 </div>
                 <div class="img-jokian">
                     <a href="orderjokimontage.php">
                             <img src="../image/MONTAGE.png" alt="">
-                            <div class="pil-jokirank">Joki Vidio Montage <br>(Jasa joki Vidio)</div>
-                    </a>
-                </div>
-                <div class="img-jokian">
-                    <a href="orderjokimabar.php">
-                            <img src="../image/JASA MABAR.png" alt="">
-                            <div class="pil-jokirank">Jasa Mabar <br>(Jasa Mabar Penjoki)</div>
+                            <div class="pil-jokirank">Jasa  Montage <br>(Jasa Vidio Montage)</div>
                     </a>
                 </div>
                 <div class="img-jokian">
                     <a href="orderjokiclassic.php">
-                            <img src="../image/JOKICLASIK.png" alt="">
-                            <div class="pil-jokirank">Joki clasic <br>(Jasa joki Up WinRate)</div>
+                    <img src="../image/JASA MABAR.png" alt="">
+                            <div class="pil-jokirank">Jasa Mabar <br>(Jasa Mabar Penjoki)</div>
                     </a>
                 </div>
         </section>
@@ -175,28 +155,15 @@ if ($koneksi->connect_error) {
 }
 
 // Query untuk mengambil data promo
-$sql_promo = "SELECT paket_joki_rank.*, discount.potongan, (paket_joki_rank.harga - discount.potongan) AS hasil
-              FROM paket_joki_rank
-              LEFT JOIN discount ON paket_joki_rank.nama_discount = discount.nama_discount
-              WHERE paket_joki_rank.judul_paket = 'PROMO';";
+$sql_promo = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'Paket MCL'";
 $result_promo = $koneksi->query($sql_promo);
 if ($result_promo === false) {
     die("Error saat mengeksekusi query promo: " . $koneksi->error);
 }
 
-// Query untuk mengambil data joki star
-$sql_joki_star = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'JOKI/Star'";
-$result_joki_star = $koneksi->query($sql_joki_star);
-if ($result_joki_star === false) {
-    die("Error saat mengeksekusi query joki star: " . $koneksi->error);
-}
 
-// Query untuk mengambil data paket murah joki
-$sql_murah_joki = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'Paket murah joki'";
-$result_murah_joki = $koneksi->query($sql_murah_joki);
-if ($result_murah_joki === false) {
-    die("Error saat mengeksekusi query paket murah joki: " . $koneksi->error);
-}
+
+
 
 
 ?>
@@ -216,7 +183,7 @@ if ($result_murah_joki === false) {
 
     <!-- Promo Joki Rank -->
     <div class="card-header">Pilih Paket Joki</div>
-    <div class="promo-classic">Promo Joki Rank</div>
+    <div class="promo-classic">Joki MCL Wekly & Gold</div>
     <div class="container-1">
     <?php
 // Menampilkan data promo
@@ -227,18 +194,15 @@ foreach ($data_promo as $row) {
 
     $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
     ?>
-    <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['hasil'], 0, ',', '.'); ?>')">
+    <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['harga'], 0, ',', '.'); ?>')">
         <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="off">
         <label class="btn btn-outline-light col-12">
             <div class="row">
                 <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
                 <div class="col-12">
-                    <span id="harga<?= $row['id_paket']; ?>" class="text-warning" >
-                        <?= number_format($row['hasil'], 0, ',', '.'); ?>
-                    </span>
                 </div>
                 <div class="col-12">
-                    <span class="text-warning" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: RED;" >
+                    <span class="text-warning" >
                         <?= number_format($row['harga'], 0, ',', '.'); ?>
                     </span>
                 </div>
@@ -252,77 +216,18 @@ foreach ($data_promo as $row) {
     $counter++;
 }
 ?>
-
-
     </div>
-
-   <!-- Joki Rank / Star -->
-<div class="promo-classic">Joki Rank / Star</div>
 <div class="container-1">
-    <?php
-    // Menampilkan data joki star
-    $counter = 0;
-    $data_joki_star = $result_joki_star->fetch_all(MYSQLI_ASSOC);
-    foreach ($data_joki_star as $row) {
-        $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
-        ?>
-        <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['harga'], 0, ',', '.'); ?>')">
-            <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="on">
-            <label class="btn btn-outline-light col-12">
-                <div class="row">
-                    <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                    <div class="col-12">
-                        <span id="harga<?= $row['id_paket']; ?>" class="text-warning">
-                            <?= number_format($row['harga'], 0, ',', '.'); ?>
-                        </span>
-                    </div>
-                    <div class="col-12">
-                        <!-- Additional content as needed -->
-                    </div>
-                </div>
-            </label>
-        </div>
-        <?php
-        $counter++;
-    }
-    ?>
     </div>
 
     <!-- Paket Joki Murah -->
-    <div class="promo-classic">Paket Joki Murah</div>
+
     <div class="container-1">
-    <?php
-// Menampilkan data paket murah joki
-$counter = 0;
-$data_murah_joki = $result_murah_joki->fetch_all(MYSQLI_ASSOC);
-foreach ($data_murah_joki as $row) {
-    $background_class = ($counter % 2 == 0) ? 'even-background' : 'odd-background';
-    ?>
-    <div class="col-md-4 <?= $background_class; ?>" onclick="selectRadio('option<?= $row['id_paket']; ?>', 'harga<?= $row['id_paket']; ?>', '<?= $row['id_paket']; ?>', '<?= number_format($row['harga'], 0, ',', '.'); ?>')">
-        <input type="radio" class="btn-check" name="nominal" id="option<?= $row['id_paket']; ?>" autocomplete="on">
-        <label class="btn btn-outline-light col-12">
-            <div class="row">
-                <div class="col-7 column-font"><?= $row['nama_paket']; ?></div>
-                <div class="col-12">
-                    <span id="harga<?= $row['id_paket']; ?>" class="text-warning">
-                        <?= number_format($row['harga'], 0, ',', '.'); ?>
-                    </span>
-                </div>
-                <div class="col-12">
-                    <!-- Additional content as needed -->
-                </div>
-            </div>
-        </label>
-    </div>
-    <?php
-    $counter++;
-}
-?>
 
     
     </div>
     
-    <label for="qtyid" class="ppq"> Jumlah: </label>
+        <label for="qtyid" class="ppq"> Jumlah: </label>
         <input type="number" name= "jumlahorder" id="qtyid" oninput="calculateTotal()">
         
     <label for="total" class="ppqmu"> Total: </label>
@@ -331,9 +236,10 @@ foreach ($data_murah_joki as $row) {
     <input type="text" class="menghilang" name= "pembayaran" id="pembayaranText" readonly>
     <input type="text" class="menghilang" name= "id_paket" id="id_paket" readonly>
     <input type="text" class="menghilang" name= "harga" id="harga" readonly>
+  
 
-    <input type="text" class="menghilang" id="id_customer" name="id_customer" value="<?php echo $id_customer; ?>" readonly>
 
+    
 
 
 
@@ -398,32 +304,14 @@ function calculateTotal() {
         document.getElementById('totaltransbro').value = isNaN(total) ? '' : total.toFixed(2);
         }
   
-function selectRadio(optionId, hargaId) {
-        // Unselect all radio buttons
-        var radioButtons = document.getElementsByName('nominal');
-        radioButtons.forEach(function (radioButton) {
-            radioButton.closest('.col-md-4').classList.remove('selected-background');
-            radioButton.checked = false;
-        });
+function selectRadio(idOption, idHarga, idPaket, harga) {
+        // Mengatur nilai id_paket dan harga pada elemen input
+        document.getElementById('id_paket').value = idPaket;
+        document.getElementById('harga').value = harga;
 
-        // Extract id_paket from the optionId
-        var id_paket = optionId.replace('option', '');
-
-        // Select the clicked radio button
-        var selectedRadio = document.getElementById(optionId);
-        selectedRadio.checked = true;
-        selectedRadio.closest('.col-md-4').classList.toggle('selected-background');
-
-        // Extract the harga from the hargaId
-        var harga = parseFloat(document.getElementById(hargaId).textContent.replace(/\./g, '').replace(',', '.'));
-
-        // Log the extracted id_paket and harga to the console (you can modify this as needed)
-        console.log('Extracted id_paket:', id_paket);
-        console.log('Extracted harga:', harga);
-
-        // Update the text inputs with the extracted values
-        document.getElementById('id_paket').value = id_paket;
-        document.getElementById('harga').value = harga.toLocaleString();
+        // Menandai radio button sebagai terpilih
+        var radio = document.getElementById(idOption);
+        radio.checked = true;
     }
                                             
 function tampilkanTulisan() {
@@ -507,7 +395,7 @@ if (isset($_POST["ORDERNOWWW"])) {
         echo "
             <script>
             alert('DATA BERHASIL DI TAMBAHKAN');
-            document.location.href = 'struk_customer_done.php';
+            document.location.href = '../customer/struk_customer_done.php';
             </script>
         ";
     } else {
@@ -539,7 +427,8 @@ function transaksi($data) {
     $id_paket = $data['id_paket'];
     $qty = $data['jumlahorder'];
     $harga = $data['harga']; // Corrected variable name
-    $id_customer = $data ['id_customer'];
+    
+
     // Insert data_akun
     $sqldata = "INSERT INTO data_akun (id_data_akun, login_via, email_nohp, req_hero, nick_id, pw, catatan)
             VALUES ('', '$login_via', '$email_nohp', '$req_hero', '$nickname', '$pass', '$catatan')";
@@ -560,20 +449,20 @@ function transaksi($data) {
         // Insert transaksi
         $sqltran = "INSERT INTO transaksi (id_transaksi, id_customer, id_worker, id_data_akun, qty_order, tgl_order,
             total_transaksi, payment, no_wa, stats, bukti_tf, laporan_ss, statsdone)
-            VALUES ('','$id_customer' , NULL, '$id_akun', '$qty_order', '$tgl_order', '$total_transaksi', '$payment', '$no_wa', 'Belum Lunas', NULL, NULL, 'Undertake')";
+            VALUES ('', NULL , NULL, '$id_akun', '$qty_order', '$tgl_order', '$total_transaksi', '$payment', '$no_wa', 'Belum Lunas', NULL, NULL, 'Undertake')";
         if (!mysqli_query($koneksi, $sqltran)) {
             die("Error in SQL query: " . mysqli_error($koneksi));
         }
-        session_start(); // Mulai sesi jika belum dimulai
+
         // Get id_transaksi
-        $result = mysqli_query($koneksi, "SELECT id_transaksi FROM transaksi WHERE payment = '$payment'");
-        if (!$result) {
+        $result_transaksi = mysqli_query($koneksi, "SELECT id_transaksi FROM transaksi WHERE payment = '$payment'");
+        if (!$result_transaksi) {
             die("Error in SQL query: " . mysqli_error($koneksi));
         }
 
         // Pemeriksaan hasil query
-        if ($row = mysqli_fetch_assoc($result)) {
-            $id_transaksi = $row['id_transaksi']; // Assign the value of id_transaksi
+        if ($row_transaksi = mysqli_fetch_assoc($result_transaksi)) {
+            $id_transaksi = $row_transaksi['id_transaksi']; // Assign the value of id_transaksi
 
             // Insert detail_transaksi
             $sqldetail = "INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES ('$id_transaksi', '$id_paket', '$qty', '$total_transaksi')";
@@ -592,5 +481,6 @@ function transaksi($data) {
     }
 }
 ?>
+
 
 

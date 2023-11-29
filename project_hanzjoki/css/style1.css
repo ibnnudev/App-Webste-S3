@@ -946,3 +946,12 @@ button {
 .lp-pw a:hover {
  color: #55e34d;
 }
+.tanpa-login{
+  
+align-items: center;
+text-align: center;
+}
+.tanpa-login a {
+  position: relative;
+  
+}

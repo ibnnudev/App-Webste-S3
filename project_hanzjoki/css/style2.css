@@ -1144,10 +1144,11 @@ input {
 /* Style untuk setiap kolom */
 .col-md-4 {
     
-    padding: 10px;
+    padding: 1px;
     height: 30px;
     text-align: center;
-    position: relative; /* Menentukan posisi relatif untuk child element */
+    position: relative; 
+    margin-top: 20px;/* Menentukan posisi relatif untuk child element */
     
 }
 
@@ -1155,8 +1156,8 @@ input {
 .btn-check:checked + .btn-outline-light{
     background-color: #0174BE;
     color: #ffffff;
+    padding: 10px;
    
-    
 }
 
 /* Style untuk tombol outline light */
@@ -1170,7 +1171,8 @@ input {
 .column-font {
     font-size: 17px;
     font-weight: bold;
-    margin-top: -20px;
+    margin-top: 10px;
+    
 }
 
 /* Style untuk teks warning */
@@ -1178,6 +1180,7 @@ input {
     background-color: #0174BE;
     color: #ffffff  ;
     text-align: center;
+   
         
 }
 
@@ -1199,6 +1202,9 @@ input {
     border-radius: 10px;
     margin-right: 5px;
     width: 200px;
+    height: inherit;
+    margin-bottom: 15px;
+   
     
     
 }
@@ -1214,10 +1220,8 @@ span.text-warning s {
     position: absolute;
     clip: rect(0, 0, 0, 0);
     pointer-events: none;
-    
     margin: 0;
     padding: 0;
-
     width: 20px; /* Sesuaikan lebar sesuai kebutuhan */
     height: 20px; /* Sesuaikan panjang sesuai kebutuhan */
 }

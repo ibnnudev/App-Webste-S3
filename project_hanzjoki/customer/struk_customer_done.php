@@ -1,8 +1,22 @@
 <?php
-session_start(); // Pastikan untuk memulai sesi jika belum dimulai
+session_start();
 
-// Ambil nilai id_transaksi dari $_SESSION
-$id_transaksi = isset($_SESSION['id_transaksi']) ? $_SESSION['id_transaksi'] : "N/A";
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['id_customer'])) {
+    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
+    header('Location: logindulu.php');
+    exit;
+}
+
+// Mengakses informasi pengguna yang login
+$id_customer = $_SESSION['id_customer'];
+$username = $_SESSION['username'];
+?>
+
+
+
+
+<?php
 // Koneksi ke database (gantilah dengan informasi koneksi yang sesuai)
 $servername = "localhost";
 $username = "root";
@@ -31,7 +45,7 @@ transaksi
 JOIN
 data_akun ON transaksi.id_data_akun = data_akun.id_data_akun
 WHERE
-transaksi.id_transaksi = '$id_transaksi' ";
+transaksi.id_transaksi = '?' ";
 $result = $conn->query($sql);
 
 // Periksa apakah query berhasil dijalankan
