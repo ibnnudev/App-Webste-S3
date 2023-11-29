@@ -1,3 +1,57 @@
+<?php
+require('../koneksi.php');
+session_start();
+
+if (isset($_POST['OKE'])) {
+    $id_transaksi = $_POST['OKE'];
+
+
+    if (empty(trim($id_transaksi))) {
+        $_SESSION['error'] = 'Masukan ID_TRANSAKSI dengan benar!';
+        header('Location: lacakorderan.php');
+        exit;
+    }
+
+    // Use parameterized query to prevent SQL Injection
+    $query = "SELECT * FROM transaksi WHERE id_transaksi = ?";
+    $stmt = mysqli_prepare($koneksi, $query);
+
+    if (!$stmt) {
+        $_SESSION['error'] = 'Terjadi kesalahan dalam query!';
+        header('Location: lacakorderan.php');
+        exit;
+    }
+
+    mysqli_stmt_bind_param($stmt, 's', $id_transaksi);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (!$result) {
+        $_SESSION['error'] = 'Terjadi kesalahan dalam eksekusi query!';
+        header('Location: lacakorderan.php');
+        exit;
+    }
+
+    $row = mysqli_fetch_assoc($result);
+    $num = mysqli_num_rows($result);
+
+    if ($num == 1) {
+        // Informasi pengguna yang login disimpan dalam session
+        $_SESSION['id_transaksi'] = $row['id_transaksi'];
+
+        // Header langsung ke dashboard tanpa memeriksa peran
+        header('Location: struk_customer_done.php');
+        exit;
+    } else {
+        $_SESSION['error'] = 'Harap masukan ID_TRANSAKSI dengan benar!';
+        header('Location: lacakorderan.php');
+        exit;
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,45 +88,23 @@
                     </a>
                 </nav>
             </div>
-            <!-- <nav class="navigation2">
-                <a href="../register.php">Daftar Sekarang</a>
-                <a href="../login.php">Masuk</a>
-            </nav> -->
+            
             
     </header>   
     <div class="background-3">
         <p class="textbg-3">Lacak Orderan</p>
         <label class="label-order1">Lacak Orderan kamu hanya dengan email atau nomor invoice</label>
-        <input type="text" id="orderTrackingInput" class="input-orderan" placeholder="   email/invoice" required>
-        
-        <!-- Tombol untuk melakukan pelacakan -->
-        <button id="trackOrderButton" class="button-orderan" onclick="trackOrder()">Lacak Orderan </button>
-        
+        <form id="formlacak" method="POST">
+    <input type="text" id="orderTrackingInput" name="OKE" class="input-orderan" placeholder="   email/invoice" required>
+    <button id="trackOrderButton" class="button-orderan" type="submit">Lacak Orderan </button>
+</form>
+
+
         <p class="textbg-4">Pesanan kamu tidak terdaftar meskipun kamu yakin sudah memesan? Harap tunggu 1-2 jam </p>
         <p class="textbg-5">Namun jika pesanan masih tidak muncul maka kamu dapat menghubungi kami <a href="https://www.instagram.com/hanzjoki.id/?igshid=NzZlODBkYWE4Ng%3D%3D&utm_source=qr" target="_blank">disini</a></p>
     </div>
 
-    <!-- Tempat untuk menampilkan struk -->
-    <!-- <div id="receipt" style="display: none; margin-top: 20px;">
-        <h2>Struk Pembayaran</h2>
-        <p id="receiptContent"></p>
-    </div>
-
-    <script>
-        function trackOrder() {
-            // Dapatkan nilai input
-            var orderInput = document.getElementById("orderTrackingInput").value;
-
-            // Lakukan logika pelacakan order di sini (gunakan AJAX untuk mengirim permintaan ke server)
-
-            // Contoh struk (gantilah dengan data sebenarnya dari pelacakan order)
-            var receiptContent = "ID Transaksi: 123456<br>Customer: John Doe<br>Total Transaksi: $50.00";
-
-            // Tampilkan struk setelah melacak order
-            document.getElementById("receiptContent").innerHTML = receiptContent;
-            document.getElementById("receipt").style.display = "block";
-        }
-    </script> -->
+    
 
 
         

@@ -2,65 +2,68 @@
 session_start();
 
 // Cek apakah pengguna sudah login
-if (!isset($_SESSION['id_customer'])) {
+if (!isset($_SESSION['id_transaksi'])) {
     // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: logindulu.php');
+    header('Location: lacakorderan.php');
     exit;
 }
 
 // Mengakses informasi pengguna yang login
-$id_customer = $_SESSION['id_customer'];
-$username = $_SESSION['username'];
+$id_transaksi = $_SESSION['id_transaksi'];
 ?>
 
+<?php
+// Periksa apakah request dikirimkan melalui metode POST
+if (isset($_POST["TRANSFER"])) {
+    // Mengambil data yang dikirim melalui POST
+    $id_transaksi = $_POST["id_transaksi"];
 
+    // Koneksi ke database
+    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
 
+    // Periksa koneksi
+    if ($koneksi->connect_error) {
+        die("Connection failed: " . $koneksi->connect_error);
+    }
+
+    // Periksa apakah kunci img_ktp ada dan tangani kasus ketika tidak ada gambar yang diunggah
+    $img_ktp = !empty($_FILES["img_ktp"]["name"]) ? $_FILES["img_ktp"]["name"] : '';
+
+    if (!empty($img_ktp)) {
+        $lokasi_sementara = $_FILES["img_ktp"]["tmp_name"];
+        $lokasi_tujuan = '../upload/' . $img_ktp;
+        move_uploaded_file($lokasi_sementara, $lokasi_tujuan);
+
+        // Melakukan update data bukti_ss pada transaksi
+        $sql = "UPDATE transaksi SET bukti_ss = '$img_ktp' WHERE id_transaksi = '$id_transaksi'";
+
+        if ($koneksi->query($sql) === TRUE) {
+            echo "Update status berhasil.";
+        } else {
+            echo "Error: " . $sql . "<br>" . $koneksi->error;
+        }
+    } else {
+        echo "Error: Foto tidak valid atau tidak diunggah.";
+    }
+
+    // Menutup koneksi
+    $koneksi->close();
+} else {
+    // Jika tidak ada data yang dikirimkan melalui POST, kirimkan pesan error
+    echo "Error: Data tidak valid.";
+}
+?>
 
 <?php
-// Koneksi ke database (gantilah dengan informasi koneksi yang sesuai)
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hanzjoki";
+$koneksi = mysqli_connect("localhost","root","","hanzjoki");
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Periksa koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
-// Query untuk mengambil ID transaksi dari database
-$sql = "SELECT
-transaksi.id_transaksi,
-transaksi.payment,
-data_akun.login_via,
-data_akun.email_nohp,
-data_akun.req_hero,
-data_akun.nick_id,
-data_akun.pw,
-data_akun.catatan
-FROM
-transaksi
-JOIN
-data_akun ON transaksi.id_data_akun = data_akun.id_data_akun
-WHERE
-transaksi.id_transaksi = '?' ";
-$result = $conn->query($sql);
-
-// Periksa apakah query berhasil dijalankan
-if ($result->num_rows > 0) {
-    // Ambil hasil query
-    $row = $result->fetch_assoc();
-    $id_transaksi = $row["id_transaksi"];
-    $payment = $row ["payment"];
-} else {
-    // Jika tidak ada hasil, berikan nilai default
-    $id_transaksi = "N/A";
-}
-
-// Tutup koneksi ke database
-$conn->close();
+$result= mysqli_query ($koneksi,"SELECT *
+FROM transaksi
+JOIN data_akun ON transaksi.id_data_akun = data_akun.id_data_akun
+JOIN detail_transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi
+JOIN paket_joki_rank ON detail_transaksi.id_paket = paket_joki_rank.id_paket
+LEFT JOIN discount ON transaksi.id_transaksi = discount.nama_discount
+WHERE transaksi.id_transaksi = '$id_transaksi'");
 ?>
 
 
@@ -110,57 +113,87 @@ $conn->close();
                 </nav>
             </div>
         </header>
+ 
 
 <!-- ====================================================================================================================== -->
                 
 
 <div class="body-struk">
+
+
             <h1 class="thank">Terima Kasih!</h1>
             <h1 class="thank2"> Transaksi Sudah Selesai. </h1>
-            <div class="id_pesanan1">Pesanan kamu <?php echo $id_transaksi; ?> Telah dikirim dan akan segera tiba. </div>
-
-            <div class="tgl-pemesanan1">
-                Transaksi dibuat pada 
-                <br> <?php      echo " "?>
-            </div>
-                        
+            <div class="id_pesanan1">Pesanan kamu <?php echo $id_transaksi; ?> Telah dikirim dan akan segera tiba.</div>
+            <div class="tgl-pemesanan1">Transaksi dibuat pada </div>
+            <?php while ($row=mysqli_fetch_assoc($result)): ?>  
             <!-- Garis horizontal -->   
             <hr class="horizontal-line">
-
-
             <div class="body-rt">
                 <div class="rt-1">
-                    <div class="data-paket"></div>
+                        <div class="via-login">
+                        <div class="via1">Login Via</div>
+                        <div class="via1">User ID & NickName </div>
+                        <div class="via1">Email/No Hp </div>
+                        <div class="via1">Password </div>
+                        <div class="via1">Request Hero </div>
+                        <div class="via1">Catatan para pejoki </div>
+                        
+                    </div>
                     <div class="data-akuncst"> 
-                    <div class="login-via">Login Via <?php echo "pler" ?></div>
-            </div>
-                   
-                </div>
-
-
-                            <div class="rt-2">
-                            <div class="metod-pembayaran">Metode Pembayaran 
-                                <br> <?php echo $payment; ?>
-                            </div>
-
+    <div class="id_pesanan1"> : <?php echo $row ["login_via"]?></div>
+    <div class="id_pesanan1"> : <?php echo $row ["nick_id"]?></div>
+    <div class="id_pesanan1"> : <?php echo $row ["email_nohp"]?></div>
+    <div class="id_pesanan1"> : <?php echo $row ["pw"]?></div>
+    <div class="id_pesanan1"> : <?php echo $row ["req_hero"]?></div>
+    <div class="id_pesanan1"> : <?php echo $row ["catatan"]?></div>
+    
+    
+                    </div>        
+                            
+                    </div>
+                    
+                    
+                                <div class="rt-2">
+                                    <div class="metod-pembayaran">Metode Pembayaran : 
+                                        <?php echo $row ["payment"] ?>   </div>
+                                    
                                     <hr class="horizontal-line1">  
-
-                                    <div class="nomor-invoice1" >Nomor Invoice <?php echo $id_transaksi; ?></div>
-                                    <div class="stats-transaksi">Status Transaksi </div>
+                                    <div class="rt-3"> 
+                                    <div class="nomor-invoice1" >Nomor Invoice</div>
+                                    <div class="stats-transaksi">Status Transaksi</div>
                                     <div class="pembayaran-status">Status Pembayaran</div>
-                                    <div class="stats-pesan">Pesan</div>
-
-                                    <a href="dashboardcust.php" class="pesan-button">Beli Lagi</a>
-
-                            </div>
+                                    <div class="stats-pesan">Pesan</div>  
+                                    
+            </div>
+            <?php endwhile;?>
+            <form id="form1" method="POST">
+                        <input type="file" name="img_ktp" accept="image/*">
+                        <button class="payment-button" type="submit" name="TRANSFER">
+                <div class="payment-content">
+            <h3 class="payment-title">KIRIM</h3>
+        </div>
+    </button>
+                        </form>
+            <a href="dashboardcust.php" class="pesan-button">Beli Lagi</a>
             
             </div>
+            
+            </div>
+            </div>
+            
+                                
 
 
-
-
-
-        </div>
+                                        
+                                    </div>
+                                    
+                                    </div>  
+ 
+                                    </div>
+                 
+                                    
+                   
+                            
 
 
 

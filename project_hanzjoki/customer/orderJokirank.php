@@ -15,9 +15,6 @@ $username = $_SESSION['username'];
 
 
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -124,7 +121,7 @@ $username = $_SESSION['username'];
                 </div>
         </section>
     </div>
-    <form id="form1" method="POST">
+    <form id="form1" method="POST" >
     <div class="box-id-input">
         <div class="card-header">Lengkapi Data</div>
         <div class="left-input">
@@ -474,17 +471,19 @@ Pilih Metode Pembayaran
         </div>
             <label for="qtyid" class="ppq"> Masukan No WhatsApp: </label>
                 <input type="number" name= "whatsappBro" id="noWhatsApp" required>
+                
         </div>
 <div class="buy-or">
     <!-- ... (elemen formulir lainnya) ... -->
-        <button class="payment-button"  type="submit" name="ORDERNOWWW">
+    <button class="payment-button" type="submit" name="ORDERNOWWW" onclick="orderNow()">
+        </form>
             <img src="../image/cart.png" alt="Payment Image" class="payment-image" id="orderImage">
                 <div class="payment-content">
             <h3 class="payment-title">Order Now</h3>
         </div>
     </button>
  </div>
-</form>
+
 </div>
 <style>
     input[type="radio"] {
@@ -501,14 +500,15 @@ Pilih Metode Pembayaran
 if (isset($_POST["ORDERNOWWW"])) {
     // Memanggil fungsi transaksi dengan data yang diterima dari form
     $result = transaksi($_POST);
-    $data = json_decode(file_get_contents("php://input"), true);
 
     if ($result > 0) {
         echo "
-            <script>
-            alert('DATA BERHASIL DI TAMBAHKAN');
-            document.location.href = 'struk_customer_done.php';
-            </script>
+        <script>
+        alert('DATA BERHASIL DI TAMBAHKAN');
+        window.location.href = 'struk_customer_done.php';
+    </script>
+    
+            
         ";
     } else {
         // Menangani jika terjadi kesalahan saat menjalankan fungsi transaksi
@@ -539,7 +539,8 @@ function transaksi($data) {
     $id_paket = $data['id_paket'];
     $qty = $data['jumlahorder'];
     $harga = $data['harga']; // Corrected variable name
-    $id_customer = $data ['id_customer'];
+    $id_customer = $data['id_customer'];
+
     // Insert data_akun
     $sqldata = "INSERT INTO data_akun (id_data_akun, login_via, email_nohp, req_hero, nick_id, pw, catatan)
             VALUES ('', '$login_via', '$email_nohp', '$req_hero', '$nickname', '$pass', '$catatan')";
@@ -564,27 +565,30 @@ function transaksi($data) {
         if (!mysqli_query($koneksi, $sqltran)) {
             die("Error in SQL query: " . mysqli_error($koneksi));
         }
-        session_start(); // Mulai sesi jika belum dimulai
+
         // Get id_transaksi
-        $result = mysqli_query($koneksi, "SELECT id_transaksi FROM transaksi WHERE payment = '$payment'");
-        if (!$result) {
-            die("Error in SQL query: " . mysqli_error($koneksi));
-        }
+$result = mysqli_query($koneksi, "SELECT id_transaksi FROM transaksi WHERE no_wa = '$no_wa'");
+if (!$result) {
+    die("Error in SQL query: " . mysqli_error($koneksi));
+}
 
-        // Pemeriksaan hasil query
-        if ($row = mysqli_fetch_assoc($result)) {
-            $id_transaksi = $row['id_transaksi']; // Assign the value of id_transaksi
+// Pemeriksaan hasil query
+if ($row = mysqli_fetch_assoc($result)) {
+    $id_transaksi = $row['id_transaksi']; // Assign the value of id_transaksi
 
-            // Insert detail_transaksi
-            $sqldetail = "INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES ('$id_transaksi', '$id_paket', '$qty', '$total_transaksi')";
-            if (!mysqli_query($koneksi, $sqldetail)) {
-                die("Error in SQL query: " . mysqli_error($koneksi));
-            }
+    // Insert detail_transaksi
+    $sqldetail = "INSERT INTO detail_transaksi (id_transaksi, id_paket, qty, subtotal) VALUES ('$id_transaksi', '$id_paket', '$qty', '$total_transaksi')";
+    if (!mysqli_query($koneksi, $sqldetail)) {
+        die("Error in SQL query: " . mysqli_error($koneksi));
+    }
 
-            return mysqli_affected_rows($koneksi);
-        } else {
+    // Simpan id_transaksi ke dalam sesi
+    $_SESSION['id_transaksi'] = $id_transaksi;
+
+    return mysqli_affected_rows($koneksi);
+} else {
             // Handle ketika id_transaksi tidak ditemukan
-            die("ID Transaksi not found for payment: $payment");
+            die("ID Transaksi not found for payment: $no_wa");
         }
     } else {
         // Handle ketika data_akun tidak ditemukan
@@ -592,5 +596,8 @@ function transaksi($data) {
     }
 }
 ?>
+
+
+
 
 

@@ -253,7 +253,8 @@ $koneksi->close();
 
 <!-- ========================================================================================== -->
 <!-- -----------------------------READY BUTTOM-------------------------- -->
-<script><script>
+<script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         const readyButtons = document.querySelectorAll('.btn-danger');
         readyButtons.forEach(button => {

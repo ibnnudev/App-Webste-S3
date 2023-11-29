@@ -1,7 +1,7 @@
 <?php
 
 // Periksa apakah request dikirimkan melalui metode POST
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_transaksi"])) {
+if ($_SERVER["TRANSFER"] == "POST" && isset($_POST["id_transaksi"])) {
     // Mengambil data yang dikirim melalui POST
     $id_transaksi = $_POST["id_transaksi"];
 

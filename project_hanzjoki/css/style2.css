@@ -1551,14 +1551,27 @@ input, button {
 .body-rt {
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 .rt-1 {
     color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Tambahkan baris ini */
 }
 .rt-2{
     margin-top: 20px;
     color: #fff;
     min-width: 50%;
+    margin-left: 200px;
+    
+}
+.rt-3{
+    margin-top: 20px;
+    color: #fff;
+    min-width: 50%;
+    margin-left: 0px;
+    
 }
 
 .horizontal-line1 {
@@ -1609,3 +1622,32 @@ margin-bottom: 10px; /* Jarak bawah garis */
     border: 1px solid #ccc; /* Jangan lupa atur garis tepi atau batas input agar terlihat */
     padding: 5px; /* Sesuaikan dengan gaya desain Anda */
    }
+
+   
+.via-login{
+    margin-right: 100px;
+}
+.data-akuncst {
+     /* Sesuaikan lebar masing-masing bagian */
+    align-items: flex-start; /* Tambahkan baris ini */
+    
+}
+
+/* Gaya untuk class .via-login */
+.via-login {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* Gaya untuk class .data-akuncst */
+.data-akuncst {
+    margin-top: 10px;
+    padding: 10px;
+    margin-left: 50px;
+    margin-right: 10px;
+}
+.data-status{
+    margin-top: 10px;
+    padding: 10px;
+    margin-left: 500px;
+}

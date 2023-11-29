@@ -479,6 +479,7 @@ Pilih Metode Pembayaran
         </div>
             <label for="qtyid" class="ppq"> Masukan No WhatsApp: </label>
                 <input type="number" name= "whatsappBro" id="noWhatsApp" required>
+                
         </div>
 <div class="buy-or">
     <!-- ... (elemen formulir lainnya) ... -->
