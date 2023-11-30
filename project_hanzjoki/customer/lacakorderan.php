@@ -1,54 +1,92 @@
+
 <?php
-require('../koneksi.php');
 session_start();
 
-if (isset($_POST['OKE'])) {
-    $id_transaksi = $_POST['OKE'];
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['id_customer'])) {
+    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
+    header('Location: ../admin/logindulu.php');
+    exit;
+}
+// Mengakses informasi pengguna yang login
+$id_customer = $_SESSION['id_customer'];
+$username = $_SESSION['username'];
+?>
 
 
+
+<?php
+// Menggunakan file koneksi.php yang berisi konfigurasi koneksi ke database
+require('../koneksi.php');
+
+// Memulai sesi untuk pengelolaan data sesi
+
+
+// Mengecek apakah form lakukan pelacakan dikirimkan (dengan mengecek variabel POST 'lacak')
+if (isset($_POST['lacak'])) {
+    // Mengambil nilai ID transaksi dari formulir yang dikirimkan
+    $id_transaksi = $_POST['id_transaksi'];
+
+    // Mengecek apakah ID transaksi kosong atau tidak diisi dengan benar
     if (empty(trim($id_transaksi))) {
-        $_SESSION['error'] = 'Masukan ID_TRANSAKSI dengan benar!';
+        // Menetapkan pesan kesalahan ke dalam sesi dan mengarahkan ke halaman nonlgn_lacakorderan.php
+        $_SESSION['error'] = 'ID TRANSAKSI ANDA HARUS DIISI DENGAN BENAR!';
         header('Location: lacakorderan.php');
         exit;
     }
 
-    // Use parameterized query to prevent SQL Injection
+    // Menggunakan kueri bersiap untuk mencegah SQL Injection
     $query = "SELECT * FROM transaksi WHERE id_transaksi = ?";
     $stmt = mysqli_prepare($koneksi, $query);
 
+    // Mengecek apakah kueri berhasil disiapkan
     if (!$stmt) {
+        // Menetapkan pesan kesalahan ke dalam sesi dan mengarahkan ke halaman nonlgn_lacakorderan.php
         $_SESSION['error'] = 'Terjadi kesalahan dalam query!';
         header('Location: lacakorderan.php');
         exit;
     }
 
+    // Membind parameter pada statement kueri
     mysqli_stmt_bind_param($stmt, 's', $id_transaksi);
+    
+    // Mengeksekusi statement kueri
     mysqli_stmt_execute($stmt);
+    
+    // Mendapatkan hasil dari statement kueri
     $result = mysqli_stmt_get_result($stmt);
 
+    // Mengecek apakah eksekusi kueri berhasil
     if (!$result) {
+        // Menetapkan pesan kesalahan ke dalam sesi dan mengarahkan ke halaman nonlgn_lacakorderan.php
         $_SESSION['error'] = 'Terjadi kesalahan dalam eksekusi query!';
         header('Location: lacakorderan.php');
         exit;
     }
 
+    // Mengambil satu baris hasil sebagai asosiatif array
     $row = mysqli_fetch_assoc($result);
+
+    // Menghitung jumlah baris hasil
     $num = mysqli_num_rows($result);
 
+    // Mengecek apakah ditemukan tepat satu baris (ID transaksi valid)
     if ($num == 1) {
-        // Informasi pengguna yang login disimpan dalam session
+        // Menyimpan informasi ID transaksi yang valid dalam sesi
         $_SESSION['id_transaksi'] = $row['id_transaksi'];
 
-        // Header langsung ke dashboard tanpa memeriksa peran
+        // Mengarahkan langsung ke halaman non_struk_customer_done.php karena ID transaksi valid
         header('Location: struk_customer_done.php');
         exit;
     } else {
-        $_SESSION['error'] = 'Harap masukan ID_TRANSAKSI dengan benar!';
+        // Menetapkan pesan kesalahan ke dalam sesi dan mengarahkan ke halaman nonlgn_lacakorderan.php
+        $_SESSION['error'] = 'Harap masukkan ID TRANSAKSI dengan benar!';
         header('Location: lacakorderan.php');
         exit;
     }
 }
 ?>
+
 
 
 
@@ -72,39 +110,42 @@ if (isset($_POST['OKE'])) {
                 </h2>
                   
         
-                 <nav class="navigation3">
+                <nav class="navigation3">
             
-                    <a href="dashboardcust.php">
-                        <span class="link-text">Beranda</span>
-                    </a>
-                    <a href="lacakorderan.html" style="text-decoration: none; color: #06D85F;">
-                        <span class="link-text">Lacak Orderan</span>
-                    </a>
-                    <a href="hubungikami.php">
-                        <span class="link-text">Hubungi Kami</span>
-                    </a>
-                    <a href="calculator.php">
-                        <span class="link-text">Calculator Ml</span>
-                    </a>
-                </nav>
+            <a href="dashboardcust.php">
+                <span class="link-text">Beranda</span>
+            </a>
+            <a href="lacakorderan.php" style="text-decoration: none; color: #06D85F;">
+                <span class="link-text">Lacak Orderan</span>
+            </a>
+            <a href="hubungikami.php">
+                <span class="link-text">Hubungi Kami</span>
+            </a>
+            <a href="calculator.php">
+                <span class="link-text">Calculator Ml</span>
+            </a>
+        </nav>
+              
             </div>
-            
+            <div class="user-info">
+            <p>Selamat datang, <?php echo $username; ?>! 
+            <br>ID anda ,  <?php echo $id_customer; ?> (<a href="logout.php">Logout</a>)</p>
+        </div>
+
             
     </header>   
     <div class="background-3">
         <p class="textbg-3">Lacak Orderan</p>
         <label class="label-order1">Lacak Orderan kamu hanya dengan email atau nomor invoice</label>
-        <form id="formlacak" method="POST">
-    <input type="text" id="orderTrackingInput" name="OKE" class="input-orderan" placeholder="   email/invoice" required>
-    <button id="trackOrderButton" class="button-orderan" type="submit">Lacak Orderan </button>
+
+        <form method="post" action="">
+    <input type="text" id="orderTrackingInput" name="id_transaksi" class="input-orderan" placeholder="   email/invoice" required>
+    <button type="submit" id="submit" class="button-orderan" name="lacak">Lacak Orderan</button>
 </form>
-
-
+        
         <p class="textbg-4">Pesanan kamu tidak terdaftar meskipun kamu yakin sudah memesan? Harap tunggu 1-2 jam </p>
         <p class="textbg-5">Namun jika pesanan masih tidak muncul maka kamu dapat menghubungi kami <a href="https://www.instagram.com/hanzjoki.id/?igshid=NzZlODBkYWE4Ng%3D%3D&utm_source=qr" target="_blank">disini</a></p>
     </div>
-
-    
 
 
         

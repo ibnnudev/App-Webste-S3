@@ -1,3 +1,78 @@
+<?php
+// Menggunakan file koneksi.php yang berisi konfigurasi koneksi ke database
+require('../koneksi.php');
+
+// Memulai sesi untuk pengelolaan data sesi
+session_start();
+
+// Mengecek apakah form lakukan pelacakan dikirimkan (dengan mengecek variabel POST 'lacak')
+if (isset($_POST['lacak'])) {
+    // Mengambil nilai ID transaksi dari formulir yang dikirimkan
+    $id_transaksi = $_POST['id_transaksi'];
+
+    // Mengecek apakah ID transaksi kosong atau tidak diisi dengan benar
+    if (empty(trim($id_transaksi))) {
+        // Menetapkan pesan kesalahan ke dalam sesi dan mengarahkan ke halaman nonlgn_lacakorderan.php
+        $_SESSION['error'] = 'ID TRANSAKSI ANDA HARUS DIISI DENGAN BENAR!';
+        header('Location: nonlgn_lacakorderan.php');
+        exit;
+    }
+
+    // Menggunakan kueri bersiap untuk mencegah SQL Injection
+    $query = "SELECT * FROM transaksi WHERE id_transaksi = ?";
+    $stmt = mysqli_prepare($koneksi, $query);
+
+    // Mengecek apakah kueri berhasil disiapkan
+    if (!$stmt) {
+        // Menetapkan pesan kesalahan ke dalam sesi dan mengarahkan ke halaman nonlgn_lacakorderan.php
+        $_SESSION['error'] = 'Terjadi kesalahan dalam query!';
+        header('Location: nonlgn_lacakorderan.php');
+        exit;
+    }
+
+    // Membind parameter pada statement kueri
+    mysqli_stmt_bind_param($stmt, 's', $id_transaksi);
+    
+    // Mengeksekusi statement kueri
+    mysqli_stmt_execute($stmt);
+    
+    // Mendapatkan hasil dari statement kueri
+    $result = mysqli_stmt_get_result($stmt);
+
+    // Mengecek apakah eksekusi kueri berhasil
+    if (!$result) {
+        // Menetapkan pesan kesalahan ke dalam sesi dan mengarahkan ke halaman nonlgn_lacakorderan.php
+        $_SESSION['error'] = 'Terjadi kesalahan dalam eksekusi query!';
+        header('Location: nonlgn_lacakorderan.php');
+        exit;
+    }
+
+    // Mengambil satu baris hasil sebagai asosiatif array
+    $row = mysqli_fetch_assoc($result);
+
+    // Menghitung jumlah baris hasil
+    $num = mysqli_num_rows($result);
+
+    // Mengecek apakah ditemukan tepat satu baris (ID transaksi valid)
+    if ($num == 1) {
+        // Menyimpan informasi ID transaksi yang valid dalam sesi
+        $_SESSION['id_transaksi'] = $row['id_transaksi'];
+
+        // Mengarahkan langsung ke halaman non_struk_customer_done.php karena ID transaksi valid
+        header('Location: non_struk_customer_done.php');
+        exit;
+    } else {
+        // Menetapkan pesan kesalahan ke dalam sesi dan mengarahkan ke halaman nonlgn_lacakorderan.php
+        $_SESSION['error'] = 'Harap masukkan ID TRANSAKSI dengan benar!';
+        header('Location: nonlgn_lacakorderan.php');
+        exit;
+    }
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,21 +93,21 @@
                 </h2>
                   
         
-                 <nav class="navigation3">
+                <nav class="navigation3">
             
-                    <a href="nonlgnberanda.php">
-                        <span class="link-text">Beranda</span>
-                    </a>
-                    <a href="nonlgn_lacakorderan.php" style="text-decoration: none; color: #06D85F;">
-                        <span class="link-text">Lacak Orderan</span>
-                    </a>
-                    <a href="nonlgn_hubungikami.php">
-                        <span class="link-text">Hubungi Kami</span>
-                    </a>
-                    <a href="nonlgn_calculator.php">
-                        <span class="link-text">Calculator Ml</span>
-                    </a>
-                </nav>
+            <a href="nonlgnberanda.php">
+                <span class="link-text">Beranda</span>
+            </a>
+            <a href="nonlgn_lacakorderan.php" style="text-decoration: none; color: #06D85F;">
+                <span class="link-text">Lacak Orderan</span>
+            </a>
+            <a href="nonlgn_hubungikami.php">
+                <span class="link-text">Hubungi Kami</span>
+            </a>
+            <a href="nonlgn_calculator.php">
+                <span class="link-text">Calculator Ml</span>
+            </a>
+        </nav>
               
             </div>
             <nav class="navigation2">
@@ -44,36 +119,15 @@
     <div class="background-3">
         <p class="textbg-3">Lacak Orderan</p>
         <label class="label-order1">Lacak Orderan kamu hanya dengan email atau nomor invoice</label>
-        <input type="text" id="orderTrackingInput" class="input-orderan" placeholder="   email/invoice" required>
-        
-        <!-- Tombol untuk melakukan pelacakan -->
-        <button id="trackOrderButton" class="button-orderan" onclick="trackOrder()">Lacak Orderan </button>
+
+        <form method="post" action="">
+    <input type="text" id="orderTrackingInput" name="id_transaksi" class="input-orderan" placeholder="   email/invoice" required>
+    <button type="submit" id="submit" class="button-orderan" name="lacak">Lacak Orderan</button>
+</form>
         
         <p class="textbg-4">Pesanan kamu tidak terdaftar meskipun kamu yakin sudah memesan? Harap tunggu 1-2 jam </p>
         <p class="textbg-5">Namun jika pesanan masih tidak muncul maka kamu dapat menghubungi kami <a href="https://www.instagram.com/hanzjoki.id/?igshid=NzZlODBkYWE4Ng%3D%3D&utm_source=qr" target="_blank">disini</a></p>
     </div>
-
-    <!-- Tempat untuk menampilkan struk -->
-    <!-- <div id="receipt" style="display: none; margin-top: 20px;">
-        <h2>Struk Pembayaran</h2>
-        <p id="receiptContent"></p>
-    </div>
-
-    <script>
-        function trackOrder() {
-            // Dapatkan nilai input
-            var orderInput = document.getElementById("orderTrackingInput").value;
-
-            // Lakukan logika pelacakan order di sini (gunakan AJAX untuk mengirim permintaan ke server)
-
-            // Contoh struk (gantilah dengan data sebenarnya dari pelacakan order)
-            var receiptContent = "ID Transaksi: 123456<br>Customer: John Doe<br>Total Transaksi: $50.00";
-
-            // Tampilkan struk setelah melacak order
-            document.getElementById("receiptContent").innerHTML = receiptContent;
-            document.getElementById("receipt").style.display = "block";
-        }
-    </script> -->
 
 
         

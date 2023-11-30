@@ -1,23 +1,11 @@
+
 <?php
 session_start();
 
 // Cek apakah pengguna sudah login
-if (!isset($_SESSION['id_customer'])) {
-    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: ../admin/logindulu.php');
-    exit;
-}
-// Mengakses informasi pengguna yang login
-$id_customer = $_SESSION['id_customer'];
-$username = $_SESSION['username'];
-?>
-<?php
-
-
-// Cek apakah pengguna sudah login
 if (!isset($_SESSION['id_transaksi'])) {
     // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: lacakorderan.php');
+    header('Location: nonlgn_lacakorderan.php');
     exit;
 }
 // Mengakses informasi pengguna yang login
@@ -30,7 +18,7 @@ $id_transaksi = $_SESSION['id_transaksi'];
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['id_transaksi'])) {
     // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: lacakorderan.php');
+    header('Location: nonlgn_lacakorderan.php');
     exit;
 }
 
@@ -108,25 +96,24 @@ $row_detail = mysqli_fetch_assoc($result_detail);
         
                  <nav class="navigation3">
             
-                    <a href="dashboardcust.php">
+                    <a href="nonlgnberanda.php">
                         <span class="link-text">Beranda</span>
                     </a>
-                    <a href="lacakorderan.php" style="text-decoration: none; color: #06D85F;">
+                    <a href="nonlgn_lacakorderan.php" style="text-decoration: none; color: #06D85F;">
                         <span class="link-text">Lacak Orderan</span>
                     </a>
-                    <a href="hubungikami.php">
+                    <a href="nonlgn_hubungikami.php">
                         <span class="link-text">Hubungi Kami</span>
                     </a>
-                    <a href="calculator.php">
+                    <a href="nonlgn_calculator.php">
                         <span class="link-text">Calculator Ml</span>
                     </a>
                 </nav>
             </div>
-            <div class="user-info">
-            <p>Selamat datang, <?php echo $username; ?>! 
-            <br>ID anda ,  <?php echo $id_customer; ?> (<a href="logout.php">Logout</a>)</p>
-        </div>
-            
+            <nav class="navigation2">
+            <a href="../register.php">Daftar Sekarang</a>
+            <a href="../login.php">Masuk</a>
+        </nav>
         </header>
 
 
@@ -192,23 +179,6 @@ $row_detail = mysqli_fetch_assoc($result_detail);
                                     
                                     <hr class="horizontal-line1">  
                                     <div class="rt-3"> 
-
-                                    <div class="nomor-invoice1" >Nomor Invoice</div>
-                                    <div class="stats-transaksi">Status Transgitaksi</div>
-                                    <div class="pembayaran-status">Status Pembayaran</div>
-                                    <div class="stats-pesan">Pesan</div>  
-                                    
-            </div>
-            <?php endwhile;?>
-            <!-- <form id="form1" method="POST">
-                        <input type="file" name="img_ktp" accept="image/*">
-                        <button class="payment-button" type="submit" name="TRANSFER">
-                <div class="payment-content">
-            <h3 class="payment-title">KIRIM</h3>
-        </div>
-     </button>
-                        </form>
-git
                                     <div class="nomor-invoice1" >Nomor Invoice <?php echo $row_trans ["id_transaksi"]?> </div>
                                     <div class="stats-transaksi">Status Transaksi <?php echo $row_trans ["stats"]?></div>
                                     <div class="pembayaran-status">Status Pengerjaan <?php echo $row_trans ["statsdone"]?></div>  
@@ -218,10 +188,9 @@ git
             
 
 
->>>>>>> 3ae042ea519127c4880e288a7895e478f87a65d6
             <a href="dashboardcust.php" class="pesan-button">Beli Lagi</a>
             
-            </div> -->
+            </div>
             
             </div>
             </div>

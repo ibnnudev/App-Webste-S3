@@ -12,9 +12,8 @@ if (!isset($_SESSION['id_customer'])) {
 // Mengakses informasi pengguna yang login
 $id_customer = $_SESSION['id_customer'];
 $username = $_SESSION['username'];
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -6,7 +6,7 @@ session_start();
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['id_customer'])) {
     // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: logindulu.php');
+    header('Location: ../admin/logindulu.php');
     exit;
 }
 

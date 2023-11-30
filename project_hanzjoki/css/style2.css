@@ -1515,14 +1515,17 @@ input, button {
 }
 
 .body-struk {
-    width: 1500px;
+    width: 720;
     background-color: #014684;
     height: auto;
     margin-top: 90px;
-    margin-left: 190px;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-left: auto;
     border-radius: 10px;
     padding: 20px;
 }
+
 .thank {
     font-size: 17px;
     color: #fff;
@@ -1540,7 +1543,7 @@ input, button {
 
 .tgl-pemesanan1 {
     color: #fff;
-    margin-top: 60px;
+    margin-top: 20px;
 }
 
 .horizontal-line {
@@ -1624,9 +1627,7 @@ margin-bottom: 10px; /* Jarak bawah garis */
    }
 
    
-.via-login{
-    margin-right: 100px;
-}
+
 .data-akuncst {
      /* Sesuaikan lebar masing-masing bagian */
     align-items: flex-start; /* Tambahkan baris ini */
@@ -1636,15 +1637,23 @@ margin-bottom: 10px; /* Jarak bawah garis */
 /* Gaya untuk class .via-login */
 .via-login {
     margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px;
+    margin-right: 10px;
+}
+.via1 {
+    
+    
+    margin-right: 50px;
 }
 
 /* Gaya untuk class .data-akuncst */
 .data-akuncst {
     margin-top: 10px;
     padding: 10px;
-    margin-left: 50px;
+    margin-left: 10px;
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 .data-status{
     margin-top: 10px;

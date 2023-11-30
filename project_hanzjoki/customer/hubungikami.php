@@ -1,3 +1,19 @@
+
+<?php
+session_start();
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['id_customer'])) {
+    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
+    header('Location: ../admin/logindulu.php');
+    exit;
+}
+
+// Mengakses informasi pengguna yang login
+$id_customer = $_SESSION['id_customer'];
+$username = $_SESSION['username'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +50,10 @@
                     <span class="link-text">Calculator Ml</span>
                 </a>
             </nav>
+        </div>
+        <div class="user-info">
+            <p>Selamat datang, <?php echo $username; ?>! 
+            <br> id anda ,  <?php echo $id_customer; ?> (<a href="logout.php">Logout</a>)</p>
         </div>
         <!-- <nav class="navigation2">
             <a href="../register.php">Daftar Sekarang</a>
