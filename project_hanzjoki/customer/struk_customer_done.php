@@ -38,7 +38,7 @@ if (!isset($_SESSION['id_transaksi'])) {
 $id_transaksi = $_SESSION['id_transaksi'];
 
 // Koneksi ke database (gantilah dengan koneksi sesuai dengan kebutuhan Anda)
-$koneksi = mysqli_connect("localhost", "root", "", "hanzjoki");
+$koneksi = mysqli_connect("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
 
 if (!$koneksi) {
     die("Koneksi gagal: " . mysqli_connect_error());

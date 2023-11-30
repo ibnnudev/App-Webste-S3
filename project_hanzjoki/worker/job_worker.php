@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idTransaksi = $_POST['id_transaksi'];
 
     // Lakukan koneksi ke database
-    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
     if ($koneksi->connect_error) {
         die("Connection failed: " . $koneksi->connect_error);
     }
@@ -202,7 +202,7 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 
 // Koneksi ke database
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
 
 // Periksa koneksi
 if ($koneksi->connect_error) {

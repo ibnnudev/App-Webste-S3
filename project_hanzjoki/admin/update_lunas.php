@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_transaksi"])) {
     $id_transaksi = $_POST["id_transaksi"];
 
     // Koneksi ke database
-    $koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+    $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
 
     // Periksa koneksi
     if ($koneksi->connect_error) {

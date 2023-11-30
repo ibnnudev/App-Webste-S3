@@ -138,9 +138,9 @@
     <?php
 // Koneksi ke database
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hanzjoki";
+$username = "tifcmyho_hanzjoki";
+$password = "@JTIpolije2023";
+$dbname = "tifcmyho_hanzjoki";
 
 $koneksi = new mysqli($servername, $username, $password, $dbname);
 

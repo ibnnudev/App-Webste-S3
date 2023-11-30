@@ -143,9 +143,9 @@ for ($tahun = $tahunSekarang; $tahun >= 2020; $tahun--) {
 // Fungsi koneksi ke database
 function connectToDatabase() {
   $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $database = "hanzjoki";
+  $username = "tifcmyho_hanzjoki";
+  $password = "@JTIpolije2023";
+  $database = "tifcmyho_hanzjoki";
 
   // Buat koneksi
   $conn = new mysqli($servername, $username, $password, $database);

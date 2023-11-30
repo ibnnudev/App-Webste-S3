@@ -1,9 +1,9 @@
 <?php
 
 $SERVER = "localhost";
-$username = "root";
-$password = "";
-$db = "hanzjoki2"; // Mengganti "user" dengan "db" sesuai dengan nama database Anda.
+$username = "tifcmyho_hanzjoki";
+$password = "@JTIpolije2023";
+$db = "tifcmyho_hanzjoki"; // Mengganti "user" dengan "db" sesuai dengan nama database Anda.
 
 $err = "";
 $ingataku= "";

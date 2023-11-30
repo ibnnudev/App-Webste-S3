@@ -122,9 +122,9 @@ if (isset($_SESSION['user'])) {
 <?php
 
                         $servername = "localhost";
-                        $username = "root";
-                        $password = "";
-                        $dbname = "hanzjoki";
+                        $username = "tifcmyho_hanzjoki";
+                        $password = "@JTIpolije2023";
+                        $dbname = "tifcmyho_hanzjoki";
 
                         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -168,9 +168,9 @@ if ($result->num_rows > 0) {
 <!-- ========================================================================================================= -->
 <?php
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hanzjoki";
+$username = "tifcmyho_hanzjoki";
+$password = "@JTIpolije2023";
+$dbname = "tifcmyho_hanzjoki";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -216,9 +216,9 @@ $conn->close();
                 <?php
                         // Buat koneksi ke database (gantilah sesuai dengan konfigurasi Anda)
                         $servername = "localhost";
-                        $username = "root";
-                        $password = "";
-                        $dbname = "hanzjoki";
+                        $username = "tifcmyho_hanzjoki";
+                        $password = "@JTIpolije2023";
+                        $dbname = "tifcmyho_hanzjoki";
 
                         $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -264,9 +264,9 @@ $conn->close();
                 <?php
                         // Buat koneksi ke database (gantilah sesuai dengan konfigurasi Anda)
                         $servername = "localhost";
-                        $username = "root";
-                        $password = "";
-                        $dbname = "hanzjoki";
+                        $username = "tifcmyho_hanzjoki";
+                        $password = "@JTIpolije2023";
+                        $dbname = "tifcmyho_hanzjoki";
 
                         $conn = new mysqli($servername, $username, $password, $dbname);
 

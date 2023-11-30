@@ -142,9 +142,9 @@
     <?php
 // Koneksi ke database
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hanzjoki";
+$username = "tifcmyho_hanzjoki";
+$password = "@JTIpolije2023";
+$dbname = "tifcmyho_hanzjoki";
 
 $koneksi = new mysqli($servername, $username, $password, $dbname);
 
@@ -336,7 +336,7 @@ function calculateTotal() {
         var harga = document.getElementById('harga').value;
 
         // Perform multiplication
-        var total = (parseFloat(quantity )) * parseFloat(harga);
+        var total = (parseFloat(quantity + "000" )) * parseFloat(harga);
 
 
         // Update the result display
@@ -452,7 +452,7 @@ if (isset($_POST["ORDERNOWWW"])) {
         echo "
             <script>
             alert('DATA BERHASIL DI TAMBAHKAN');
-            document.location.href = 'non_struk_customer_done.php';
+            document.location.href = 'nonrank_struk_customer_done.php';
             </script>
         ";
     } else {
@@ -531,3 +531,54 @@ function transaksi($data) {
     die("ID Data Akun not found for email_nohp: $email_nohp");
 }
 ?>
+
+
+<!-- 
+
+function upload(){
+    $namafile = $_FILES['bukti_tf']['name'];
+    $ukuranfile = $_FILES['bukti_tf']['size'];
+    $eror = $_FILES['bukti_tf']['error'];
+    $tmpnama = $_FILES['bukti_tf']['tmp_name'];
+    // cek apakah bukti_tf sudah di upload
+    if($eror === 4){
+        echo "<script>
+                alert('Gambar Belum Di Masukkan!!!');
+            </script>";
+        return false;
+    }
+    // cek apakah yang di masukkan adalah gambar
+    $exgambarvalid = ['png', 'jpeg', 'jpg', 'gif'];
+    $exgambar = explode('.', $namafile);
+    $exgambar = strtolower(end($exgambar));
+    if(!in_array($exgambar, $exgambarvalid)){
+        echo "<script>
+                alert('WOY JANGAN UPLOLAD FILE ANEH!!!');
+             </script>";
+        return false;         
+    }
+    // cek ukuran gambar
+    if($ukuranfile > 20000000){
+        echo "<script>
+                alert('Ukuran gambar anda terlalu besar!!!');
+             </script>";
+        return false; 
+    }
+    // berhasil pengecekan gas upload
+    // buat nama gambar baru
+    $namafilebaru = uniqid();
+    $namafilebaru .= '.';
+    $namafilebaru .= $exgambar;
+    move_uploaded_file($tmpnama, '../gambar/' . $namafilebaru);
+    return $namafilebaru;
+}
+
+function edit($data){
+    global $koneksi;
+    $id = ($data["id_transaksi"]);
+    $weapon = htmlspecialchars($data["bukti_tf"]);
+    $gambar = uplaud();
+    $query = "UPDATE transaksi SET bukti_tf = '$gambar' WHERE id_transaksi = '$id'";
+    mysqli_query($con, $query);
+    return mysqli_affected_rows($con);
+} -->

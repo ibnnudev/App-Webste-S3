@@ -254,7 +254,7 @@ if (isset($_SESSION['user'])) {
     
     <?php
 // Koneksi ke database
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
 if ($koneksi->connect_error) {
     die("Koneksi gagal: " . $koneksi->connect_error);
 }

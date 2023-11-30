@@ -1,6 +1,6 @@
 
 <?php
-session_start()
+session_start();
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['id_transaksi'])) {
     // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
@@ -110,7 +110,7 @@ $row_detail = mysqli_fetch_assoc($result_detail);
 <div class="body-struk">
 <!-- ====================================================================================================================== -->
 <!-- ====================================================================================================================== -->
-            <h1 class="thank">Terima Kasih!</h1>
+            <h1 class="thank">Terima Kasih OK !</h1>
             <h1 class="thank2"> Transaksi Sudah Selesai. </h1>
             <div class="id_pesanan1">Pesanan kamu <?php echo $id_transaksi; ?> Telah dikirim dan akan segera tiba.</div>
             <div class="tgl-pemesanan1">Transaksi dibuat pada </div>
@@ -173,7 +173,7 @@ $row_detail = mysqli_fetch_assoc($result_detail);
             
             
 
-
+            <input type="submit" name = "uplaud" > 
             <a href="dashboardcust.php" class="pesan-button">Beli Lagi</a>
             
             </div>

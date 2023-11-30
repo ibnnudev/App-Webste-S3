@@ -169,7 +169,7 @@ if (isset($_SESSION['user'])) {
     </thead>
     <tbody>
     <?php
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
 if ($koneksi->connect_error) {
     die("Connection failed: " . $koneksi->connect_error);   
 }
@@ -225,7 +225,7 @@ $koneksi->close();
 <!-- ================================================================================================= -->
 <!-- ---------------------------------php insert------------------------------ -->
 <?php
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
+$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
 
 if ($koneksi->connect_error) {
     die("Connection failed: " . $koneksi->connect_error);
