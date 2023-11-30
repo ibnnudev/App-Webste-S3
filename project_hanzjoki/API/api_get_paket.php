@@ -1,6 +1,6 @@
 <?php
 
-include ('D:\xampp\htdocs\PHP\App-Webste-S3\project_hanzjoki\koneksi.php');
+include ('../koneksi.php');
 
 
 if($_SERVER['REQUEST_METHOD'] == 'GET' ){
