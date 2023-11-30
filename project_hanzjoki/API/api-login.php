@@ -1,6 +1,7 @@
-<!-- <?php
+<?php
 
-include ('C:\xampp\htdocs\website\App-Webste-S3\project_hanzjoki\koneksi.php');
+include ('D:\xampp\htdocs\PHP\App-Webste-S3\project_hanzjoki\koneksi.php');
+
 $response = array();
 
 if (isset($_POST['email']) && isset($_POST['pw'])) {
@@ -30,4 +31,4 @@ if (isset($_POST['email']) && isset($_POST['pw'])) {
 
 // Output the JSON response
 echo json_encode($response);
-?> -->
+?>
