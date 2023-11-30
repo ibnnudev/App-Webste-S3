@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_transaksi"])) {
         die("Connection failed: " . $koneksi->connect_error);
     }
 
+
     // Melakukan update data statsdone pada transaksi
     $sql = "UPDATE transaksi SET stats = 'Lunas' WHERE id_transaksi = '$id_transaksi'";
     

@@ -955,3 +955,16 @@ text-align: center;
   position: relative;
   
 }
+
+.colomn-register {
+  display: flex;
+  flex-direction: column; /* Mengatur tata letak menjadi kolom */
+  width: 810px;
+  margin-top: 20px;
+}
+
+.regi-cust{
+  margin-left: 80px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}

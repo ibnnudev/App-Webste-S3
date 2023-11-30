@@ -192,6 +192,23 @@ $row_detail = mysqli_fetch_assoc($result_detail);
                                     
                                     <hr class="horizontal-line1">  
                                     <div class="rt-3"> 
+
+                                    <div class="nomor-invoice1" >Nomor Invoice</div>
+                                    <div class="stats-transaksi">Status Transgitaksi</div>
+                                    <div class="pembayaran-status">Status Pembayaran</div>
+                                    <div class="stats-pesan">Pesan</div>  
+                                    
+            </div>
+            <?php endwhile;?>
+            <!-- <form id="form1" method="POST">
+                        <input type="file" name="img_ktp" accept="image/*">
+                        <button class="payment-button" type="submit" name="TRANSFER">
+                <div class="payment-content">
+            <h3 class="payment-title">KIRIM</h3>
+        </div>
+     </button>
+                        </form>
+git
                                     <div class="nomor-invoice1" >Nomor Invoice <?php echo $row_trans ["id_transaksi"]?> </div>
                                     <div class="stats-transaksi">Status Transaksi <?php echo $row_trans ["stats"]?></div>
                                     <div class="pembayaran-status">Status Pengerjaan <?php echo $row_trans ["statsdone"]?></div>  
@@ -201,9 +218,10 @@ $row_detail = mysqli_fetch_assoc($result_detail);
             
 
 
+>>>>>>> 3ae042ea519127c4880e288a7895e478f87a65d6
             <a href="dashboardcust.php" class="pesan-button">Beli Lagi</a>
             
-            </div>
+            </div> -->
             
             </div>
             </div>

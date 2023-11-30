@@ -213,7 +213,9 @@ if ($koneksi->connect_error) {
 $id_worker = $user['id_worker'];
 
 // Kueri SQL untuk mengambil data hanya untuk id_worker yang saat ini login
-$sql = "SELECT id_transaksi, id_customer, id_worker, id_data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats, bukti_tf, laporan_ss, statsdone FROM transaksi WHERE id_worker = '$id_worker'";
+$sql = "SELECT id_transaksi, id_customer, id_worker, id_data_akun, qty_order, tgl_order, total_transaksi, payment, no_wa, stats, bukti_tf, laporan_ss, statsdone 
+        FROM transaksi 
+        WHERE id_worker = '$id_worker' AND (statsdone = 'progres' OR statsdone = 'done')";
 $result = $koneksi->query($sql);
 
 echo "<table id='datatablesSimple' class='custom-table' border='2'>
