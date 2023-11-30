@@ -1,3 +1,18 @@
+
+<?php
+session_start();
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['id_customer'])) {
+    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
+    header('Location: ../admin/logindulu.php');
+    exit;
+}
+
+// Mengakses informasi pengguna yang login
+$id_customer = $_SESSION['id_customer'];
+$username = $_SESSION['username'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
