@@ -1,7 +1,7 @@
 <?php
 
 // Periksa apakah request dikirimkan melalui metode POST
-if ($_SERVER["TRANSFER"] == "POST" && isset($_POST["id_transaksi"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_transaksi"])) {
     // Mengambil data yang dikirim melalui POST
     $id_transaksi = $_POST["id_transaksi"];
 
@@ -12,6 +12,7 @@ if ($_SERVER["TRANSFER"] == "POST" && isset($_POST["id_transaksi"])) {
     if ($koneksi->connect_error) {
         die("Connection failed: " . $koneksi->connect_error);
     }
+
 
     // Melakukan update data statsdone pada transaksi
     $sql = "UPDATE transaksi SET stats = 'Lunas' WHERE id_transaksi = '$id_transaksi'";

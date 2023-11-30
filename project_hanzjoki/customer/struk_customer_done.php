@@ -160,23 +160,23 @@ WHERE transaksi.id_transaksi = '$id_transaksi'");
                                     <hr class="horizontal-line1">  
                                     <div class="rt-3"> 
                                     <div class="nomor-invoice1" >Nomor Invoice</div>
-                                    <div class="stats-transaksi">Status Transaksi</div>
+                                    <div class="stats-transaksi">Status Transgitaksi</div>
                                     <div class="pembayaran-status">Status Pembayaran</div>
                                     <div class="stats-pesan">Pesan</div>  
                                     
             </div>
             <?php endwhile;?>
-            <form id="form1" method="POST">
+            <!-- <form id="form1" method="POST">
                         <input type="file" name="img_ktp" accept="image/*">
                         <button class="payment-button" type="submit" name="TRANSFER">
                 <div class="payment-content">
             <h3 class="payment-title">KIRIM</h3>
         </div>
-    </button>
+     </button>
                         </form>
             <a href="dashboardcust.php" class="pesan-button">Beli Lagi</a>
             
-            </div>
+            </div> -->
             
             </div>
             </div>

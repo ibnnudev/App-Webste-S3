@@ -136,6 +136,7 @@ if (isset($_SESSION['user'])) {
                                         <th>Nama Depan</th>
                                         <th>Nama Belakang</th>
                                         <th>Email</th>
+                                        <th>Password</th>
                                         <th>Username</th>
                                         
                                         
@@ -149,7 +150,7 @@ if (isset($_SESSION['user'])) {
                                             die("Connection failed: " . $koneksi->connect_error);   
                                         }
 
-                                        $sql = "SELECT id_customer, nama_depan, nama_belakang , email, username FROM data_customer";
+                                        $sql = "SELECT id_customer, nama_depan, nama_belakang , email,pw, username FROM data_customer";
                                         $result = $koneksi->query($sql);
 
                                         if ($result->num_rows > 0) {
@@ -159,8 +160,8 @@ if (isset($_SESSION['user'])) {
                                                         <td>" . $row["nama_depan"] . "</td>
                                                         <td>" . $row["nama_belakang"] . "</td>
                                                         <td>" . $row["email"] . "</td>
+                                                        <td>" . $row["pw"] . "</td>    
                                                         <td>" . $row["username"] . "</td>                            
-                                                        
                                                         
                                                     </tr>";
                                             }
