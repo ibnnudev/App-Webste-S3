@@ -1,18 +1,3 @@
-<?php
-session_start();
-
-// Cek apakah pengguna sudah login
-if (!isset($_SESSION['id_transaksi'])) {
-    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: nonlgn_lacakorderan.php');
-    exit;
-}
-
-// Mengakses informasi pengguna yang login
-$id_transaksi = $_SESSION['id_transaksi'];
-
-
-?>
 
 
 <!DOCTYPE html>
@@ -36,26 +21,29 @@ $id_transaksi = $_SESSION['id_transaksi'];
             </h2>
               
     
-            <nav class="navigation3">
+             <nav class="navigation3">
+        
+                <a href="nonlgnberanda.php">
+                    <span class="link-text">Beranda</span>
+                </a>
+
             
-            <a href="nonlgnberanda.php">
-                <span class="link-text">Beranda</span>
-            </a>
-            <a href="nonlgn_lacakorderan.php" style="text-decoration: none; color: #06D85F;">
-                <span class="link-text">Lacak Orderan</span>
-            </a>
-            <a href="nonlgn_hubungikami.php">
-                <span class="link-text">Hubungi Kami</span>
-            </a>
-            <a href="nonlgn_calculator.php">
-                <span class="link-text">Calculator Ml</span>
-            </a>
-        </nav>
+                <a href="nonlgn_lacakorderan.php">
+                    <span class="link-text">Lacak Orderan</span>
+                </a>
+                <a href="nonlgn_hubungikami.php">
+                    <span class="link-text">Hubungi Kami</span>
+                </a>
+                <a href="nonlgn_calculator.php" style="text-decoration: none; color: #06D85F;">
+                    <span class="link-text">Calculator Ml</span>
+                </a>
+            </nav>
         </div>
+       
         <nav class="navigation2">
-        <a href="../admin/register_customer.php">Daftar Sekarang</a>
-        <a href="../admin/logindulu.php">Masuk</a>
-    </nav>
+            <a href="../register.php">Daftar Sekarang</a>
+            <a href="../login.php">Masuk</a>
+        </nav>
         
     </header>   
 
