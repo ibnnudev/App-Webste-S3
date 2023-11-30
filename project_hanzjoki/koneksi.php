@@ -3,7 +3,7 @@
 $SERVER = "localhost";
 $username = "root";
 $password = "";
-$db = "hanzjoki"; // Mengganti "user" dengan "db" sesuai dengan nama database Anda.
+$db = "hanzjoki2"; // Mengganti "user" dengan "db" sesuai dengan nama database Anda.
 
 $err = "";
 $ingataku= "";
