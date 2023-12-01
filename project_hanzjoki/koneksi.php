@@ -4,6 +4,7 @@ $SERVER = "localhost";
 $username = "tifcmyho_hanzjoki";
 $password = "@JTIpolije2023";
 $db = "tifcmyho_hanzjoki"; // Mengganti "user" dengan "db" sesuai dengan nama database Anda.
+//coba ganti localhostnyagit
 
 $err = "";
 $ingataku= "";
