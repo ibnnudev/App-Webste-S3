@@ -7,26 +7,15 @@ if (!isset($_SESSION['id_customer'])) {
     header('Location: ../admin/logindulu.php');
     exit;
 }
+
 // Mengakses informasi pengguna yang login
 $id_customer = $_SESSION['id_customer'];
 $username = $_SESSION['username'];
 ?>
 <?php
+// Sertakan file koneksi.php
+require('../koneksi.php');
 
-
-// Cek apakah pengguna sudah login
-if (!isset($_SESSION['id_transaksi'])) {
-    // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
-    header('Location: lacakorderan.php');
-    exit;
-}
-// Mengakses informasi pengguna yang login
-$id_transaksi = $_SESSION['id_transaksi'];
-
-?>
-
-
-<?php
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['id_transaksi'])) {
     // Jika tidak, mungkin redirect ke halaman login atau tindakan lainnya
@@ -36,21 +25,14 @@ if (!isset($_SESSION['id_transaksi'])) {
 
 // Mengakses informasi pengguna yang login
 $id_transaksi = $_SESSION['id_transaksi'];
-
-// Koneksi ke database (gantilah dengan koneksi sesuai dengan kebutuhan Anda)
-$koneksi = mysqli_connect("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-
-if (!$koneksi) {
-    die("Koneksi gagal: " . mysqli_connect_error());
-}
 
 // Query untuk mendapatkan data transaksi berdasarkan id_transaksi
-$query_trans = "SELECT * FROM data_akun JOIN transaksi on data_akun.id_data_akun = transaksi.id_data_akun 
-JOIN detail_transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi
-JOIN paket_joki_rank ON detail_transaksi.id_paket = paket_joki_rank.id_paket
-JOIN discount ON discount.nama_discount = discount.nama_discount
-GROUP BY transaksi.id_transaksi HAVING transaksi.id_transaksi = '$id_transaksi'";
-
+$query_trans = "SELECT * FROM data_akun 
+    JOIN transaksi ON data_akun.id_data_akun = transaksi.id_data_akun 
+    JOIN detail_transaksi ON transaksi.id_transaksi = detail_transaksi.id_transaksi
+    JOIN paket_joki_rank ON detail_transaksi.id_paket = paket_joki_rank.id_paket
+    JOIN discount ON discount.nama_discount = discount.nama_discount
+    GROUP BY transaksi.id_transaksi HAVING transaksi.id_transaksi = '$id_transaksi'";
 
 $result_trans = mysqli_query($koneksi, $query_trans);
 

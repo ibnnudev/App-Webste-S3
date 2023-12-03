@@ -243,11 +243,7 @@ if (isset($_SESSION['user'])) {
     
     <?php
 // Koneksi ke database
-$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
-
+require('../koneksi.php');
 // Query untuk menampilkan data
 $sql = "SELECT id_paket, judul_paket, nama_paket, harga
         FROM paket_joki_rank

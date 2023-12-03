@@ -13,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jenis_kelamin = $_POST['jenis_kelamin'];
     $pangkat = $_POST['pangkat'];
     $no_wa = $_POST['no_wa'];
-    $pertanyaan = $_POST['pertanyaan'];
-    $jawaban = $_POST['jawaban'];
+    // $pertanyaan = $_POST['pertanyaan'];
+    // $jawaban = $_POST['jawaban'];
     $Role_utama = $_POST['Role_utama'];
     $img_ktp = !empty($_FILES["img_ktp"]["name"]) ? $_FILES["img_ktp"]["name"] : '';
     
@@ -27,27 +27,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Query untuk memasukkan data ke dalam database
    // Query untuk memasukkan data ke dalam database
-$query = "INSERT INTO data_worker (id_worker, email, username, pw, nama_lengkap, alamat, jenis_kelamin, pangkat, no_wa, pertanyaan, jawaban, rolee, img_ktp, sebagai) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'worker')";
-
+$query = "INSERT INTO data_worker (id_worker, email, username, pw, nama_lengkap, alamat, jenis_kelamin, pangkat, no_wa, rolee, img_ktp, sebagai) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'worker')";
 // Gunakan prepared statement
 $stmt = mysqli_prepare($koneksi, $query);
 
-// I// Ikat parameter
-mysqli_stmt_bind_param($stmt, "sssssssssssss", $NIK, $email, $username, $pw, $nama_lengkap, $alamat, $jenis_kelamin, $pangkat, $no_wa, $pertanyaan, $jawaban, $Role_utama, $img_ktp);
+// Ikat parameter
+mysqli_stmt_bind_param($stmt, "sssssssssss", $NIK, $email, $username, $pw, $nama_lengkap, $alamat, $jenis_kelamin, $pangkat, $no_wa, $Role_utama, $img_ktp);
 
 // Jalankan statement
+if (mysqli_stmt_execute($stmt)) {
+    echo "Data berhasil ditambahkan.";
+} else {
+    echo "Terjadi kesalahan saat menambahkan data: " . mysqli_error($koneksi);
+}
 
-        // Jalankan statement
-    if (mysqli_stmt_execute($stmt)) {
-        echo "Data berhasil ditambahkan.";
-    } else {
-        echo "Terjadi kesalahan saat menambahkan data: " . mysqli_error($koneksi);
-    }
+// Tutup statement dan koneksi
+mysqli_stmt_close($stmt);
+mysqli_close($koneksi);
 
-    // Tutup statement dan koneksi
-    mysqli_stmt_close($stmt);
-    mysqli_close($koneksi);
 }
 
 
@@ -238,12 +236,12 @@ if (isset($_SESSION['user'])) {
                                         <label for="Role_utama">Role Utama:</label>
                                         <input type="text" name="Role_utama" required>
                                         
-                                        <label for="pertanyaan">Pertanyaan:</label>
+                                        <!-- <label for="pertanyaan">Pertanyaan:</label>
                                         <input type="text" name="pertanyaan" required>
 
                                         
                                         <label for="jawaban">Jawaban:</label>
-                                        <input type="text" name="jawaban" required>
+                                        <input type="text" name="jawaban" required> -->
 
 
                                         <label for="img_ktp">Unggah Gambar KTP:</label>
@@ -275,8 +273,8 @@ if (isset($_SESSION['user'])) {
                                         <th>Role HERO</th>
                                         <th>sebagai</th>
                                         <th>username</th>
-                                        <th>pertanyaan</th>
-                                        <th>jawaban</th>
+                                        <th>Password</th>
+                                        <!-- <th>jawaban</th> -->
                                         <!-- <th>Foto Ktp</th> -->
                                         <th>Aksi</th>
                                         </tr>
@@ -284,12 +282,9 @@ if (isset($_SESSION['user'])) {
                                     
                                     <tbody>
                                     <?php
-                                        $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-                                        if ($koneksi->connect_error) {
-                                            die("Connection failed: " . $koneksi->connect_error);   
-                                        }
+                                        require('../koneksi.php');
 
-                                        $sql = "SELECT id_worker, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa ,username,pertanyaan, jawaban FROM data_worker";
+                                        $sql = "SELECT id_worker, `nama_lengkap`, alamat, jenis_kelamin, email, pangkat, rolee, sebagai, no_wa ,username,pw FROM data_worker";
                                         $result = $koneksi->query($sql);
 
                                         if ($result->num_rows > 0) {
@@ -304,9 +299,9 @@ if (isset($_SESSION['user'])) {
                                                         <td>" . $row["pangkat"] . "</td>
                                                         <td>" . $row["rolee"] . "</td>
                                                         <td>" . $row["sebagai"] . "</td>
-                                                        <td>" . $row["username"] . "</td>      
-                                                        <td>" . $row["pertanyaan"] . "</td>  
-                                                        <td>" . $row["jawaban"] . "</td>                         
+                                                        <td>" . $row["username"] . "</td>    
+                                                        <td>" . $row["pw"] . "</td>   
+                                                                                 
                                                         <td>
                                                         <a href='form_edit.php?id=" . $row['id_worker'] . "' class='btn btn-info'>Edit</a>
                                                         <a href='../crud/worker_hapus.php?id_worker=" . $row['id_worker'] . "' class='btn btn-danger'>Hapus</a>

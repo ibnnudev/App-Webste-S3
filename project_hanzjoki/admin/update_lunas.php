@@ -5,14 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_transaksi"])) {
     // Mengambil data yang dikirim melalui POST
     $id_transaksi = $_POST["id_transaksi"];
 
-    // Koneksi ke database
-    $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-
-    // Periksa koneksi
-    if ($koneksi->connect_error) {
-        die("Connection failed: " . $koneksi->connect_error);
-    }
-
+    // Sertakan file koneksi.php
+    require('../koneksi.php');
 
     // Melakukan update data statsdone pada transaksi
     $sql = "UPDATE transaksi SET stats = 'Lunas' WHERE id_transaksi = '$id_transaksi'";
@@ -31,3 +25,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_transaksi"])) {
 }
 
 ?>
+

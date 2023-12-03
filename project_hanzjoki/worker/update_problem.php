@@ -1,13 +1,12 @@
 <?php
-
 // Periksa apakah request dikirimkan melalui metode POST
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_transaksi"])) {
     // Mengambil data yang dikirim melalui POST
     $id_transaksi = $_POST["id_transaksi"];
 
-    // Koneksi ke database
-    $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-
+    // Memanggil fungsi koneksi dari file 'koneksi.php'
+    require('../koneksi.php');
+    
     // Periksa koneksi
     if ($koneksi->connect_error) {
         die("Connection failed: " . $koneksi->connect_error);
@@ -28,5 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id_transaksi"])) {
     // Jika tidak ada data yang dikirimkan melalui POST, kirimkan pesan error
     echo "Error: Data tidak valid.";
 }
+
 
 ?>

@@ -238,11 +238,7 @@ if (isset($_SESSION['user'])) {
         <tbody>
         <?php
 // Koneksi ke database (hapus inisialisasi koneksi yang sudah ada)
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
-
+require('../koneksi.php');
 // Query untuk menampilkan data (revisi query)
 $sql = "SELECT  nama_discount, potongan FROM discount";
 $result = $koneksi->query($sql);
@@ -277,11 +273,7 @@ $koneksi->close();
 
 <?php
 // Koneksi ke database
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
-
+require('../koneksi.php');
 // Query untuk menampilkan data
 $sql = "SELECT nama_discount, potongan
         FROM discount";

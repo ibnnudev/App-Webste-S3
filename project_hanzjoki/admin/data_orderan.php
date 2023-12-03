@@ -5,11 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Ambil ID transaksi dari permintaan POST
     $idTransaksi = $_POST['id_transaksi'];
 
-    // Lakukan koneksi ke database
-    $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-    if ($koneksi->connect_error) {
-        die("Connection failed: " . $koneksi->connect_error);
-    }
+    require('../koneksi.php');
 
     // Lakukan pembaruan status di database
     $updateSql = "UPDATE transaksi SET stats = 'bermasalah' WHERE id_transaksi = ?";
@@ -202,10 +198,7 @@ if (isset($_SESSION['user'])) {
     </thead>
     <tbody>
     <?php
-$koneksi = new mysqli("localhost", "root", "", "hanzjoki");
-if ($koneksi->connect_error) {
-    die("Connection failed: " . $koneksi->connect_error);   
-}
+    require('../koneksi.php');
 
 $sql = "SELECT 
 transaksi.id_transaksi,

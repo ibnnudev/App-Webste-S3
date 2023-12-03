@@ -226,22 +226,11 @@ if (isset($_SESSION['user'])) {
                     <select name="nama_discount" required>
 
     <?php
-    // Koneksi ke database
-    $servername = "localhost";
-    $username = "tifcmyho_hanzjoki";
-    $password = "@JTIpolije2023";
-    $dbname = "tifcmyho_hanzjoki";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Periksa koneksi
-    if ($conn->connect_error) {
-        die("Koneksi gagal: " . $conn->connect_error);
-    }
+    // Koneksi ke databaserequire('../koneksi.php');
 
     // Query untuk mengambil nilai dari database
     $sql = "SELECT nama_discount FROM discount";
-    $result = $conn->query($sql);
+    $result = $koneksi->query($sql);
 
     // Tambahkan pilihan ke dalam elemen select
     if ($result->num_rows > 0) {
@@ -253,7 +242,7 @@ if (isset($_SESSION['user'])) {
     }
 
     // Tutup koneksi ke database
-    $conn->close();
+    $koneksi->close();
     ?>
 </select>
 
@@ -283,11 +272,7 @@ if (isset($_SESSION['user'])) {
     
     <?php
 // Koneksi ke database
-$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
-
+require('../koneksi.php');
 // Query untuk menampilkan data
 $sql = "SELECT id_paket, judul_paket, nama_paket, harga, nama_discount FROM paket_joki_rank
         WHERE judul_paket = 'PROMO'";

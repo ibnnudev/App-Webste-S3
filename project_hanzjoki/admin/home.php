@@ -121,20 +121,10 @@ if (isset($_SESSION['user'])) {
 <!-- =============================================================================================================================== -->
 <?php
 
-                        $servername = "localhost";
-                        $username = "tifcmyho_hanzjoki";
-                        $password = "@JTIpolije2023";
-                        $dbname = "tifcmyho_hanzjoki";
-
-                        $conn = new mysqli($servername, $username, $password, $dbname);
-
-                        // Periksa koneksi
-                        if ($conn->connect_error) {
-                            die("Koneksi gagal: " . $conn->connect_error);
-                        }
+require('../koneksi.php');
 // Kueri SQL untuk mendapatkan jumlah transaksi hari ini
 $sql = "SELECT COUNT(*) as total_transaksi FROM transaksi WHERE DATE(tgl_order) = CURDATE()";
-$result = $conn->query($sql);
+$result = $koneksi->query($sql);
 
 // Ambil hasil kueri
 if ($result->num_rows > 0) {
@@ -144,8 +134,10 @@ if ($result->num_rows > 0) {
     $totalTransaksiday = 0;
 }
 
-// ... Tutup koneksi ke database ...
+// Tutup koneksi ke database
+$koneksi->close();
 ?>
+
                                 
 <div class="row" style="margin-left: 10px; margin-right: 10px;">
                 <!-- Earnings (Monthly) Card Example -->
@@ -167,21 +159,11 @@ if ($result->num_rows > 0) {
                 </div>
 <!-- ========================================================================================================= -->
 <?php
-$servername = "localhost";
-$username = "tifcmyho_hanzjoki";
-$password = "@JTIpolije2023";
-$dbname = "tifcmyho_hanzjoki";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Periksa koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
+require('../koneksi.php');
 
 // Kueri SQL untuk mendapatkan jumlah total transaksi
 $sql = "SELECT COUNT(*) as transaksi_keseluruhan FROM transaksi";
-$result = $conn->query($sql);
+$result = $koneksi->query($sql);
 
 // Ambil hasil kueri
 if ($result->num_rows > 0) {
@@ -192,7 +174,7 @@ if ($result->num_rows > 0) {
 }
 
 // Tutup koneksi ke database
-$conn->close();
+$koneksi->close();
 ?>
                 <!-- Earnings (Monthly) Card Example -->
                 <div class="col-xl-3 col-md-6 mb-4">
@@ -215,21 +197,10 @@ $conn->close();
                 <!-- Earnings (Monthly) Card Example -->
                 <?php
                         // Buat koneksi ke database (gantilah sesuai dengan konfigurasi Anda)
-                        $servername = "localhost";
-                        $username = "tifcmyho_hanzjoki";
-                        $password = "@JTIpolije2023";
-                        $dbname = "tifcmyho_hanzjoki";
-
-                        $conn = new mysqli($servername, $username, $password, $dbname);
-
-                        // Periksa koneksi
-                        if ($conn->connect_error) {
-                            die("Koneksi gagal: " . $conn->connect_error);
-                        }
-
+                        require('../koneksi.php');
                         // Eksekusi kueri SQL untuk mendapatkan jumlah pekerja
                         $sql = "SELECT COUNT(*) as total_customer FROM data_customer";
-                        $result = $conn->query($sql);
+                        $result = $koneksi->query($sql);
 
                         // Ambil hasil kueri
                         if ($result->num_rows > 0) {
@@ -240,7 +211,7 @@ $conn->close();
                         }
 
                         // Tutup koneksi ke database
-                        $conn->close();
+                        $koneksi->close();
                         ?>
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-info shadow h-100 py-2">
@@ -263,21 +234,10 @@ $conn->close();
                 <!-- Pending Requests Card Example -->
                 <?php
                         // Buat koneksi ke database (gantilah sesuai dengan konfigurasi Anda)
-                        $servername = "localhost";
-                        $username = "tifcmyho_hanzjoki";
-                        $password = "@JTIpolije2023";
-                        $dbname = "tifcmyho_hanzjoki";
-
-                        $conn = new mysqli($servername, $username, $password, $dbname);
-
-                        // Periksa koneksi
-                        if ($conn->connect_error) {
-                            die("Koneksi gagal: " . $conn->connect_error);
-                        }
-
+                        require('../koneksi.php');
                         // Eksekusi kueri SQL untuk mendapatkan jumlah pekerja
                         $sql = "SELECT COUNT(*) as total_worker FROM data_worker";
-                        $result = $conn->query($sql);
+                        $result = $koneksi->query($sql);
 
                         // Ambil hasil kueri
                         if ($result->num_rows > 0) {
@@ -288,7 +248,7 @@ $conn->close();
                         }
 
                         // Tutup koneksi ke database
-                        $conn->close();
+                        $koneksi->close();
                         ?>
 
                         <!-- Tampilkan jumlah pekerja dalam elemen HTML -->

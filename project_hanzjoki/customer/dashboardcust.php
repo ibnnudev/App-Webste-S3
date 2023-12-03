@@ -22,7 +22,7 @@ $username = $_SESSION['username'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOMEHanzJoki</title>
+    <title>HOME HanzJoki</title>
     <link rel="stylesheet" href="../css/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="path/to/style.css">
@@ -97,7 +97,7 @@ $username = $_SESSION['username'];
 </div>
 <div class="Jasa-mcl">
     <div class="link">
-        <a href="orderjokimcl.html">
+        <a href="orderjokimcl.php">
                 <img src="../image/JASA MCL.png" alt="">
             
         </a>
@@ -127,7 +127,7 @@ $username = $_SESSION['username'];
 
 <div class="jasa-clasic">
     <div class="link">
-        <a href="#harga-pubg">
+        <a href="orderjokiclassic.php">
                 <img src="../image/JASA CLASIK.png" alt="">
         </a>
     </div>

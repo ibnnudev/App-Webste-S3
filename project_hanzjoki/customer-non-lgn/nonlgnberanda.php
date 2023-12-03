@@ -67,7 +67,7 @@
         
 <div class="Jasa-rank">
     <div class="link">
-        <a href="non_orderjokirank.php">
+        <a href="non_orderJokirank.php">
                 <img src="../image/JASA RANK.png" alt="">
                
         </a>

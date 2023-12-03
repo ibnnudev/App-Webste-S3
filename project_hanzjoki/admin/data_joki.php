@@ -252,18 +252,11 @@ if (isset($_SESSION['user'])) {
                                 
     
     <?php
-// Koneksi ke database
-$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
+require('../koneksi.php');
 
 // Query untuk menampilkan data
-$sql = "SELECT id_paket, judul_paket, nama_paket, harga, nama_discount
-        FROM paket_joki_rank
-        ";
+$sql = "SELECT id_paket, judul_paket, nama_paket, harga, nama_discount FROM paket_joki_rank";
 $result = $koneksi->query($sql);
-
 
 // Validasi form submission dan update data jika ada request POST
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
@@ -272,6 +265,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     $harga = $_POST['harga'];
     $nama_discount = $_POST['nama_discount'];
 
+    // Query untuk melakukan update data
+    $update_query = "UPDATE paket_joki_rank SET nama_paket=?, harga=?, nama_discount=? WHERE id_paket=?";
+    
     // Prepare statement
     $update_stmt = $koneksi->prepare($update_query);
 
@@ -291,6 +287,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
 
 $koneksi->close();
 ?>
+
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {

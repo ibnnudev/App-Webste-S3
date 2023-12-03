@@ -153,17 +153,8 @@ $username = $_SESSION['username'];
 
     
     <?php
-// Koneksi ke database
-$servername = "localhost";
-$username = "tifcmyho_hanzjoki";
-$password = "@JTIpolije2023";
-$dbname = "tifcmyho_hanzjoki";
-
-$koneksi = new mysqli($servername, $username, $password, $dbname);
-
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
+// Sertakan file koneksi.php
+require('../koneksi.php');
 
 // Query untuk mengambil data promo
 $sql_promo = "SELECT paket_joki_rank.*, discount.potongan, (paket_joki_rank.harga - discount.potongan) AS hasil
@@ -188,9 +179,8 @@ $result_murah_joki = $koneksi->query($sql_murah_joki);
 if ($result_murah_joki === false) {
     die("Error saat mengeksekusi query paket murah joki: " . $koneksi->error);
 }
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

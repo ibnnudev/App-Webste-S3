@@ -153,17 +153,8 @@ $username = $_SESSION['username'];
 
     
     <?php
-// Koneksi ke database
-$servername = "localhost";
-$username = "tifcmyho_hanzjoki";
-$password = "@JTIpolije2023";
-$dbname = "tifcmyho_hanzjoki";
-
-$koneksi = new mysqli($servername, $username, $password, $dbname);
-
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
+// Sertakan file koneksi.php
+require('../koneksi.php');
 
 // Query untuk mengambil data promo
 $sql_promo = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'Paket MCL'";
@@ -171,13 +162,8 @@ $result_promo = $koneksi->query($sql_promo);
 if ($result_promo === false) {
     die("Error saat mengeksekusi query promo: " . $koneksi->error);
 }
-
-
-
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

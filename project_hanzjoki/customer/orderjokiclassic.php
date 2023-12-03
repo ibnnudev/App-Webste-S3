@@ -155,17 +155,8 @@ $username = $_SESSION['username'];
 
     
     <?php
-// Koneksi ke database
-$servername = "localhost";
-$username = "tifcmyho_hanzjoki";
-$password = "@JTIpolije2023";
-$dbname = "tifcmyho_hanzjoki";
-
-$koneksi = new mysqli($servername, $username, $password, $dbname);
-
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
+// Sertakan file koneksi.php
+require('../koneksi.php');
 
 // Query untuk mengambil data promo
 $sql_promo = "SELECT * FROM paket_joki_rank WHERE judul_paket = 'Promo Classic'";
@@ -180,10 +171,8 @@ $result_joki_star = $koneksi->query($sql_joki_star);
 if ($result_joki_star === false) {
     die("Error saat mengeksekusi query joki star: " . $koneksi->error);
 }
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

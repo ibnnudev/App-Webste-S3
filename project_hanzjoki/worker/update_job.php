@@ -20,8 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id_transaksi"])) {
             exit;
         }
 
-        // Melakukan koneksi ke database
-        $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
+        // Memanggil fungsi koneksi dari file 'koneksi.php'
+        require('../koneksi.php');
+    
+        // Periksa koneksi
         if ($koneksi->connect_error) {
             die("Connection failed: " . $koneksi->connect_error);
         }
@@ -44,3 +46,4 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id_transaksi"])) {
     }
 }
 ?>
+

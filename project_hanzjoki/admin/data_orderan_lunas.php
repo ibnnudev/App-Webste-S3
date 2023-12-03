@@ -169,10 +169,7 @@ if (isset($_SESSION['user'])) {
     </thead>
     <tbody>
     <?php
-$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-if ($koneksi->connect_error) {
-    die("Connection failed: " . $koneksi->connect_error);   
-}
+    require('../koneksi.php');
 
 $sql = "SELECT 
 id_transaksi,
@@ -224,11 +221,7 @@ $koneksi->close();
 <!-- ================================================================================================= -->
 <!-- ---------------------------------php insert------------------------------ -->
 <?php
-$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-
-if ($koneksi->connect_error) {
-    die("Connection failed: " . $koneksi->connect_error);
-}
+require('../koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_transaksi = $_POST["id_transaksi"];

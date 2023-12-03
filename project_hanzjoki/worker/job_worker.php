@@ -24,17 +24,13 @@ if (isset($_SESSION['user'])) {
 ?>
 
 
-
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Ambil ID transaksi dari permintaan POST
     $idTransaksi = $_POST['id_transaksi'];
 
-    // Lakukan koneksi ke database
-    $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-    if ($koneksi->connect_error) {
-        die("Connection failed: " . $koneksi->connect_error);
-    }
+    // Sertakan file koneksi.php
+    require('../koneksi.php');
 
     // Lakukan pembaruan status di database
     $updateSql = "UPDATE take_job SET statsdone = 'Problem' WHERE id_transaksi = ?";
@@ -190,7 +186,6 @@ if ($user['sebagai'] === 'admin') {
 
                             
                             <?php
-
 // Periksa apakah pengguna telah login
 if (!isset($_SESSION['user'])) {
     // Jika belum login, redirect ke halaman login
@@ -201,8 +196,8 @@ if (!isset($_SESSION['user'])) {
 // Ambil informasi pengguna dari sesi
 $user = $_SESSION['user'];
 
-// Koneksi ke database
-$koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
+// Sertakan file koneksi.php
+require('../koneksi.php');
 
 // Periksa koneksi
 if ($koneksi->connect_error) {
@@ -266,6 +261,7 @@ echo "</tbody></table>";
 
 $koneksi->close();
 ?>
+
 
 
 <!-- bootstrap -->

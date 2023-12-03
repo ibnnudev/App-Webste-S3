@@ -140,22 +140,18 @@ for ($tahun = $tahunSekarang; $tahun >= 2020; $tahun--) {
 
 
 <?php
+require('../koneksi.php');
+
 // Fungsi koneksi ke database
 function connectToDatabase() {
-  $servername = "localhost";
-  $username = "tifcmyho_hanzjoki";
-  $password = "@JTIpolije2023";
-  $database = "tifcmyho_hanzjoki";
-
-  // Buat koneksi
-  $conn = new mysqli($servername, $username, $password, $database);
-
+  global $koneksi; // Variabel koneksi diambil dari file 'koneksi.php'
+  
   // Periksa koneksi
-  if ($conn->connect_error) {
-    die("Koneksi ke database gagal: " . $conn->connect_error);
+  if ($koneksi->connect_error) {
+    die("Koneksi ke database gagal: " . $koneksi->connect_error);
   }
 
-  return $conn;
+  return $koneksi;
 }
 
 // Memanggil fungsi koneksi

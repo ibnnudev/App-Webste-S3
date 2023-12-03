@@ -144,33 +144,30 @@ if (isset($_SESSION['user'])) {
                                     </thead>
                                     
                                     <tbody>
-                                    <?php
-                                        $koneksi = new mysqli("localhost", "tifcmyho_hanzjoki", "@JTIpolije2023", "tifcmyho_hanzjoki");
-                                        if ($koneksi->connect_error) {
-                                            die("Connection failed: " . $koneksi->connect_error);   
-                                        }
+                                         <?php
+                                            require('../koneksi.php');
 
-                                        $sql = "SELECT id_customer, nama_depan, nama_belakang , email,pw, username FROM data_customer";
-                                        $result = $koneksi->query($sql);
+                                            $sql = "SELECT id_customer, nama_depan, nama_belakang, email, pw, username FROM data_customer";
+                                            $result = $koneksi->query($sql);
 
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<tr>
-                                                        <td>" . $row["id_customer"] . "</td>
-                                                        <td>" . $row["nama_depan"] . "</td>
-                                                        <td>" . $row["nama_belakang"] . "</td>
-                                                        <td>" . $row["email"] . "</td>
-                                                        <td>" . $row["pw"] . "</td>    
-                                                        <td>" . $row["username"] . "</td>                            
-                                                        
-                                                    </tr>";
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo "<tr>
+                                                            <td>" . $row["id_customer"] . "</td>
+                                                            <td>" . $row["nama_depan"] . "</td>
+                                                            <td>" . $row["nama_belakang"] . "</td>
+                                                            <td>" . $row["email"] . "</td>
+                                                            <td>" . $row["pw"] . "</td>    
+                                                            <td>" . $row["username"] . "</td>                            
+                                                        </tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='10'>0 result</td></tr>";
                                             }
-                                        } else {
-                                            echo "<tr><td colspan='10'>0 result</td></tr>";
-                                        }
 
-                                        $koneksi->close();
-                                    ?>
+                                            $koneksi->close();
+                                        ?>
+
                                     </tbody>
                                     
                                 </table>
