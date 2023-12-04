@@ -1,6 +1,7 @@
 <?php
 
-include ('D:\xampp\htdocs\PHP\App-Webste-S3\project_hanzjoki\koneksi.php');
+// Include koneksi.php
+include_once('../koneksi.php');
 
 $response = array();
 
@@ -8,27 +9,38 @@ if (isset($_POST['email']) && isset($_POST['pw'])) {
     $userMail = $_POST['email'];
     $userPass = $_POST['pw'];
 
-    $cek = "SELECT * FROM data_customer WHERE email = '$userMail' AND pw = '$userPass'";
-    $mysql = mysqli_query($koneksi, $cek);
-    $result = mysqli_num_rows($mysql);
+    // Use prepared statements to prevent SQL injection
+    $cek = "SELECT * FROM data_customer WHERE email = ? AND pw = ?";
+    $stmt = mysqli_prepare($koneksi, $cek);
 
-    if ($result > 0) {
-        // Fetch and store data in an associative array
-        $userData = mysqli_fetch_assoc($mysql);
+    if ($stmt) {
+        // Bind parameters and execute the query
+        mysqli_stmt_bind_param($stmt, 'ss', $userMail, $userPass);
+        mysqli_stmt_execute($stmt);
 
-        // Add user data to the response array
-        $response['status_code'] = 200;
-        $response['message'] = 'Success';
-        $response['data'] = $userData;
+        // Get the result
+        $result = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($result) > 0) {
+            // Fetch and store data in an associative array
+            $userData = mysqli_fetch_assoc($result);
+
+            // Add user data to the response array
+            $response['status_code'] = 200;
+            $response['message'] = 'Success';
+            $response['data'] = $userData;
+        } else {
+            $response['status_code'] = 200;
+            $response['message'] = 'Email / Password Salah!';
+        }
     } else {
-        $response['status_code'] = 200;
-        $response['message'] = 'Email / Password Salah!';
+        $response['status_code'] = 500;
+        $response['message'] = 'Terjadi kesalahan dalam query.';
     }
 } else {
-    $response['status_code'] = 200;
+    $response['status_code'] = 400;
     $response['message'] = 'Email / Password Kosong!';
 }
 
 // Output the JSON response
 echo json_encode($response);
-?>

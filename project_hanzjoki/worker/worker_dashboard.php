@@ -1,27 +1,26 @@
 <?php
-// Pastikan sesi sudah dimulai
 session_start();
 
-// Periksa apakah pengguna telah login
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
 
-    // Menentukan keterangan berdasarkan peran pengguna
-    $keterangan = '';
+    // Check the user's role and create appropriate greetings
+    $greeting = '';
     if ($user['sebagai'] === 'admin') {
-        $keterangan = '' . $user['username'];
+        $greeting = 'Hello, Admin ' . $user['username'];
     } elseif ($user['sebagai'] === 'worker') {
-        $keterangan = 'Halo, Worker ' . $user['nama_lengkap'];
+        $greeting = 'Hello, Worker ' . $user['nama_lengkap'];
     }
 
-    // Output keterangan
-    echo $keterangan;
+    // Output the greeting
+    echo $greeting;
 } else {
-    // Jika pengguna belum login, kembalikan ke halaman login
+    // Redirect to the login page if the user is not logged in
     header('Location: ../admin/login_admin.php');
     exit;
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -45,8 +44,7 @@ if (isset($_SESSION['user'])) {
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="#">HanzStore</a>
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <!-- <div class="input-group">
@@ -57,8 +55,7 @@ if (isset($_SESSION['user'])) {
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="setting_admin.php">Settings</a></li>
                     <li><a class="dropdown-item" href="add_admin.php">Activity Log</a></li>
@@ -94,19 +91,19 @@ if (isset($_SESSION['user'])) {
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">
-                    <?php
-if ($user['sebagai'] === 'admin') {
-    echo 'Admin: ' . $user['username'];
-} elseif ($user['sebagai'] === 'worker') {
-    echo 'Hallo, Penjoki ' . $user['nama_lengkap'];
-    
-    // Ganti nilai $nik dengan id_worker
-    $nik = $user['id_worker'];
-    
-    // Tampilkan ID Worker di bawah nama worker
-    echo '<br>ID Worker: ' . $nik;
-}
-?>
+                        <?php
+                        if ($user['sebagai'] === 'admin') {
+                            echo 'Admin: ' . $user['username'];
+                        } elseif ($user['sebagai'] === 'worker') {
+                            echo 'Hallo, Penjoki ' . $user['nama_lengkap'];
+
+                            // Ganti nilai $nik dengan id_worker
+                            $nik = $user['id_worker'];
+
+                            // Tampilkan ID Worker di bawah nama worker
+                            echo '<br>ID Worker: ' . $nik;
+                        }
+                        ?>
                     </div>
                     <!-- <p></p> -->
                     <h1> <br></h1>
@@ -125,7 +122,7 @@ if ($user['sebagai'] === 'admin') {
                 </div>
             </main>
 
-<!--             
+            <!--             
             <div class="row" style="margin-left: 10px; margin-right: 10px;">
                
                 <div class="col-xl-3 col-md-6 mb-4">
@@ -145,13 +142,6 @@ if ($user['sebagai'] === 'admin') {
                     </div>
                 </div> -->
 
-
-
-
-
-
-
-                
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
@@ -166,14 +156,12 @@ if ($user['sebagai'] === 'admin') {
             </footer>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="../js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="assets/demo/chart-area-demo.js"></script>
     <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
 </body>
 
